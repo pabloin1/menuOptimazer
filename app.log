@@ -1,47 +1,25 @@
-2025-07-21 03:33:31,007 - INFO - database_manager - Intentando conectar a la base de datos 'menu_optimizer_db' en host 'localhost'...
-2025-07-21 03:33:31,057 - INFO - database_manager - Conexión a la base de datos exitosa.
-2025-07-21 03:33:31,074 - INFO - database_manager - Carga completa. Se cargaron 32 ingredientes y 15 platos.
-2025-07-21 03:33:45,110 - INFO - app_gui - --- INICIANDO NUEVA OPTIMIZACIÓN ---
-2025-07-21 03:33:45,110 - INFO - app_gui - Parámetros: Platos=5, Costo Máx=150.0, Margen=40.0%, Temporada=Todo el año
-2025-07-21 03:33:45,110 - INFO - app_gui - Técnicas disponibles: {'Plancha', 'Guisar', 'Emulsificar', 'Reducción', 'Salteado'}
-2025-07-21 03:33:45,119 - INFO - app_gui - Iniciando filtrado de 15 platos totales...
-2025-07-21 03:33:45,119 - WARNING - app_gui - RECHAZADO 'Pechuga a la Plancha con Arroz': Requiere técnicas no disponibles {'Hervido'}.
-2025-07-21 03:33:45,119 - WARNING - app_gui - RECHAZADO 'Tacos de Arrachera': Requiere técnicas no disponibles {'Marinar'}.
-2025-07-21 03:33:45,119 - WARNING - app_gui - RECHAZADO 'Salmón Invernal con Quinoa': Requiere técnicas no disponibles {'Horneado', 'Hervido'}.
-2025-07-21 03:33:45,119 - WARNING - app_gui - RECHAZADO 'Spaghetti a la Bolognesa': Requiere técnicas no disponibles {'Hervido'}.
-2025-07-21 03:33:45,119 - INFO - app_gui - ACEPTADO 'Ensalada César con Pollo': Cumple todas las restricciones.
-2025-07-21 03:33:45,119 - WARNING - app_gui - RECHAZADO 'Sopa de Tortilla': Requiere técnicas no disponibles {'Freír', 'Hervido'}.
-2025-07-21 03:33:45,119 - INFO - app_gui - ACEPTADO 'Risotto de Champiñones': Cumple todas las restricciones.
-2025-07-21 03:33:45,119 - WARNING - app_gui - RECHAZADO 'Bowl de Tofu Salteado': Requiere técnicas no disponibles {'Hervido'}.
-2025-07-21 03:33:45,119 - INFO - app_gui - ACEPTADO 'Club Sándwich': Cumple todas las restricciones.
-2025-07-21 03:33:45,126 - INFO - app_gui - ACEPTADO 'Lasaña Clásica': Cumple todas las restricciones.
-2025-07-21 03:33:45,126 - INFO - app_gui - ACEPTADO 'Huevos Rancheros': Cumple todas las restricciones.
-2025-07-21 03:33:45,126 - INFO - app_gui - ACEPTADO 'Papas a la Francesa': Cumple todas las restricciones.
-2025-07-21 03:33:45,126 - INFO - app_gui - ACEPTADO 'Costillas de Cerdo BBQ': Cumple todas las restricciones.
-2025-07-21 03:33:45,126 - INFO - app_gui - ACEPTADO 'Enchiladas Suizas': Cumple todas las restricciones.
-2025-07-21 03:33:45,126 - INFO - app_gui - ACEPTADO 'Pastel de Fresas con Crema': Cumple todas las restricciones.
-2025-07-21 03:33:45,128 - INFO - app_gui - Filtrado finalizado. 9 platos cumplen las restricciones.
-2025-07-21 03:33:45,128 - INFO - app_gui - Iniciando algoritmo genético...
-2025-07-21 03:33:45,537 - INFO - app_gui - Algoritmo finalizado. Se encontraron 3 menús únicos para mostrar.
-2025-07-21 03:34:06,949 - INFO - app_gui - --- INICIANDO NUEVA OPTIMIZACIÓN ---
-2025-07-21 03:34:06,949 - INFO - app_gui - Parámetros: Platos=8, Costo Máx=150.0, Margen=40.0%, Temporada=Todo el año
-2025-07-21 03:34:06,949 - INFO - app_gui - Técnicas disponibles: {'Plancha', 'Guisar', 'Emulsificar', 'Reducción', 'Salteado'}
-2025-07-21 03:34:06,957 - INFO - app_gui - Iniciando filtrado de 15 platos totales...
-2025-07-21 03:34:06,957 - WARNING - app_gui - RECHAZADO 'Pechuga a la Plancha con Arroz': Requiere técnicas no disponibles {'Hervido'}.
-2025-07-21 03:34:06,962 - WARNING - app_gui - RECHAZADO 'Tacos de Arrachera': Requiere técnicas no disponibles {'Marinar'}.
-2025-07-21 03:34:06,962 - WARNING - app_gui - RECHAZADO 'Salmón Invernal con Quinoa': Requiere técnicas no disponibles {'Horneado', 'Hervido'}.
-2025-07-21 03:34:06,963 - WARNING - app_gui - RECHAZADO 'Spaghetti a la Bolognesa': Requiere técnicas no disponibles {'Hervido'}.
-2025-07-21 03:34:06,963 - INFO - app_gui - ACEPTADO 'Ensalada César con Pollo': Cumple todas las restricciones.
-2025-07-21 03:34:06,963 - WARNING - app_gui - RECHAZADO 'Sopa de Tortilla': Requiere técnicas no disponibles {'Freír', 'Hervido'}.
-2025-07-21 03:34:06,963 - INFO - app_gui - ACEPTADO 'Risotto de Champiñones': Cumple todas las restricciones.
-2025-07-21 03:34:06,963 - WARNING - app_gui - RECHAZADO 'Bowl de Tofu Salteado': Requiere técnicas no disponibles {'Hervido'}.
-2025-07-21 03:34:06,963 - INFO - app_gui - ACEPTADO 'Club Sándwich': Cumple todas las restricciones.
-2025-07-21 03:34:06,963 - INFO - app_gui - ACEPTADO 'Lasaña Clásica': Cumple todas las restricciones.
-2025-07-21 03:34:06,963 - INFO - app_gui - ACEPTADO 'Huevos Rancheros': Cumple todas las restricciones.
-2025-07-21 03:34:06,963 - INFO - app_gui - ACEPTADO 'Papas a la Francesa': Cumple todas las restricciones.
-2025-07-21 03:34:06,963 - INFO - app_gui - ACEPTADO 'Costillas de Cerdo BBQ': Cumple todas las restricciones.
-2025-07-21 03:34:06,966 - INFO - app_gui - ACEPTADO 'Enchiladas Suizas': Cumple todas las restricciones.
-2025-07-21 03:34:06,966 - INFO - app_gui - ACEPTADO 'Pastel de Fresas con Crema': Cumple todas las restricciones.
-2025-07-21 03:34:06,966 - INFO - app_gui - Filtrado finalizado. 9 platos cumplen las restricciones.
-2025-07-21 03:34:06,966 - INFO - app_gui - Iniciando algoritmo genético...
-2025-07-21 03:34:07,441 - INFO - app_gui - Algoritmo finalizado. Se encontraron 3 menús únicos para mostrar.
+2025-07-21 10:48:46,740 - INFO - database_manager - Intentando conectar a la base de datos 'menu_optimizer_db' en host 'localhost'...
+2025-07-21 10:48:46,817 - INFO - database_manager - Conexión a la base de datos exitosa.
+2025-07-21 10:48:46,843 - INFO - database_manager - Carga completa. Se cargaron 32 ingredientes y 15 platos.
+2025-07-21 10:49:23,002 - INFO - app_gui - --- INICIANDO NUEVA OPTIMIZACIÓN ---
+2025-07-21 10:49:23,017 - INFO - app_gui - Parámetros: Platos=8, Costo Máx=150.0, Margen=50.0%, Temporada=Todo el año
+2025-07-21 10:49:23,017 - INFO - app_gui - Técnicas disponibles: {'Guisar', 'Freír', 'Hervido', 'Marinar', 'Horneado', 'Salteado', 'Amasar', 'Brasear', 'Plancha', 'Reducción', 'Emulsificar'}
+2025-07-21 10:49:23,037 - INFO - app_gui - Iniciando filtrado de 15 platos totales...
+2025-07-21 10:49:23,041 - INFO - app_gui - ACEPTADO 'Pechuga a la Plancha con Arroz': Cumple todas las restricciones.
+2025-07-21 10:49:23,041 - INFO - app_gui - ACEPTADO 'Tacos de Arrachera': Cumple todas las restricciones.
+2025-07-21 10:49:23,042 - INFO - app_gui - ACEPTADO 'Salmón Invernal con Quinoa': Cumple todas las restricciones.
+2025-07-21 10:49:23,042 - INFO - app_gui - ACEPTADO 'Spaghetti a la Bolognesa': Cumple todas las restricciones.
+2025-07-21 10:49:23,042 - INFO - app_gui - ACEPTADO 'Ensalada César con Pollo': Cumple todas las restricciones.
+2025-07-21 10:49:23,042 - INFO - app_gui - ACEPTADO 'Sopa de Tortilla': Cumple todas las restricciones.
+2025-07-21 10:49:23,043 - INFO - app_gui - ACEPTADO 'Risotto de Champiñones': Cumple todas las restricciones.
+2025-07-21 10:49:23,043 - INFO - app_gui - ACEPTADO 'Bowl de Tofu Salteado': Cumple todas las restricciones.
+2025-07-21 10:49:23,043 - INFO - app_gui - ACEPTADO 'Club Sándwich': Cumple todas las restricciones.
+2025-07-21 10:49:23,046 - INFO - app_gui - ACEPTADO 'Lasaña Clásica': Cumple todas las restricciones.
+2025-07-21 10:49:23,046 - INFO - app_gui - ACEPTADO 'Huevos Rancheros': Cumple todas las restricciones.
+2025-07-21 10:49:23,046 - INFO - app_gui - ACEPTADO 'Papas a la Francesa': Cumple todas las restricciones.
+2025-07-21 10:49:23,047 - INFO - app_gui - ACEPTADO 'Costillas de Cerdo BBQ': Cumple todas las restricciones.
+2025-07-21 10:49:23,048 - INFO - app_gui - ACEPTADO 'Enchiladas Suizas': Cumple todas las restricciones.
+2025-07-21 10:49:23,048 - INFO - app_gui - ACEPTADO 'Pastel de Fresas con Crema': Cumple todas las restricciones.
+2025-07-21 10:49:23,048 - INFO - app_gui - Filtrado finalizado. 15 platos cumplen las restricciones.
+2025-07-21 10:49:23,048 - INFO - app_gui - Iniciando algoritmo genético...
+2025-07-21 10:49:23,550 - INFO - app_gui - Algoritmo finalizado. Se encontraron 3 menús únicos para mostrar.
