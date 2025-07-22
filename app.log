@@ -1,25 +1,259 @@
-2025-07-21 10:48:46,740 - INFO - database_manager - Intentando conectar a la base de datos 'menu_optimizer_db' en host 'localhost'...
-2025-07-21 10:48:46,817 - INFO - database_manager - Conexión a la base de datos exitosa.
-2025-07-21 10:48:46,843 - INFO - database_manager - Carga completa. Se cargaron 32 ingredientes y 15 platos.
-2025-07-21 10:49:23,002 - INFO - app_gui - --- INICIANDO NUEVA OPTIMIZACIÓN ---
-2025-07-21 10:49:23,017 - INFO - app_gui - Parámetros: Platos=8, Costo Máx=150.0, Margen=50.0%, Temporada=Todo el año
-2025-07-21 10:49:23,017 - INFO - app_gui - Técnicas disponibles: {'Guisar', 'Freír', 'Hervido', 'Marinar', 'Horneado', 'Salteado', 'Amasar', 'Brasear', 'Plancha', 'Reducción', 'Emulsificar'}
-2025-07-21 10:49:23,037 - INFO - app_gui - Iniciando filtrado de 15 platos totales...
-2025-07-21 10:49:23,041 - INFO - app_gui - ACEPTADO 'Pechuga a la Plancha con Arroz': Cumple todas las restricciones.
-2025-07-21 10:49:23,041 - INFO - app_gui - ACEPTADO 'Tacos de Arrachera': Cumple todas las restricciones.
-2025-07-21 10:49:23,042 - INFO - app_gui - ACEPTADO 'Salmón Invernal con Quinoa': Cumple todas las restricciones.
-2025-07-21 10:49:23,042 - INFO - app_gui - ACEPTADO 'Spaghetti a la Bolognesa': Cumple todas las restricciones.
-2025-07-21 10:49:23,042 - INFO - app_gui - ACEPTADO 'Ensalada César con Pollo': Cumple todas las restricciones.
-2025-07-21 10:49:23,042 - INFO - app_gui - ACEPTADO 'Sopa de Tortilla': Cumple todas las restricciones.
-2025-07-21 10:49:23,043 - INFO - app_gui - ACEPTADO 'Risotto de Champiñones': Cumple todas las restricciones.
-2025-07-21 10:49:23,043 - INFO - app_gui - ACEPTADO 'Bowl de Tofu Salteado': Cumple todas las restricciones.
-2025-07-21 10:49:23,043 - INFO - app_gui - ACEPTADO 'Club Sándwich': Cumple todas las restricciones.
-2025-07-21 10:49:23,046 - INFO - app_gui - ACEPTADO 'Lasaña Clásica': Cumple todas las restricciones.
-2025-07-21 10:49:23,046 - INFO - app_gui - ACEPTADO 'Huevos Rancheros': Cumple todas las restricciones.
-2025-07-21 10:49:23,046 - INFO - app_gui - ACEPTADO 'Papas a la Francesa': Cumple todas las restricciones.
-2025-07-21 10:49:23,047 - INFO - app_gui - ACEPTADO 'Costillas de Cerdo BBQ': Cumple todas las restricciones.
-2025-07-21 10:49:23,048 - INFO - app_gui - ACEPTADO 'Enchiladas Suizas': Cumple todas las restricciones.
-2025-07-21 10:49:23,048 - INFO - app_gui - ACEPTADO 'Pastel de Fresas con Crema': Cumple todas las restricciones.
-2025-07-21 10:49:23,048 - INFO - app_gui - Filtrado finalizado. 15 platos cumplen las restricciones.
-2025-07-21 10:49:23,048 - INFO - app_gui - Iniciando algoritmo genético...
-2025-07-21 10:49:23,550 - INFO - app_gui - Algoritmo finalizado. Se encontraron 3 menús únicos para mostrar.
+2025-07-22 15:20:46,960 - INFO - database_manager - Intentando conectar a la base de datos 'menu_optimizer_db' en host 'localhost'...
+2025-07-22 15:20:47,014 - INFO - database_manager - Conexión a la base de datos exitosa.
+2025-07-22 15:20:47,088 - INFO - database_manager - Carga completa. Se cargaron 300 ingredientes y 100 platos.
+2025-07-22 15:21:22,190 - INFO - app_gui - --- INICIANDO NUEVA OPTIMIZACIÓN ---
+2025-07-22 15:21:22,190 - INFO - app_gui - Parámetros: Platos=6, Costo Máx=120.0, Margen=45.0%, Temporada=Todo el año
+2025-07-22 15:21:22,190 - INFO - app_gui - Tipo de establecimiento: casual
+2025-07-22 15:21:22,190 - INFO - app_gui - Objetivos automáticos: {'ganancia': 0.6, 'tiempo': 0.8, 'popularidad': 0.9, 'desperdicio': 0.5}
+2025-07-22 15:21:22,190 - INFO - app_gui - Técnicas disponibles: {'Liofilización', 'Reducción', 'Wood Fired', 'Amasar', 'Kimchi Fermentation', 'Nitrógeno Líquido', 'Marinar', 'Freír', 'Guisar', 'Caramelizado', 'Hervido', 'Infusionado', 'Ahumar', 'Wok Hei', 'Pochado', 'Steam Injection', 'Plancha', 'Emulsificar', 'Nigirizushi', 'Rotisserie', 'Ultrasonidos', 'Brasear', 'Tempura Tradicional', 'Texturización', 'Cold Smoking', 'Sous Vide', 'Vapor', 'Horneado', 'Pressure Cooking', 'Salteado'}
+2025-07-22 15:21:22,190 - INFO - app_gui - Estaciones disponibles: {'Ahumador', 'Estofados y Salsas', 'Ensaladas y Fríos', 'Ensamblaje y Emplatado', 'Repostería y Postres', 'Horno y Rostizado', 'Pasta y Granos', 'Estación de Sushis', 'Plancha y Parrilla'}
+2025-07-22 15:21:22,201 - INFO - app_gui - Iniciando filtrado de 100 platos totales...
+2025-07-22 15:21:22,201 - INFO - app_gui - Costo calculado para Pechuga a la Plancha con Arroz Integral: $39.62
+2025-07-22 15:21:22,201 - WARNING - app_gui - RECHAZADO 'Pechuga a la Plancha con Arroz Integral': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,201 - INFO - app_gui - Costo calculado para Tacos de Arrachera con Guacamole: $68.09
+2025-07-22 15:21:22,201 - WARNING - app_gui - RECHAZADO 'Tacos de Arrachera con Guacamole': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,201 - INFO - app_gui - Costo calculado para Salmón Noruego con Quinoa y Espinacas: $95.59
+2025-07-22 15:21:22,201 - WARNING - app_gui - RECHAZADO 'Salmón Noruego con Quinoa y Espinacas': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,204 - INFO - app_gui - Costo calculado para Spaghetti a la Boloñesa Casera: $39.44
+2025-07-22 15:21:22,204 - INFO - app_gui - ACEPTADO 'Spaghetti a la Boloñesa Casera': Costo real=$39.44, Tiempo=60.0min
+2025-07-22 15:21:22,204 - INFO - app_gui - Costo calculado para Ensalada César con Pollo Orgánico: $41.55
+2025-07-22 15:21:22,204 - INFO - app_gui - ACEPTADO 'Ensalada César con Pollo Orgánico': Costo real=$41.55, Tiempo=38.0min
+2025-07-22 15:21:22,205 - INFO - app_gui - Costo calculado para Risotto de Champiñones Portobello: $46.80
+2025-07-22 15:21:22,205 - WARNING - app_gui - RECHAZADO 'Risotto de Champiñones Portobello': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,205 - INFO - app_gui - Costo calculado para Bowl Asiático de Tofu Teriyaki: $31.40
+2025-07-22 15:21:22,205 - WARNING - app_gui - RECHAZADO 'Bowl Asiático de Tofu Teriyaki': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,205 - INFO - app_gui - Costo calculado para Lasaña de Verduras con Ricotta: $90.34
+2025-07-22 15:21:22,205 - INFO - app_gui - ACEPTADO 'Lasaña de Verduras con Ricotta': Costo real=$90.34, Tiempo=105.0min
+2025-07-22 15:21:22,205 - INFO - app_gui - Costo calculado para Cordero Braseado con Couscous: $88.33
+2025-07-22 15:21:22,205 - INFO - app_gui - ACEPTADO 'Cordero Braseado con Couscous': Costo real=$88.33, Tiempo=133.0min
+2025-07-22 15:21:22,207 - INFO - app_gui - Costo calculado para Pescado a la Veracruzana: $88.34
+2025-07-22 15:21:22,207 - WARNING - app_gui - RECHAZADO 'Pescado a la Veracruzana': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,207 - INFO - app_gui - Costo calculado para Curry Rojo de Vegetales: $20.54
+2025-07-22 15:21:22,207 - WARNING - app_gui - RECHAZADO 'Curry Rojo de Vegetales': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,209 - INFO - app_gui - Costo calculado para Paella Valenciana de Mariscos: $101.60
+2025-07-22 15:21:22,209 - WARNING - app_gui - RECHAZADO 'Paella Valenciana de Mariscos': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,209 - INFO - app_gui - Costo calculado para Hamburguesa Gourmet con Papas: $72.86
+2025-07-22 15:21:22,209 - WARNING - app_gui - RECHAZADO 'Hamburguesa Gourmet con Papas': Requiere estaciones no disponibles {'Mise en Place', 'Fritura'}.
+2025-07-22 15:21:22,209 - INFO - app_gui - Costo calculado para Pulpo a la Gallega: $84.66
+2025-07-22 15:21:22,209 - WARNING - app_gui - RECHAZADO 'Pulpo a la Gallega': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,209 - INFO - app_gui - Costo calculado para Enchiladas Suizas de Pollo: $51.99
+2025-07-22 15:21:22,209 - INFO - app_gui - ACEPTADO 'Enchiladas Suizas de Pollo': Costo real=$51.99, Tiempo=83.0min
+2025-07-22 15:21:22,209 - INFO - app_gui - Costo calculado para Sopa de Tortilla Tradicional: $28.34
+2025-07-22 15:21:22,209 - WARNING - app_gui - RECHAZADO 'Sopa de Tortilla Tradicional': Requiere estaciones no disponibles {'Fritura'}.
+2025-07-22 15:21:22,209 - INFO - app_gui - Costo calculado para Crema de Champiñones: $41.19
+2025-07-22 15:21:22,209 - WARNING - app_gui - RECHAZADO 'Crema de Champiñones': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,209 - INFO - app_gui - Costo calculado para Bruschetta de Tomate y Albahaca: $18.64
+2025-07-22 15:21:22,209 - WARNING - app_gui - RECHAZADO 'Bruschetta de Tomate y Albahaca': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,209 - INFO - app_gui - Costo calculado para Gazpacho Andaluz: $27.20
+2025-07-22 15:21:22,214 - WARNING - app_gui - RECHAZADO 'Gazpacho Andaluz': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,214 - INFO - app_gui - Costo calculado para Ceviche de Robalo: $81.24
+2025-07-22 15:21:22,214 - WARNING - app_gui - RECHAZADO 'Ceviche de Robalo': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,216 - INFO - app_gui - Costo calculado para Papas a la Francesa Artesanales: $16.74
+2025-07-22 15:21:22,216 - WARNING - app_gui - RECHAZADO 'Papas a la Francesa Artesanales': Requiere estaciones no disponibles {'Mise en Place', 'Fritura'}.
+2025-07-22 15:21:22,216 - INFO - app_gui - Costo calculado para Arroz Pilaf con Almendras: $10.54
+2025-07-22 15:21:22,216 - INFO - app_gui - ACEPTADO 'Arroz Pilaf con Almendras': Costo real=$10.54, Tiempo=34.0min
+2025-07-22 15:21:22,216 - INFO - app_gui - Costo calculado para Verduras Salteadas al Wok: $10.90
+2025-07-22 15:21:22,216 - WARNING - app_gui - RECHAZADO 'Verduras Salteadas al Wok': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,216 - INFO - app_gui - Costo calculado para Puré de Papa con Mantequilla: $22.05
+2025-07-22 15:21:22,216 - INFO - app_gui - ACEPTADO 'Puré de Papa con Mantequilla': Costo real=$22.05, Tiempo=30.0min
+2025-07-22 15:21:22,216 - INFO - app_gui - Costo calculado para Ensalada Mixta de Temporada: $11.09
+2025-07-22 15:21:22,216 - INFO - app_gui - ACEPTADO 'Ensalada Mixta de Temporada': Costo real=$11.09, Tiempo=21.0min
+2025-07-22 15:21:22,216 - INFO - app_gui - Costo calculado para Tiramisú Clásico: $47.90
+2025-07-22 15:21:22,216 - INFO - app_gui - ACEPTADO 'Tiramisú Clásico': Costo real=$47.90, Tiempo=293.0min
+2025-07-22 15:21:22,216 - INFO - app_gui - Costo calculado para Flan Napolitano: $23.55
+2025-07-22 15:21:22,216 - INFO - app_gui - ACEPTADO 'Flan Napolitano': Costo real=$23.55, Tiempo=193.0min
+2025-07-22 15:21:22,220 - INFO - app_gui - Costo calculado para Mousse de Chocolate: $18.14
+2025-07-22 15:21:22,221 - INFO - app_gui - ACEPTADO 'Mousse de Chocolate': Costo real=$18.14, Tiempo=213.0min
+2025-07-22 15:21:22,221 - INFO - app_gui - Costo calculado para Ensalada de Frutas Tropicales: $14.28
+2025-07-22 15:21:22,221 - INFO - app_gui - ACEPTADO 'Ensalada de Frutas Tropicales': Costo real=$14.28, Tiempo=60.0min
+2025-07-22 15:21:22,221 - INFO - app_gui - Costo calculado para Cheesecake de Fresas: $46.00
+2025-07-22 15:21:22,222 - INFO - app_gui - ACEPTADO 'Cheesecake de Fresas': Costo real=$46.00, Tiempo=332.0min
+2025-07-22 15:21:22,222 - INFO - app_gui - Costo calculado para Paella de Mariscos Premium: $152.60
+2025-07-22 15:21:22,222 - WARNING - app_gui - RECHAZADO 'Paella de Mariscos Premium': Costo (152.60) > Máximo (120.0).
+2025-07-22 15:21:22,222 - INFO - app_gui - Costo calculado para Ceviche Mixto Tropical: $123.67
+2025-07-22 15:21:22,222 - WARNING - app_gui - RECHAZADO 'Ceviche Mixto Tropical': Costo (123.67) > Máximo (120.0).
+2025-07-22 15:21:22,222 - INFO - app_gui - Costo calculado para Langostinos al Ajillo: $128.42
+2025-07-22 15:21:22,222 - WARNING - app_gui - RECHAZADO 'Langostinos al Ajillo': Costo (128.42) > Máximo (120.0).
+2025-07-22 15:21:22,222 - INFO - app_gui - Costo calculado para Sopa de Mariscos: $73.35
+2025-07-22 15:21:22,222 - WARNING - app_gui - RECHAZADO 'Sopa de Mariscos': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,222 - INFO - app_gui - Costo calculado para Ostiones Rockefeller: $108.30
+2025-07-22 15:21:22,222 - WARNING - app_gui - RECHAZADO 'Ostiones Rockefeller': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,222 - INFO - app_gui - Costo calculado para Codorniz Rellena con Foie Gras: $372.55
+2025-07-22 15:21:22,222 - WARNING - app_gui - RECHAZADO 'Codorniz Rellena con Foie Gras': Costo (372.55) > Máximo (120.0).
+2025-07-22 15:21:22,222 - INFO - app_gui - Costo calculado para Pato Confitado con Naranja: $122.90
+2025-07-22 15:21:22,222 - WARNING - app_gui - RECHAZADO 'Pato Confitado con Naranja': Costo (122.90) > Máximo (120.0).
+2025-07-22 15:21:22,222 - INFO - app_gui - Costo calculado para Costillas BBQ Estilo Texas: $125.30
+2025-07-22 15:21:22,222 - WARNING - app_gui - RECHAZADO 'Costillas BBQ Estilo Texas': Costo (125.30) > Máximo (120.0).
+2025-07-22 15:21:22,222 - INFO - app_gui - Costo calculado para Conejo en Salsa de Mostaza: $142.74
+2025-07-22 15:21:22,222 - WARNING - app_gui - RECHAZADO 'Conejo en Salsa de Mostaza': Costo (142.74) > Máximo (120.0).
+2025-07-22 15:21:22,222 - INFO - app_gui - Costo calculado para Ternera Osso Buco: $240.04
+2025-07-22 15:21:22,222 - WARNING - app_gui - RECHAZADO 'Ternera Osso Buco': Costo (240.04) > Máximo (120.0).
+2025-07-22 15:21:22,227 - INFO - app_gui - Costo calculado para Alcachofas Rellenas Mediterráneas: $67.30
+2025-07-22 15:21:22,227 - WARNING - app_gui - RECHAZADO 'Alcachofas Rellenas Mediterráneas': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,228 - INFO - app_gui - Costo calculado para Risotto de Trufa Negra: $243.40
+2025-07-22 15:21:22,228 - WARNING - app_gui - RECHAZADO 'Risotto de Trufa Negra': Costo (243.40) > Máximo (120.0).
+2025-07-22 15:21:22,228 - INFO - app_gui - Costo calculado para Ensalada de Espárragos y Setas: $103.50
+2025-07-22 15:21:22,228 - WARNING - app_gui - RECHAZADO 'Ensalada de Espárragos y Setas': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,228 - INFO - app_gui - Costo calculado para Tempura de Verduras Asiáticas: $126.65
+2025-07-22 15:21:22,228 - WARNING - app_gui - RECHAZADO 'Tempura de Verduras Asiáticas': Costo (126.65) > Máximo (120.0).
+2025-07-22 15:21:22,228 - INFO - app_gui - Costo calculado para Ratatouille Provenzal: $28.20
+2025-07-22 15:21:22,228 - WARNING - app_gui - RECHAZADO 'Ratatouille Provenzal': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,228 - INFO - app_gui - Costo calculado para Soufflé de Chocolate con Frambuesa: $33.00
+2025-07-22 15:21:22,230 - INFO - app_gui - ACEPTADO 'Soufflé de Chocolate con Frambuesa': Costo real=$33.00, Tiempo=66.0min
+2025-07-22 15:21:22,230 - INFO - app_gui - Costo calculado para Crème Brûlée de Vainilla: $47.60
+2025-07-22 15:21:22,230 - INFO - app_gui - ACEPTADO 'Crème Brûlée de Vainilla': Costo real=$47.60, Tiempo=259.0min
+2025-07-22 15:21:22,230 - INFO - app_gui - Costo calculado para Tarta de Frutas Tropicales: $37.20
+2025-07-22 15:21:22,230 - WARNING - app_gui - RECHAZADO 'Tarta de Frutas Tropicales': Requiere técnicas no disponibles {'Glaseado'}.
+2025-07-22 15:21:22,230 - INFO - app_gui - Costo calculado para Helado de Pistache con Miel: $139.30
+2025-07-22 15:21:22,230 - WARNING - app_gui - RECHAZADO 'Helado de Pistache con Miel': Costo (139.30) > Máximo (120.0).
+2025-07-22 15:21:22,230 - INFO - app_gui - Costo calculado para Macarons de Chocolate y Café: $63.30
+2025-07-22 15:21:22,230 - INFO - app_gui - ACEPTADO 'Macarons de Chocolate y Café': Costo real=$63.30, Tiempo=1560.0min
+2025-07-22 15:21:22,230 - INFO - app_gui - Costo calculado para Sushi Omakase Premium: $630.31
+2025-07-22 15:21:22,230 - WARNING - app_gui - RECHAZADO 'Sushi Omakase Premium': Costo (630.31) > Máximo (120.0).
+2025-07-22 15:21:22,230 - INFO - app_gui - Costo calculado para Ramen Tonkotsu Auténtico: $85.40
+2025-07-22 15:21:22,230 - WARNING - app_gui - RECHAZADO 'Ramen Tonkotsu Auténtico': Requiere estaciones no disponibles {'Mise en Place'}.
+2025-07-22 15:21:22,230 - INFO - app_gui - Costo calculado para Tempura de Mariscos Premium: $389.55
+2025-07-22 15:21:22,230 - WARNING - app_gui - RECHAZADO 'Tempura de Mariscos Premium': Costo (389.55) > Máximo (120.0).
+2025-07-22 15:21:22,230 - WARNING - app_gui - Plato Kaiseki Tradicional no tiene receta
+2025-07-22 15:21:22,230 - INFO - app_gui - Tiempo estimado por complejidad para Kaiseki Tradicional: 72 min (complejidad: 9)
+2025-07-22 15:21:22,230 - INFO - app_gui - ACEPTADO 'Kaiseki Tradicional': Costo real=$10.00, Tiempo=72min
+2025-07-22 15:21:22,230 - WARNING - app_gui - Plato Yakitori de Autor no tiene receta
+2025-07-22 15:21:22,230 - INFO - app_gui - Tiempo estimado por complejidad para Yakitori de Autor: 32 min (complejidad: 4)
+2025-07-22 15:21:22,230 - INFO - app_gui - ACEPTADO 'Yakitori de Autor': Costo real=$10.00, Tiempo=32min
+2025-07-22 15:21:22,230 - WARNING - app_gui - Plato Chirashi de Pescados del Golfo no tiene receta
+2025-07-22 15:21:22,230 - INFO - app_gui - Tiempo estimado por complejidad para Chirashi de Pescados del Golfo: 48 min (complejidad: 6)
+2025-07-22 15:21:22,236 - INFO - app_gui - ACEPTADO 'Chirashi de Pescados del Golfo': Costo real=$10.00, Tiempo=48min
+2025-07-22 15:21:22,236 - INFO - app_gui - Costo calculado para Wagyu Teppanyaki: $2404.44
+2025-07-22 15:21:22,236 - WARNING - app_gui - RECHAZADO 'Wagyu Teppanyaki': Costo (2404.44) > Máximo (120.0).
+2025-07-22 15:21:22,236 - WARNING - app_gui - Plato Donburi de Temporada no tiene receta
+2025-07-22 15:21:22,237 - INFO - app_gui - Tiempo estimado por complejidad para Donburi de Temporada: 24 min (complejidad: 3)
+2025-07-22 15:21:22,237 - INFO - app_gui - ACEPTADO 'Donburi de Temporada': Costo real=$10.00, Tiempo=24min
+2025-07-22 15:21:22,237 - WARNING - app_gui - Plato Miso Soup de Algas Premium no tiene receta
+2025-07-22 15:21:22,237 - INFO - app_gui - Tiempo estimado por complejidad para Miso Soup de Algas Premium: 16 min (complejidad: 2)
+2025-07-22 15:21:22,237 - INFO - app_gui - ACEPTADO 'Miso Soup de Algas Premium': Costo real=$10.00, Tiempo=16min
+2025-07-22 15:21:22,237 - WARNING - app_gui - Plato Matcha Dessert Experience no tiene receta
+2025-07-22 15:21:22,238 - INFO - app_gui - Tiempo estimado por complejidad para Matcha Dessert Experience: 48 min (complejidad: 6)
+2025-07-22 15:21:22,238 - INFO - app_gui - ACEPTADO 'Matcha Dessert Experience': Costo real=$10.00, Tiempo=48min
+2025-07-22 15:21:22,239 - INFO - app_gui - Costo calculado para Curry de Cordero Kashmiri: $156.20
+2025-07-22 15:21:22,239 - WARNING - app_gui - RECHAZADO 'Curry de Cordero Kashmiri': Costo (156.20) > Máximo (120.0).
+2025-07-22 15:21:22,239 - INFO - app_gui - Costo calculado para Biryani de Mariscos: $449.00
+2025-07-22 15:21:22,239 - WARNING - app_gui - RECHAZADO 'Biryani de Mariscos': Costo (449.00) > Máximo (120.0).
+2025-07-22 15:21:22,239 - WARNING - app_gui - Plato Tandoori Mixed Grill no tiene receta
+2025-07-22 15:21:22,239 - INFO - app_gui - Tiempo estimado por complejidad para Tandoori Mixed Grill: 40 min (complejidad: 5)
+2025-07-22 15:21:22,239 - INFO - app_gui - ACEPTADO 'Tandoori Mixed Grill': Costo real=$10.00, Tiempo=40min
+2025-07-22 15:21:22,239 - WARNING - app_gui - Plato Dal Maharaja no tiene receta
+2025-07-22 15:21:22,239 - INFO - app_gui - Tiempo estimado por complejidad para Dal Maharaja: 24 min (complejidad: 3)
+2025-07-22 15:21:22,239 - INFO - app_gui - ACEPTADO 'Dal Maharaja': Costo real=$10.00, Tiempo=24min
+2025-07-22 15:21:22,239 - WARNING - app_gui - Plato Paneer Makhani no tiene receta
+2025-07-22 15:21:22,239 - INFO - app_gui - Tiempo estimado por complejidad para Paneer Makhani: 32 min (complejidad: 4)
+2025-07-22 15:21:22,239 - INFO - app_gui - ACEPTADO 'Paneer Makhani': Costo real=$10.00, Tiempo=32min
+2025-07-22 15:21:22,239 - WARNING - app_gui - Plato Samosas de Verduras no tiene receta
+2025-07-22 15:21:22,239 - INFO - app_gui - Tiempo estimado por complejidad para Samosas de Verduras: 32 min (complejidad: 4)
+2025-07-22 15:21:22,239 - INFO - app_gui - ACEPTADO 'Samosas de Verduras': Costo real=$10.00, Tiempo=32min
+2025-07-22 15:21:22,242 - WARNING - app_gui - Plato Lassi de Mango y Cardamomo no tiene receta
+2025-07-22 15:21:22,242 - INFO - app_gui - Tiempo estimado por complejidad para Lassi de Mango y Cardamomo: 16 min (complejidad: 2)
+2025-07-22 15:21:22,242 - INFO - app_gui - ACEPTADO 'Lassi de Mango y Cardamomo': Costo real=$10.00, Tiempo=16min
+2025-07-22 15:21:22,242 - WARNING - app_gui - Plato Gulab Jamun Premium no tiene receta
+2025-07-22 15:21:22,242 - INFO - app_gui - Tiempo estimado por complejidad para Gulab Jamun Premium: 40 min (complejidad: 5)
+2025-07-22 15:21:22,242 - INFO - app_gui - ACEPTADO 'Gulab Jamun Premium': Costo real=$10.00, Tiempo=40min
+2025-07-22 15:21:22,242 - WARNING - app_gui - Plato Masala Chai de Especias no tiene receta
+2025-07-22 15:21:22,242 - INFO - app_gui - Tiempo estimado por complejidad para Masala Chai de Especias: 16 min (complejidad: 2)
+2025-07-22 15:21:22,245 - INFO - app_gui - ACEPTADO 'Masala Chai de Especias': Costo real=$10.00, Tiempo=16min
+2025-07-22 15:21:22,245 - WARNING - app_gui - Plato Naan de Trufa y Queso no tiene receta
+2025-07-22 15:21:22,245 - INFO - app_gui - Tiempo estimado por complejidad para Naan de Trufa y Queso: 32 min (complejidad: 4)
+2025-07-22 15:21:22,245 - INFO - app_gui - ACEPTADO 'Naan de Trufa y Queso': Costo real=$10.00, Tiempo=32min
+2025-07-22 15:21:22,245 - INFO - app_gui - Costo calculado para Mezze Libanés Completo: $72.70
+2025-07-22 15:21:22,245 - INFO - app_gui - ACEPTADO 'Mezze Libanés Completo': Costo real=$72.70, Tiempo=80.0min
+2025-07-22 15:21:22,245 - WARNING - app_gui - Plato Cordero al Shawarma no tiene receta
+2025-07-22 15:21:22,245 - INFO - app_gui - Tiempo estimado por complejidad para Cordero al Shawarma: 32 min (complejidad: 4)
+2025-07-22 15:21:22,245 - INFO - app_gui - ACEPTADO 'Cordero al Shawarma': Costo real=$10.00, Tiempo=32min
+2025-07-22 15:21:22,245 - WARNING - app_gui - Plato Hummus de Garbanzos Negros no tiene receta
+2025-07-22 15:21:22,245 - INFO - app_gui - Tiempo estimado por complejidad para Hummus de Garbanzos Negros: 16 min (complejidad: 2)
+2025-07-22 15:21:22,245 - INFO - app_gui - ACEPTADO 'Hummus de Garbanzos Negros': Costo real=$10.00, Tiempo=16min
+2025-07-22 15:21:22,245 - WARNING - app_gui - Plato Falafel de Habas Verdes no tiene receta
+2025-07-22 15:21:22,245 - INFO - app_gui - Tiempo estimado por complejidad para Falafel de Habas Verdes: 24 min (complejidad: 3)
+2025-07-22 15:21:22,245 - INFO - app_gui - ACEPTADO 'Falafel de Habas Verdes': Costo real=$10.00, Tiempo=24min
+2025-07-22 15:21:22,245 - INFO - app_gui - Costo calculado para Baklava de Pistache: $164.50
+2025-07-22 15:21:22,245 - INFO - app_gui - Tiempo estimado por complejidad para Baklava de Pistache: 48 min (complejidad: 6)
+2025-07-22 15:21:22,245 - WARNING - app_gui - RECHAZADO 'Baklava de Pistache': Costo (164.50) > Máximo (120.0).
+2025-07-22 15:21:22,245 - WARNING - app_gui - Plato Tajine de Cordero con Ciruelas no tiene receta
+2025-07-22 15:21:22,245 - INFO - app_gui - Tiempo estimado por complejidad para Tajine de Cordero con Ciruelas: 48 min (complejidad: 6)
+2025-07-22 15:21:22,245 - INFO - app_gui - ACEPTADO 'Tajine de Cordero con Ciruelas': Costo real=$10.00, Tiempo=48min
+2025-07-22 15:21:22,245 - WARNING - app_gui - Plato Cuscús Real Marroquí no tiene receta
+2025-07-22 15:21:22,245 - INFO - app_gui - Tiempo estimado por complejidad para Cuscús Real Marroquí: 40 min (complejidad: 5)
+2025-07-22 15:21:22,245 - INFO - app_gui - ACEPTADO 'Cuscús Real Marroquí': Costo real=$10.00, Tiempo=40min
+2025-07-22 15:21:22,245 - WARNING - app_gui - Plato Shakshuka de Tomates Heirloom no tiene receta
+2025-07-22 15:21:22,250 - INFO - app_gui - Tiempo estimado por complejidad para Shakshuka de Tomates Heirloom: 24 min (complejidad: 3)
+2025-07-22 15:21:22,250 - INFO - app_gui - ACEPTADO 'Shakshuka de Tomates Heirloom': Costo real=$10.00, Tiempo=24min
+2025-07-22 15:21:22,250 - WARNING - app_gui - Plato Muhammara de Nueces no tiene receta
+2025-07-22 15:21:22,250 - INFO - app_gui - Tiempo estimado por complejidad para Muhammara de Nueces: 24 min (complejidad: 3)
+2025-07-22 15:21:22,250 - INFO - app_gui - ACEPTADO 'Muhammara de Nueces': Costo real=$10.00, Tiempo=24min
+2025-07-22 15:21:22,250 - WARNING - app_gui - Plato Knafeh de Queso de Cabra no tiene receta
+2025-07-22 15:21:22,250 - INFO - app_gui - Tiempo estimado por complejidad para Knafeh de Queso de Cabra: 40 min (complejidad: 5)
+2025-07-22 15:21:22,250 - INFO - app_gui - ACEPTADO 'Knafeh de Queso de Cabra': Costo real=$10.00, Tiempo=40min
+2025-07-22 15:21:22,251 - INFO - app_gui - Costo calculado para Esferificación de Caviar Falso: $57.74
+2025-07-22 15:21:22,251 - WARNING - app_gui - RECHAZADO 'Esferificación de Caviar Falso': Requiere técnicas no disponibles {'Gelificación', 'Esferificación'}.
+2025-07-22 15:21:22,251 - INFO - app_gui - Costo calculado para Aire de Limón con Nitrógeno: $4.64
+2025-07-22 15:21:22,251 - WARNING - app_gui - RECHAZADO 'Aire de Limón con Nitrógeno': Requiere técnicas no disponibles {'Gelificación'}.
+2025-07-22 15:21:22,251 - WARNING - app_gui - Plato Gel Caliente de Gazpacho no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Gel Caliente de Gazpacho: 56 min (complejidad: 7)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Gel Caliente de Gazpacho': Costo real=$10.00, Tiempo=56min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Caviar de Aceite de Oliva no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Caviar de Aceite de Oliva: 48 min (complejidad: 6)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Caviar de Aceite de Oliva': Costo real=$10.00, Tiempo=48min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Nube de Chocolate no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Nube de Chocolate: 64 min (complejidad: 8)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Nube de Chocolate': Costo real=$10.00, Tiempo=64min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Cristales de Vino Tinto no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Cristales de Vino Tinto: 72 min (complejidad: 9)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Cristales de Vino Tinto': Costo real=$10.00, Tiempo=72min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Polvo Mágico de Fresas no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Polvo Mágico de Fresas: 56 min (complejidad: 7)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Polvo Mágico de Fresas': Costo real=$10.00, Tiempo=56min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Caviar de Balsámico no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Caviar de Balsámico: 48 min (complejidad: 6)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Caviar de Balsámico': Costo real=$10.00, Tiempo=48min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Tierra Comestible de Cacao no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Tierra Comestible de Cacao: 48 min (complejidad: 6)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Tierra Comestible de Cacao': Costo real=$10.00, Tiempo=48min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Humo Líquido Comestible no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Humo Líquido Comestible: 64 min (complejidad: 8)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Humo Líquido Comestible': Costo real=$10.00, Tiempo=64min
+2025-07-22 15:21:22,252 - INFO - app_gui - Costo calculado para Tacos de Escamoles con Aguacate: $236.67
+2025-07-22 15:21:22,252 - WARNING - app_gui - RECHAZADO 'Tacos de Escamoles con Aguacate': Costo (236.67) > Máximo (120.0).
+2025-07-22 15:21:22,252 - INFO - app_gui - Costo calculado para Chapulines al Ajo y Limón: $29.65
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Chapulines al Ajo y Limón: 16 min (complejidad: 2)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Chapulines al Ajo y Limón': Costo real=$29.65, Tiempo=16min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Gusanos de Maguey Tempura no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Gusanos de Maguey Tempura: 40 min (complejidad: 5)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Gusanos de Maguey Tempura': Costo real=$10.00, Tiempo=40min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Ensalada de Grillos Tostados no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Ensalada de Grillos Tostados: 24 min (complejidad: 3)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Ensalada de Grillos Tostados': Costo real=$10.00, Tiempo=24min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Harina de Grillo en Pan no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Harina de Grillo en Pan: 32 min (complejidad: 4)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Harina de Grillo en Pan': Costo real=$10.00, Tiempo=32min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Larvas de Hormiga Caramelizadas no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Larvas de Hormiga Caramelizadas: 48 min (complejidad: 6)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Larvas de Hormiga Caramelizadas': Costo real=$10.00, Tiempo=48min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Protein Bar de Insectos no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Protein Bar de Insectos: 24 min (complejidad: 3)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Protein Bar de Insectos': Costo real=$10.00, Tiempo=24min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Sopa de Grillos y Verduras no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Sopa de Grillos y Verduras: 32 min (complejidad: 4)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Sopa de Grillos y Verduras': Costo real=$10.00, Tiempo=32min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Brownies de Harina de Grillo no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Brownies de Harina de Grillo: 32 min (complejidad: 4)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Brownies de Harina de Grillo': Costo real=$10.00, Tiempo=32min
+2025-07-22 15:21:22,252 - WARNING - app_gui - Plato Cocktail de Sal de Gusano no tiene receta
+2025-07-22 15:21:22,252 - INFO - app_gui - Tiempo estimado por complejidad para Cocktail de Sal de Gusano: 16 min (complejidad: 2)
+2025-07-22 15:21:22,252 - INFO - app_gui - ACEPTADO 'Cocktail de Sal de Gusano': Costo real=$10.00, Tiempo=16min
+2025-07-22 15:21:22,252 - INFO - app_gui - Filtrado finalizado. 56 platos cumplen las restricciones.
+2025-07-22 15:21:22,252 - INFO - app_gui - Iniciando algoritmo genético...
+2025-07-22 15:21:22,577 - INFO - app_gui - Algoritmo finalizado. Se encontraron 3 menús únicos para mostrar.
+2025-07-22 15:21:22,616 - WARNING - app_gui - Plato Samosas de Verduras no tiene receta
+2025-07-22 15:21:22,616 - WARNING - app_gui - Plato Gulab Jamun Premium no tiene receta
+2025-07-22 15:21:22,616 - WARNING - app_gui - Plato Cordero al Shawarma no tiene receta
+2025-07-22 15:21:22,616 - WARNING - app_gui - Plato Yakitori de Autor no tiene receta
+2025-07-22 15:21:22,616 - WARNING - app_gui - Plato Tandoori Mixed Grill no tiene receta
+2025-07-22 15:21:22,616 - WARNING - app_gui - Plato Masala Chai de Especias no tiene receta
