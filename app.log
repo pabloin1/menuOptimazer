@@ -1,12 +1,47 @@
-2025-07-23 00:57:16,206 - INFO - main - === INICIANDO MENUOPTIMIZER v10.0 ===
-2025-07-23 00:57:16,897 - INFO - database_manager - Intentando conectar a la base de datos 'menu_optimizer_db' en host 'localhost'...
-2025-07-23 00:57:16,942 - INFO - main - Conexión a base de datos exitosa. 130 platos disponibles.
-2025-07-23 00:57:16,943 - INFO - main - Cargando catálogo de platos y técnicas culinarias...
-2025-07-23 00:57:16,944 - INFO - database_manager - Intentando conectar a la base de datos 'menu_optimizer_db' en host 'localhost'...
-2025-07-23 00:57:16,951 - INFO - database_manager - Conexión a la base de datos exitosa.
-2025-07-23 00:57:17,096 - INFO - database_manager - Carga completa. Se cargaron 300 ingredientes y 130 platos.
-2025-07-23 00:57:17,096 - INFO - main - Base de conocimiento cargada: 130 platos, 43 técnicas
-2025-07-23 00:57:17,459 - INFO - main_window - Ventana principal inicializada correctamente
-2025-07-23 00:57:17,460 - INFO - main - Aplicación iniciada exitosamente
-2025-07-23 01:01:40,156 - INFO - main - Cerrando aplicación...
-2025-07-23 01:01:41,480 - INFO - main - === FINALIZANDO MENUOPTIMIZER ===
+2025-07-23 03:09:51,854 - INFO - main - === INICIANDO MENUOPTIMIZER v10.0 ===
+2025-07-23 03:09:52,521 - INFO - database_manager - Intentando conectar a la base de datos 'menu_optimizer_db' en host 'localhost'...
+2025-07-23 03:09:52,562 - INFO - main - Conexión a base de datos exitosa. 130 platos disponibles.
+2025-07-23 03:09:52,562 - INFO - main - Cargando catálogo de platos y técnicas culinarias...
+2025-07-23 03:09:52,563 - INFO - database_manager - Intentando conectar a la base de datos 'menu_optimizer_db' en host 'localhost'...
+2025-07-23 03:09:52,571 - INFO - database_manager - Conexión a la base de datos exitosa.
+2025-07-23 03:09:52,681 - INFO - database_manager - Carga completa. Se cargaron 300 ingredientes y 130 platos.
+2025-07-23 03:09:52,682 - INFO - main - Base de conocimiento cargada: 130 platos, 43 técnicas
+2025-07-23 03:09:53,036 - INFO - main_window - Ventana principal inicializada correctamente
+2025-07-23 03:09:53,036 - INFO - main - Aplicación iniciada exitosamente
+2025-07-23 03:09:55,197 - INFO - main_window - Status: Iniciando optimización...
+2025-07-23 03:09:55,197 - INFO - main_window - === INICIANDO FILTRADO DE CATÁLOGO ===
+2025-07-23 03:09:55,199 - INFO - main_window - Catálogo inicial: 130 platos
+2025-07-23 03:09:55,201 - INFO - main_window - === RESUMEN DE FILTRADO ===
+2025-07-23 03:09:55,201 - INFO - main_window - Platos aceptados: 38
+2025-07-23 03:09:55,201 - INFO - main_window - Platos rechazados: 92
+2025-07-23 03:09:55,201 - INFO - main_window -   - tecnicas_faltantes: 58 platos
+2025-07-23 03:09:55,201 - INFO - main_window -   - estaciones_faltantes: 26 platos
+2025-07-23 03:09:55,201 - INFO - main_window -   - costo_excesivo: 8 platos
+2025-07-23 03:09:55,283 - INFO - main_window - Status: Ejecutando algoritmo genético...
+2025-07-23 03:09:55,284 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 1
+2025-07-23 03:09:55,284 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
+2025-07-23 03:09:55,286 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
+2025-07-23 03:09:55,333 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4446, Promedio=0.4113, Diversidad=0.0127
+2025-07-23 03:09:56,385 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.6514, Promedio=0.5820, Diversidad=0.0127
+2025-07-23 03:09:57,269 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.6570, Promedio=0.6517, Diversidad=0.0100
+2025-07-23 03:09:58,128 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6574, Promedio=0.6399, Diversidad=0.0123
+2025-07-23 03:09:59,143 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6574, Promedio=0.6509, Diversidad=0.0103
+2025-07-23 03:10:00,180 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6574, Promedio=0.6469, Diversidad=0.0113
+2025-07-23 03:10:01,094 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6574, Promedio=0.6491, Diversidad=0.0110
+2025-07-23 03:10:01,950 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6574, Promedio=0.6494, Diversidad=0.0103
+2025-07-23 03:10:02,843 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6574, Promedio=0.6477, Diversidad=0.0100
+2025-07-23 03:10:03,725 - INFO - genetic_algorithm_v2 - Generación 225: Mejor fitness=0.6574, Promedio=0.6456, Diversidad=0.0110
+2025-07-23 03:10:04,588 - INFO - genetic_algorithm_v2 - Evolución completada. Mejor fitness: 0.6574
+2025-07-23 03:10:04,588 - INFO - genetic_algorithm_v2 - Solución única 1 encontrada con fitness: 0.6574
+2025-07-23 03:10:04,588 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 2
+2025-07-23 03:10:04,588 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
+2025-07-23 03:10:04,590 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
+2025-07-23 03:10:04,632 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4493, Promedio=0.4112, Diversidad=0.0127
+2025-07-23 03:10:05,578 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.6474, Promedio=0.6408, Diversidad=0.0090
+2025-07-23 03:10:06,490 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.6543, Promedio=0.6415, Diversidad=0.0110
+2025-07-23 03:10:07,644 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6543, Promedio=0.6496, Diversidad=0.0093
+2025-07-23 03:10:08,616 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6543, Promedio=0.6454, Diversidad=0.0107
+2025-07-23 03:10:09,574 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6543, Promedio=0.6483, Diversidad=0.0100
+2025-07-23 03:10:10,478 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6543, Promedio=0.6499, Diversidad=0.0090
+2025-07-23 03:10:11,516 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6543, Promedio=0.6459, Diversidad=0.0093
+2025-07-23 03:10:12,589 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6543, Promedio=0.6481, Diversidad=0.0097

@@ -1,7 +1,8 @@
-# app/ui/configuration_panel.py
+# app/ui/configuration_panel.py - CÓDIGO COMPLETO CON CORRECCIÓN PARA CAMPOS VACÍOS
 import tkinter as tk
 from tkinter import ttk, messagebox
 from typing import List, Callable, Dict, Set
+import logging
 
 
 class ConfigurationPanel(ttk.Frame):
@@ -23,6 +24,9 @@ class ConfigurationPanel(ttk.Frame):
         self.config_vars = {}  # Para parámetros de optimización
         self.technique_vars = {}
         self.station_vars = {}
+        
+        # NUEVO: Flags para rastrear si el usuario ha interactuado con los campos
+        self.field_touched = {}
         
         # Presets de optimización por tipo de establecimiento
         self.establishment_presets = {
@@ -78,10 +82,16 @@ class ConfigurationPanel(ttk.Frame):
                  font=("Segoe UI", 9, "bold")).grid(
             row=grid_row, column=0, sticky="w", pady=8, padx=(0, 10))
         
-        self.vars["num_dishes"] = tk.StringVar(value="20")
+        self.vars["num_dishes"] = tk.StringVar(value="")  # VACÍO por defecto
+        self.field_touched["num_dishes"] = False
         num_dishes_entry = ttk.Entry(frame, textvariable=self.vars["num_dishes"], 
                                    width=15, font=("Segoe UI", 10))
         num_dishes_entry.grid(row=grid_row, column=1, sticky="w")
+        
+        # Agregar placeholder y eventos
+        self._add_placeholder(num_dishes_entry, "Ej: 20")
+        num_dishes_entry.bind('<FocusIn>', lambda e: self._on_field_focus_in(e, 'num_dishes'))
+        num_dishes_entry.bind('<KeyPress>', lambda e: self._on_field_edit(e, 'num_dishes'))
         
         # Validación para números enteros positivos
         num_dishes_vcmd = (self.register(self._validate_positive_integer), '%P', '%V')
@@ -95,10 +105,16 @@ class ConfigurationPanel(ttk.Frame):
                  font=("Segoe UI", 9, "bold")).grid(
             row=grid_row, column=0, sticky="w", pady=8, padx=(0, 10))
         
-        self.vars["max_cost_per_dish"] = tk.StringVar(value="200")
+        self.vars["max_cost_per_dish"] = tk.StringVar(value="")  # VACÍO por defecto
+        self.field_touched["max_cost_per_dish"] = False
         cost_entry = ttk.Entry(frame, textvariable=self.vars["max_cost_per_dish"], 
                              width=15, font=("Segoe UI", 10))
         cost_entry.grid(row=grid_row, column=1, sticky="w")
+        
+        # Agregar placeholder y eventos
+        self._add_placeholder(cost_entry, "Ej: 200")
+        cost_entry.bind('<FocusIn>', lambda e: self._on_field_focus_in(e, 'max_cost_per_dish'))
+        cost_entry.bind('<KeyPress>', lambda e: self._on_field_edit(e, 'max_cost_per_dish'))
         
         # Validación para números decimales positivos
         cost_vcmd = (self.register(self._validate_positive_decimal), '%P', '%V')
@@ -112,10 +128,16 @@ class ConfigurationPanel(ttk.Frame):
                  font=("Segoe UI", 9, "bold")).grid(
             row=grid_row, column=0, sticky="w", pady=8, padx=(0, 10))
         
-        self.vars["num_chefs"] = tk.StringVar(value="8")
+        self.vars["num_chefs"] = tk.StringVar(value="")  # VACÍO por defecto
+        self.field_touched["num_chefs"] = False
         chefs_entry = ttk.Entry(frame, textvariable=self.vars["num_chefs"], 
                               width=15, font=("Segoe UI", 10))
         chefs_entry.grid(row=grid_row, column=1, sticky="w")
+        
+        # Agregar placeholder y eventos
+        self._add_placeholder(chefs_entry, "Ej: 8")
+        chefs_entry.bind('<FocusIn>', lambda e: self._on_field_focus_in(e, 'num_chefs'))
+        chefs_entry.bind('<KeyPress>', lambda e: self._on_field_edit(e, 'num_chefs'))
         
         # Validación para números enteros positivos
         chefs_vcmd = (self.register(self._validate_positive_integer), '%P', '%V')
@@ -173,10 +195,16 @@ class ConfigurationPanel(ttk.Frame):
                  font=("Segoe UI", 9, "bold")).grid(
             row=grid_row, column=0, sticky="w", pady=8, padx=(0, 10))
         
-        self.config_vars["min_profit_margin"] = tk.StringVar(value="30")
+        self.config_vars["min_profit_margin"] = tk.StringVar(value="")  # VACÍO por defecto
+        self.field_touched["min_profit_margin"] = False
         margin_entry = ttk.Entry(frame, textvariable=self.config_vars["min_profit_margin"], 
                                width=15, font=("Segoe UI", 10))
         margin_entry.grid(row=grid_row, column=1, sticky="w")
+        
+        # Agregar placeholder y eventos
+        self._add_placeholder(margin_entry, "Ej: 30")
+        margin_entry.bind('<FocusIn>', lambda e: self._on_field_focus_in(e, 'min_profit_margin'))
+        margin_entry.bind('<KeyPress>', lambda e: self._on_field_edit(e, 'min_profit_margin'))
         
         # Validación para porcentajes (0-100)
         margin_vcmd = (self.register(self._validate_positive_decimal), '%P', '%V')
@@ -321,22 +349,59 @@ class ConfigurationPanel(ttk.Frame):
                            "Ejecuta el algoritmo genético para encontrar las mejores "
                            "configuraciones de menú según los parámetros establecidos.")
     
+    def _add_placeholder(self, entry_widget, placeholder_text):
+        """Agrega texto de placeholder a un Entry widget."""
+        entry_widget.placeholder_text = placeholder_text
+        entry_widget.insert(0, placeholder_text)
+        entry_widget.configure(foreground='gray')
+        
+        def on_focus_in(event):
+            if entry_widget.get() == placeholder_text:
+                entry_widget.delete(0, tk.END)
+                entry_widget.configure(foreground='black')
+        
+        def on_focus_out(event):
+            if not entry_widget.get():
+                entry_widget.insert(0, placeholder_text)
+                entry_widget.configure(foreground='gray')
+        
+        entry_widget.bind('<FocusIn>', on_focus_in)
+        entry_widget.bind('<FocusOut>', on_focus_out)
+    
+    def _on_field_focus_in(self, event, field_name):
+        """Maneja cuando un campo recibe el foco."""
+        print(f"DEBUG: Campo '{field_name}' recibió foco")
+    
+    def _on_field_edit(self, event, field_name):
+        """Maneja cuando el usuario edita un campo."""
+        self.field_touched[field_name] = True
+        print(f"DEBUG: Campo '{field_name}' editado por usuario")
+    
     def _set_default_values(self):
-        """Establece valores por defecto."""
+        """Establece valores por defecto. VERSIÓN CORREGIDA."""
+        print("DEBUG: _set_default_values iniciado")
+        
+        # Configurar establishment change
         self._on_establishment_change()
         
-        # Configurar técnicas básicas por defecto
+        # Configurar técnicas básicas por defecto - PERO SIN MARCAR COMO TOCADO
         self._select_basic_techniques()
-        # Configurar estaciones básicas por defecto
-        self._select_basic_stations()
+        
+        # NO llamar _select_basic_stations aquí porque las estaciones aún no existen
+        # Se llamará desde set_available_stations() con delay
+        print("DEBUG: _set_default_values completado")
     
     def set_available_stations(self, stations: List[str]):
-        """Establece las estaciones disponibles y crea los checkboxes."""
+        """Establece las estaciones disponibles y crea los checkboxes. VERSIÓN CORREGIDA."""
+        print(f"DEBUG: set_available_stations llamado con {len(stations)} estaciones")
         self.all_stations = stations
         
         # Limpiar contenedor existente
         for widget in self.stations_container.winfo_children():
             widget.destroy()
+        
+        # IMPORTANTE: Limpiar variables anteriores
+        self.station_vars.clear()
         
         # Crear checkboxes para estaciones
         stations_per_column = 5
@@ -348,12 +413,25 @@ class ConfigurationPanel(ttk.Frame):
                 col += 1
                 row = 0
             
+            # Crear nueva variable
             self.station_vars[station] = tk.BooleanVar(value=False)
-            ttk.Checkbutton(self.stations_container, text=station,
+            
+            # Crear checkbox
+            checkbox = ttk.Checkbutton(self.stations_container, text=station,
                           variable=self.station_vars[station],
-                          style="TCheckbutton").grid(
-                row=row, column=col, sticky="w", padx=15, pady=2)
+                          style="TCheckbutton")
+            checkbox.grid(row=row, column=col, sticky="w", padx=15, pady=2)
+            
+            print(f"DEBUG: Estación '{station}' creada con variable {self.station_vars[station]}")
             row += 1
+        
+        # DESPUÉS de crear las estaciones, aplicar configuración básica
+        self.after(100, self._select_basic_stations_delayed)  # Delay para asegurar que se crean primero
+    
+    def _select_basic_stations_delayed(self):
+        """Selecciona estaciones básicas con delay para asegurar que existan."""
+        print("DEBUG: Aplicando selección básica de estaciones (delayed)")
+        self._select_basic_stations()
     
     def _on_establishment_change(self, event=None):
         """Maneja el cambio de tipo de establecimiento."""
@@ -364,10 +442,10 @@ class ConfigurationPanel(ttk.Frame):
         description = preset.get('description', '')
         self.establishment_description.config(text=description)
         
-        # Actualizar valores sugeridos
-        if 'target_margin' in preset:
+        # SOLO actualizar valores si el usuario NO ha tocado los campos
+        if 'target_margin' in preset and not self.field_touched.get('min_profit_margin', False):
             self.config_vars["min_profit_margin"].set(str(preset['target_margin']))
-        if 'max_cost' in preset:
+        if 'max_cost' in preset and not self.field_touched.get('max_cost_per_dish', False):
             self.vars["max_cost_per_dish"].set(str(preset['max_cost']))
     
     def _select_all_techniques(self):
@@ -388,24 +466,39 @@ class ConfigurationPanel(ttk.Frame):
             var.set(technique in basic_techniques)
     
     def _select_all_stations(self):
-        """Selecciona todas las estaciones."""
-        for var in self.station_vars.values():
+        """Selecciona todas las estaciones. VERSIÓN CON DEBUG."""
+        print("DEBUG: Seleccionando todas las estaciones")
+        count = 0
+        for station, var in self.station_vars.items():
             var.set(True)
+            count += 1
+        print(f"DEBUG: {count} estaciones seleccionadas")
     
     def _deselect_all_stations(self):
-        """Deselecciona todas las estaciones."""
+        """Deselecciona todas las estaciones. VERSIÓN CON DEBUG."""
+        print("DEBUG: Deseleccionando todas las estaciones")
         for var in self.station_vars.values():
             var.set(False)
     
     def _select_basic_stations(self):
-        """Selecciona solo estaciones básicas."""
+        """Selecciona solo estaciones básicas. VERSIÓN CORREGIDA."""
         basic_stations = {
             'Mise en Place', 'Plancha y Parrilla', 'Horno y Rostizado',
             'Estofados y Salsas', 'Fritura', 'Ensamblaje y Emplatado'
         }
         
+        print(f"DEBUG: _select_basic_stations - Estaciones disponibles: {list(self.station_vars.keys())}")
+        
+        selected_count = 0
         for station, var in self.station_vars.items():
-            var.set(station in basic_stations)
+            if station in basic_stations:
+                var.set(True)
+                selected_count += 1
+                print(f"DEBUG: Estación '{station}' seleccionada como básica")
+            else:
+                var.set(False)
+        
+        print(f"DEBUG: {selected_count} estaciones básicas seleccionadas")
     
     def _run_optimization(self):
         """Recopila la configuración y ejecuta la optimización con validación completa."""
@@ -424,8 +517,21 @@ class ConfigurationPanel(ttk.Frame):
                                f"Error inesperado al recopilar configuración:\n{str(e)}")
     
     def _gather_configuration(self) -> Dict:
-        """Recopila toda la configuración del panel con validación completa."""
+        """Recopila toda la configuración del panel con validación completa. VERSIÓN MEJORADA."""
         try:
+            print("DEBUG: Iniciando _gather_configuration")
+            
+            # NUEVA VALIDACIÓN: Verificar que el usuario haya ingresado valores
+            if not self._user_has_provided_input():
+                messagebox.showwarning("Configuración Incompleta", 
+                                     "Por favor complete todos los campos obligatorios antes de optimizar.\n\n"
+                                     "Campos requeridos:\n"
+                                     "• Número deseado de opciones en el menú\n"
+                                     "• Presupuesto máximo de costo por plato\n"
+                                     "• Personal disponible (cocineros)\n"
+                                     "• Porcentaje mínimo de margen de ganancia")
+                return None
+            
             # Validar campos obligatorios
             validation_errors = self._validate_all_fields()
             if validation_errors:
@@ -437,198 +543,40 @@ class ConfigurationPanel(ttk.Frame):
             selected_techniques = {tech for tech, var in self.technique_vars.items() 
                                  if var.get()}
             
-            # Estaciones seleccionadas
-            selected_stations = {station for station, var in self.station_vars.items() 
-                               if var.get()}
+            # Estaciones seleccionadas - CON DEBUGGING DETALLADO
+            selected_stations = set()
+            print(f"DEBUG: Revisando {len(self.station_vars)} variables de estación:")
             
-            # Validar selecciones
+            for station, var in self.station_vars.items():
+                is_selected = var.get()
+                print(f"DEBUG: Estación '{station}': {is_selected} (variable: {var})")
+                if is_selected:
+                    selected_stations.add(station)
+            
+            print(f"DEBUG: Técnicas seleccionadas: {len(selected_techniques)}")
+            print(f"DEBUG: Lista de técnicas: {selected_techniques}")
+            print(f"DEBUG: Estaciones seleccionadas: {len(selected_stations)}")  
+            print(f"DEBUG: Lista de estaciones: {selected_stations}")
+            
+            # Validaciones con mensajes mejorados
             if not selected_techniques:
                 messagebox.showerror("Error de Configuración", 
                                    "Debe seleccionar al menos una técnica culinaria disponible.")
                 return None
             
             if not selected_stations:
+                # Mensaje más detallado para debugging
+                station_status = []
+                for station, var in self.station_vars.items():
+                    station_status.append(f"  • {station}: {'✓' if var.get() else '✗'}")
+                
+                detail_msg = f"Estado de las estaciones:\n" + "\n".join(station_status[:10])  # Mostrar primeras 10
+                if len(station_status) > 10:
+                    detail_msg += f"\n  ... y {len(station_status) - 10} más"
+                
+                print(f"DEBUG: Error - No hay estaciones seleccionadas")
+                print(detail_msg)
+                
                 messagebox.showerror("Error de Configuración", 
-                                   "Debe seleccionar al menos una estación de trabajo disponible.")
+                                   f"Debe seleccionar al menos una estación de trabajo disponible.\n\n{detail_msg}")
                 return None
-            
-            config = {
-                'num_dishes': int(self.vars["num_dishes"].get()),
-                'max_cost_per_dish': float(self.vars["max_cost_per_dish"].get()),
-                'num_chefs': int(self.vars["num_chefs"].get()),
-                'min_profit_margin': float(self.config_vars["min_profit_margin"].get()),
-                'season': self.config_vars["season"].get(),
-                'establishment_type': self.config_vars["establishment_type"].get(),
-                'available_techniques': selected_techniques,
-                'available_stations': selected_stations
-            }
-            
-            return config
-            
-        except ValueError as e:
-            messagebox.showerror("Error de Formato", 
-                               f"Error en el formato de los datos:\n{str(e)}")
-            return None
-        except Exception as e:
-            messagebox.showerror("Error Inesperado", 
-                               f"Error inesperado al recopilar configuración:\n{str(e)}")
-            return None
-    
-    def _validate_all_fields(self) -> List[str]:
-        """Valida todos los campos y retorna lista de errores."""
-        errors = []
-        
-        # Validar número de platos
-        try:
-            num_dishes = int(self.vars["num_dishes"].get().strip())
-            if num_dishes <= 0:
-                errors.append("• El número de opciones en el menú debe ser mayor a 0")
-            elif num_dishes > 50:
-                errors.append("• El número de opciones en el menú no puede ser mayor a 50")
-        except ValueError:
-            errors.append("• El número de opciones en el menú debe ser un número entero válido")
-        
-        # Validar costo máximo
-        try:
-            max_cost = float(self.vars["max_cost_per_dish"].get().strip())
-            if max_cost <= 0:
-                errors.append("• El presupuesto máximo por plato debe ser mayor a 0")
-            elif max_cost > 1000:
-                errors.append("• El presupuesto máximo por plato no puede ser mayor a $1000")
-        except ValueError:
-            errors.append("• El presupuesto máximo por plato debe ser un número válido")
-        
-        # Validar número de cocineros
-        try:
-            num_chefs = int(self.vars["num_chefs"].get().strip())
-            if num_chefs <= 0:
-                errors.append("• El número de cocineros debe ser mayor a 0")
-            elif num_chefs > 50:
-                errors.append("• El número de cocineros no puede ser mayor a 50")
-        except ValueError:
-            errors.append("• El número de cocineros debe ser un número entero válido")
-        
-        # Validar margen de ganancia
-        try:
-            margin = float(self.config_vars["min_profit_margin"].get().strip())
-            if margin < 0:
-                errors.append("• El margen de ganancia no puede ser negativo")
-            elif margin > 100:
-                errors.append("• El margen de ganancia no puede ser mayor a 100%")
-        except ValueError:
-            errors.append("• El margen de ganancia debe ser un número válido")
-        
-        return errors
-    
-    def _validate_positive_integer(self, value, validation_type):
-        """Valida que el valor sea un entero positivo o vacío."""
-        if validation_type == 'focusout':
-            return True
-        
-        if value == "":
-            return True
-        
-        try:
-            num = int(value)
-            return num >= 0
-        except ValueError:
-            return False
-    
-    def _validate_positive_decimal(self, value, validation_type):
-        """Valida que el valor sea un decimal positivo o vacío."""
-        if validation_type == 'focusout':
-            return True
-        
-        if value == "":
-            return True
-        
-        # Permitir punto decimal
-        if value.count('.') <= 1:
-            try:
-                if value.endswith('.'):
-                    # Permitir número seguido de punto
-                    return float(value[:-1]) >= 0 if value[:-1] else True
-                else:
-                    num = float(value)
-                    return num >= 0
-            except ValueError:
-                return False
-        return False
-    
-    def _validate_range(self, event, var_name, min_val, max_val, default_val):
-        """Valida que el valor esté en el rango especificado."""
-        try:
-            widget = event.widget
-            current_value = widget.get().strip()
-            
-            if not current_value:
-                # Campo vacío, establecer valor por defecto
-                if var_name in self.vars:
-                    self.vars[var_name].set(str(default_val))
-                else:
-                    self.config_vars[var_name].set(str(default_val))
-                widget.config(bg='#fff2cc')  # Color amarillo suave para indicar corrección
-                self.after(1000, lambda: widget.config(bg='white'))
-                return
-            
-            # Validar rango
-            if isinstance(min_val, int):
-                value = int(current_value)
-            else:
-                value = float(current_value)
-            
-            if value < min_val:
-                messagebox.showwarning("Valor Fuera de Rango", 
-                                     f"El valor mínimo permitido es {min_val}")
-                if var_name in self.vars:
-                    self.vars[var_name].set(str(min_val))
-                else:
-                    self.config_vars[var_name].set(str(min_val))
-                widget.config(bg='#ffebee')  # Color rojo suave
-                self.after(1000, lambda: widget.config(bg='white'))
-                
-            elif value > max_val:
-                messagebox.showwarning("Valor Fuera de Rango", 
-                                     f"El valor máximo permitido es {max_val}")
-                if var_name in self.vars:
-                    self.vars[var_name].set(str(max_val))
-                else:
-                    self.config_vars[var_name].set(str(max_val))
-                widget.config(bg='#ffebee')  # Color rojo suave
-                self.after(1000, lambda: widget.config(bg='white'))
-            else:
-                # Valor válido
-                widget.config(bg='#e8f5e8')  # Color verde suave
-                self.after(1000, lambda: widget.config(bg='white'))
-                
-        except ValueError:
-            # Valor inválido, restablecer al valor por defecto
-            messagebox.showerror("Valor Inválido", 
-                               f"Por favor ingrese un número válido")
-            if var_name in self.vars:
-                self.vars[var_name].set(str(default_val))
-            else:
-                self.config_vars[var_name].set(str(default_val))
-            widget.config(bg='#ffebee')
-            self.after(1000, lambda: widget.config(bg='white'))
-    
-    def _create_tooltip(self, widget, text):
-        """Crea un tooltip para el widget especificado."""
-        def on_enter(event):
-            tooltip = tk.Toplevel()
-            tooltip.wm_overrideredirect(True)
-            tooltip.geometry(f"+{event.x_root+10}+{event.y_root+10}")
-            
-            label = tk.Label(tooltip, text=text, background="lightyellow",
-                           relief="solid", borderwidth=1, font=("Segoe UI", 8))
-            label.pack()
-            
-            widget.tooltip = tooltip
-        
-        def on_leave(event):
-            if hasattr(widget, 'tooltip'):
-                widget.tooltip.destroy()
-                delattr(widget, 'tooltip')
-        
-        widget.bind("<Enter>", on_enter)
-        widget.bind("<Leave>", on_leave)

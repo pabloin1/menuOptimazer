@@ -6,7 +6,6 @@ from typing import List, Dict
 from collections import defaultdict  # Agregar este import
 
 from app.core.models import Dish
-from app.core.genetic_algorithm_v2 import MenuGeneticAlgorithm
 from app.ui.configuration_panel import ConfigurationPanel
 from app.ui.results_panel import ResultsPanel
 from app.ui.progress_dialog import ProgressDialog
@@ -125,12 +124,10 @@ class MenuOptimizerMainWindow(tk.Tk):
     def _run_optimization(self, config: Dict):
         """
         Ejecuta el algoritmo de optimización con la configuración proporcionada.
-        
-        Args:
-            config: Diccionario con toda la configuración del usuario
+        VERSIÓN CORREGIDA con mejor manejo de errores
         """
         if config is None:
-            # La validación falló en el panel de configuración
+            print("DEBUG: Configuración es None, cancelando optimización")
             return
             
         if self.optimization_running:
@@ -138,10 +135,15 @@ class MenuOptimizerMainWindow(tk.Tk):
                                  "Ya hay una optimización ejecutándose. Por favor espere.")
             return
         
+        # Variable para rastrear el diálogo de progreso
+        progress_dialog = None
+        
         try:
             self.optimization_running = True
             self._update_status("Iniciando optimización...")
             self.progress_bar.start(10)
+            
+            print(f"DEBUG: Iniciando optimización con config: {config.keys()}")
             
             # Validar configuración
             validation_result = self._validate_configuration(config)
@@ -149,26 +151,36 @@ class MenuOptimizerMainWindow(tk.Tk):
                 messagebox.showerror("Configuración Inválida", validation_result['message'])
                 return
             
+            print("DEBUG: Configuración validada exitosamente")
+            
             # Filtrar catálogo según restricciones
             filtered_catalog = self._filter_catalog(config)
+            print(f"DEBUG: Catálogo filtrado: {len(filtered_catalog)} platos disponibles")
             
             if len(filtered_catalog) < config['num_dishes']:
+                print(f"DEBUG: Insuficientes platos filtrados")
                 self._show_insufficient_dishes_dialog(len(filtered_catalog), config['num_dishes'])
                 return
             
             # Mostrar diálogo de progreso
             progress_dialog = ProgressDialog(self, "Optimizando Menú...")
             progress_dialog.show()
+            print("DEBUG: Diálogo de progreso mostrado")
             
             # Configurar algoritmo genético
             genetic_config = self._build_genetic_config(config, filtered_catalog)
+            
+            # Importar aquí para evitar import circular
+            from app.core.genetic_algorithm_v2 import MenuGeneticAlgorithm
             genetic_algorithm = MenuGeneticAlgorithm(genetic_config)
             
             self._update_status("Ejecutando algoritmo genético...")
+            print("DEBUG: Iniciando algoritmo genético...")
             
-            # Ejecutar optimización (obtener múltiples soluciones)
+            # Ejecutar optimización
             try:
                 solutions = genetic_algorithm.get_multiple_solutions(num_solutions=3)
+                print(f"DEBUG: Optimización completada. {len(solutions) if solutions else 0} soluciones encontradas")
                 
                 if solutions:
                     self.current_results = {
@@ -191,22 +203,30 @@ class MenuOptimizerMainWindow(tk.Tk):
                     
             except Exception as e:
                 logging.error(f"Error durante optimización: {e}", exc_info=True)
+                print(f"DEBUG: Error en optimización: {e}")
                 messagebox.showerror("Error de Optimización", 
                                    f"Error durante la optimización:\n{str(e)}")
                 self._update_status("Error en optimización")
-            
-            finally:
-                progress_dialog.close()
         
         except Exception as e:
             logging.error(f"Error en configuración de optimización: {e}", exc_info=True)
+            print(f"DEBUG: Error en configuración: {e}")
             messagebox.showerror("Error de Configuración", 
                                f"Error al configurar la optimización:\n{str(e)}")
             self._update_status("Error en configuración")
         
         finally:
+            print("DEBUG: Finalizando optimización, limpiando recursos...")
             self.optimization_running = False
             self.progress_bar.stop()
+            
+            # IMPORTANTE: Cerrar diálogo de progreso
+            if progress_dialog:
+                try:
+                    progress_dialog.close()
+                    print("DEBUG: Diálogo de progreso cerrado desde finally")
+                except Exception as e:
+                    print(f"DEBUG: Error cerrando diálogo: {e}")
     
     def _validate_configuration(self, config: Dict) -> Dict:
         """Valida la configuración del usuario."""
@@ -239,9 +259,14 @@ class MenuOptimizerMainWindow(tk.Tk):
             return {'valid': False, 'message': f'Error de validación: {e}'}
     
     def _filter_catalog(self, config: Dict) -> List[Dish]:
-        """Filtra el catálogo según las restricciones configuradas con logging detallado."""
+        """
+        Filtra el catálogo con debugging mejorado
+        """
         logging.info("=== INICIANDO FILTRADO DE CATÁLOGO ===")
         logging.info(f"Catálogo inicial: {len(self.catalog)} platos")
+        print(f"DEBUG: Iniciando filtrado con {len(self.catalog)} platos")
+        print(f"DEBUG: Estaciones disponibles: {config.get('available_stations', 'N/A')}")
+        print(f"DEBUG: Técnicas disponibles: {config.get('available_techniques', 'N/A')}")
         
         filtered = []
         rejection_reasons = defaultdict(int)
@@ -249,23 +274,28 @@ class MenuOptimizerMainWindow(tk.Tk):
         for dish in self.catalog:
             rejected = False
             
-            # Filtrar por costo
+            # Calcular costo real del plato
             dish_cost = self._calculate_dish_cost(dish)
+            dish._calculated_cost = dish_cost
+            
+            # Calcular tiempo real del plato
+            real_prep_time = self._calculate_dish_prep_time(dish)
+            dish._calculated_prep_time = real_prep_time
+            
+            # Filtrar por costo
             if dish_cost > config['max_cost_per_dish']:
                 rejection_reasons['costo_excesivo'] += 1
                 logging.debug(f"RECHAZADO '{dish.name}': Costo ${dish_cost:.2f} > Máximo ${config['max_cost_per_dish']}")
-                rejected = True
                 continue
             
-            # Filtrar por temporada (solo si hay ingredientes con temporada específica)
+            # Filtrar por temporada
             if config['season'] != 'Todo el año':
                 if not self._dish_available_in_season(dish, config['season']):
                     rejection_reasons['fuera_temporada'] += 1
                     logging.debug(f"RECHAZADO '{dish.name}': Fuera de temporada '{config['season']}'")
-                    rejected = True
                     continue
             
-            # Filtrar por técnicas disponibles (solo si el plato requiere técnicas específicas)
+            # Filtrar por técnicas disponibles
             required_techniques = set()
             if hasattr(dish, 'steps') and dish.steps:
                 required_techniques = {step.technique for step in dish.steps if step.technique}
@@ -274,10 +304,9 @@ class MenuOptimizerMainWindow(tk.Tk):
                 missing_techniques = required_techniques - config['available_techniques']
                 rejection_reasons['tecnicas_faltantes'] += 1
                 logging.debug(f"RECHAZADO '{dish.name}': Requiere técnicas no disponibles: {missing_techniques}")
-                rejected = True
                 continue
             
-            # Filtrar por estaciones disponibles (solo si el plato requiere estaciones específicas)
+            # Filtrar por estaciones disponibles
             required_stations = set()
             if hasattr(dish, 'steps') and dish.steps:
                 required_stations = {step.station for step in dish.steps if step.station}
@@ -286,30 +315,26 @@ class MenuOptimizerMainWindow(tk.Tk):
                 missing_stations = required_stations - config['available_stations']
                 rejection_reasons['estaciones_faltantes'] += 1
                 logging.debug(f"RECHAZADO '{dish.name}': Requiere estaciones no disponibles: {missing_stations}")
-                rejected = True
                 continue
             
-            # Filtrar por tipo de establecimiento (más permisivo)
+            # Filtrar por tipo de establecimiento
             if not self._dish_suitable_for_establishment(dish, config['establishment_type']):
                 rejection_reasons['inadecuado_establecimiento'] += 1
                 logging.debug(f"RECHAZADO '{dish.name}': No adecuado para establecimiento '{config['establishment_type']}'")
-                rejected = True
                 continue
             
-            if not rejected:
-                logging.debug(f"ACEPTADO '{dish.name}': Costo=${dish_cost:.2f}, Tiempo={self._calculate_dish_prep_time(dish):.0f}min")
-                filtered.append(dish)
+            logging.debug(f"ACEPTADO '{dish.name}': Costo=${dish_cost:.2f}, Tiempo={real_prep_time:.0f}min")
+            filtered.append(dish)
         
-        # Log de resumen de filtrado
+        # Log de resumen
         logging.info("=== RESUMEN DE FILTRADO ===")
         logging.info(f"Platos aceptados: {len(filtered)}")
         logging.info(f"Platos rechazados: {len(self.catalog) - len(filtered)}")
         
+        print(f"DEBUG: Filtrado completado - {len(filtered)} platos aceptados de {len(self.catalog)}")
         for reason, count in rejection_reasons.items():
             logging.info(f"  - {reason}: {count} platos")
-        
-        if len(filtered) < config['num_dishes']:
-            logging.warning(f"ADVERTENCIA: Solo {len(filtered)} platos disponibles para menú de {config['num_dishes']} opciones")
+            print(f"DEBUG: {reason}: {count} platos")
         
         return filtered
     
@@ -340,22 +365,6 @@ class MenuOptimizerMainWindow(tk.Tk):
                     return False
         
         return True
-    
-    def _dish_uses_available_techniques(self, dish: Dish, available_techniques: set) -> bool:
-        """Verifica si un plato usa solo técnicas disponibles."""
-        if not hasattr(dish, 'steps') or not dish.steps:
-            return True
-        
-        required_techniques = {step.technique for step in dish.steps if step.technique}
-        return required_techniques.issubset(available_techniques)
-    
-    def _dish_uses_available_stations(self, dish: Dish, available_stations: set) -> bool:
-        """Verifica si un plato usa solo estaciones disponibles."""
-        if not hasattr(dish, 'steps') or not dish.steps:
-            return True
-        
-        required_stations = {step.station for step in dish.steps if step.station}
-        return required_stations.issubset(available_stations)
     
     def _dish_suitable_for_establishment(self, dish: Dish, establishment_type: str) -> bool:
         """Verifica si un plato es adecuado para el tipo de establecimiento (criterios más permisivos)."""

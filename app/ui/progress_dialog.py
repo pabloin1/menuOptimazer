@@ -1,4 +1,4 @@
-# app/ui/progress_dialog.py
+# app/ui/progress_dialog.py - VERSIÓN CORREGIDA
 import tkinter as tk
 from tkinter import ttk
 import threading
@@ -8,6 +8,7 @@ import time
 class ProgressDialog:
     """
     Diálogo de progreso para mostrar el avance de la optimización.
+    VERSIÓN CORREGIDA - Evita reaperturas automáticas
     """
     
     def __init__(self, parent, title: str = "Procesando..."):
@@ -15,12 +16,15 @@ class ProgressDialog:
         self.title = title
         self.dialog = None
         self.is_visible = False
+        self.is_closed = False  # Nueva bandera para evitar reaperturas
+        self.update_job = None  # Para cancelar actualizaciones programadas
         
     def show(self):
         """Muestra el diálogo de progreso."""
-        if self.is_visible:
+        if self.is_visible or self.is_closed:
             return
         
+        self.is_closed = False  # Reset de la bandera
         self.dialog = tk.Toplevel(self.parent)
         self.dialog.title(self.title)
         self.dialog.geometry("400x200")
@@ -29,6 +33,9 @@ class ProgressDialog:
         # Centrar en la ventana padre
         self.dialog.transient(self.parent)
         self.dialog.grab_set()
+        
+        # IMPORTANTE: Configurar protocolo de cierre
+        self.dialog.protocol("WM_DELETE_WINDOW", self.close)
         
         # Centrar diálogo
         self.dialog.update_idletasks()
@@ -108,35 +115,72 @@ Esto puede tomar unos momentos..."""
     
     def _update_status_message(self):
         """Actualiza el mensaje de estado cíclicamente."""
-        if self.is_visible and self.dialog and self.dialog.winfo_exists():
+        # CORRECCIÓN CRÍTICA: Verificar si el diálogo fue cerrado
+        if self.is_closed or not self.is_visible:
+            return
+            
+        if self.dialog and self._dialog_exists():
             try:
                 message = self.status_messages[self.current_message_index]
                 self.status_label.config(text=message)
                 
                 self.current_message_index = (self.current_message_index + 1) % len(self.status_messages)
                 
-                # Programar siguiente actualización
-                self.dialog.after(2000, self._update_status_message)
+                # Programar siguiente actualización SOLO si no está cerrado
+                if not self.is_closed and self.is_visible:
+                    self.update_job = self.dialog.after(2000, self._update_status_message)
+                    
             except tk.TclError:
-                # El diálogo fue cerrado
-                self.is_visible = False
+                # El diálogo fue cerrado inesperadamente
+                self._cleanup()
+    
+    def _dialog_exists(self):
+        """Verifica si el diálogo todavía existe."""
+        try:
+            return self.dialog and self.dialog.winfo_exists()
+        except tk.TclError:
+            return False
     
     def update_status(self, message: str):
         """Actualiza manualmente el mensaje de estado."""
-        if self.is_visible and self.dialog and self.dialog.winfo_exists():
+        if not self.is_closed and self.is_visible and self._dialog_exists():
             try:
                 self.status_label.config(text=message)
                 self.dialog.update_idletasks()
             except tk.TclError:
-                self.is_visible = False
+                self._cleanup()
     
     def close(self):
         """Cierra el diálogo de progreso."""
-        if self.dialog and self.dialog.winfo_exists():
+        print("DEBUG: Cerrando diálogo de progreso...")
+        self._cleanup()
+    
+    def _cleanup(self):
+        """Limpia todos los recursos del diálogo."""
+        self.is_closed = True
+        self.is_visible = False
+        
+        # Cancelar cualquier actualización programada
+        if self.update_job and self.dialog:
+            try:
+                self.dialog.after_cancel(self.update_job)
+                self.update_job = None
+            except tk.TclError:
+                pass
+        
+        # Detener barra de progreso
+        if hasattr(self, 'progress_bar') and self.progress_bar:
             try:
                 self.progress_bar.stop()
+            except tk.TclError:
+                pass
+        
+        # Destruir diálogo
+        if self.dialog and self._dialog_exists():
+            try:
                 self.dialog.destroy()
             except tk.TclError:
                 pass
         
-        self.is_visible = False
+        self.dialog = None
+        print("DEBUG: Diálogo de progreso cerrado correctamente")
