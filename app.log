@@ -1,111 +1,397 @@
-2025-07-23 08:48:55,241 - INFO - main - === INICIANDO MENUOPTIMIZER v10.0 ===
-2025-07-23 08:48:57,038 - INFO - database_manager - Intentando conectar a la base de datos 'menu_optimizer_db' en host 'localhost'...
-2025-07-23 08:48:57,127 - INFO - main - Conexión a base de datos exitosa. 130 platos disponibles.
-2025-07-23 08:48:57,128 - INFO - main - Cargando catálogo de platos y técnicas culinarias...
-2025-07-23 08:48:57,128 - INFO - database_manager - Intentando conectar a la base de datos 'menu_optimizer_db' en host 'localhost'...
-2025-07-23 08:48:57,133 - INFO - database_manager - Conexión a la base de datos exitosa.
-2025-07-23 08:48:57,265 - INFO - database_manager - Carga completa. Se cargaron 300 ingredientes y 130 platos.
-2025-07-23 08:48:57,265 - INFO - main - Base de conocimiento cargada: 130 platos, 43 técnicas
-2025-07-23 08:48:57,822 - INFO - main_window - Ventana principal inicializada correctamente
-2025-07-23 08:48:57,822 - INFO - main - Aplicación iniciada exitosamente
-2025-07-23 08:49:38,667 - INFO - main_window - Status: Iniciando optimización...
-2025-07-23 08:49:38,667 - INFO - main_window - === INICIANDO FILTRADO DE CATÁLOGO ===
-2025-07-23 08:49:38,667 - INFO - main_window - Catálogo inicial: 130 platos
-2025-07-23 08:49:38,688 - INFO - main_window - === RESUMEN DE FILTRADO ===
-2025-07-23 08:49:38,689 - INFO - main_window - Platos aceptados: 38
-2025-07-23 08:49:38,689 - INFO - main_window - Platos rechazados: 92
-2025-07-23 08:49:38,689 - INFO - main_window -   - tecnicas_faltantes: 53 platos
-2025-07-23 08:49:38,689 - INFO - main_window -   - estaciones_faltantes: 31 platos
-2025-07-23 08:49:38,689 - INFO - main_window -   - costo_excesivo: 8 platos
-2025-07-23 08:49:38,815 - INFO - main_window - Status: Ejecutando algoritmo genético...
-2025-07-23 08:49:38,818 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 1
-2025-07-23 08:49:38,818 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
-2025-07-23 08:49:38,828 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
-2025-07-23 08:49:38,953 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4459, Promedio=0.4081, Diversidad=0.0127
-2025-07-23 08:49:40,351 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.6728, Promedio=0.6255, Diversidad=0.0123
-2025-07-23 08:49:41,890 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.6746, Promedio=0.6689, Diversidad=0.0093
-2025-07-23 08:49:43,485 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6746, Promedio=0.6694, Diversidad=0.0093
-2025-07-23 08:49:45,345 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6746, Promedio=0.6644, Diversidad=0.0103
-2025-07-23 08:49:47,594 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6746, Promedio=0.6681, Diversidad=0.0107
-2025-07-23 08:49:50,301 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6746, Promedio=0.6688, Diversidad=0.0100
-2025-07-23 08:49:52,793 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6746, Promedio=0.6671, Diversidad=0.0103
-2025-07-23 08:49:55,159 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6746, Promedio=0.6610, Diversidad=0.0110
-2025-07-23 08:49:57,527 - INFO - genetic_algorithm_v2 - Generación 225: Mejor fitness=0.6746, Promedio=0.6687, Diversidad=0.0093
-2025-07-23 08:49:59,832 - INFO - genetic_algorithm_v2 - Evolución completada. Mejor fitness: 0.6746
-2025-07-23 08:49:59,832 - INFO - genetic_algorithm_v2 - Solución única 1 encontrada con fitness: 0.6746
-2025-07-23 08:49:59,838 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 2
-2025-07-23 08:49:59,838 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
-2025-07-23 08:49:59,846 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
-2025-07-23 08:49:59,943 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4449, Promedio=0.4092, Diversidad=0.0127
-2025-07-23 08:50:02,468 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.6517, Promedio=0.6244, Diversidad=0.0113
-2025-07-23 08:50:05,111 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.6683, Promedio=0.6548, Diversidad=0.0117
-2025-07-23 08:50:06,961 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6746, Promedio=0.6602, Diversidad=0.0103
-2025-07-23 08:50:08,644 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6746, Promedio=0.6656, Diversidad=0.0103
-2025-07-23 08:50:10,264 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6746, Promedio=0.6692, Diversidad=0.0100
-2025-07-23 08:50:12,079 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6746, Promedio=0.6659, Diversidad=0.0083
-2025-07-23 08:50:13,741 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6746, Promedio=0.6712, Diversidad=0.0087
-2025-07-23 08:50:15,730 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6746, Promedio=0.6681, Diversidad=0.0103
-2025-07-23 08:50:18,116 - INFO - genetic_algorithm_v2 - Generación 225: Mejor fitness=0.6746, Promedio=0.6611, Diversidad=0.0117
-2025-07-23 08:50:20,064 - INFO - genetic_algorithm_v2 - Evolución completada. Mejor fitness: 0.6746
-2025-07-23 08:50:20,064 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 3
-2025-07-23 08:50:20,064 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
-2025-07-23 08:50:20,070 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
-2025-07-23 08:50:20,175 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4453, Promedio=0.4098, Diversidad=0.0127
-2025-07-23 08:50:22,282 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.6568, Promedio=0.6090, Diversidad=0.0127
-2025-07-23 08:50:24,271 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.6677, Promedio=0.6619, Diversidad=0.0097
-2025-07-23 08:50:26,295 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6728, Promedio=0.6633, Diversidad=0.0103
-2025-07-23 08:50:28,437 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6728, Promedio=0.6575, Diversidad=0.0110
-2025-07-23 08:50:30,517 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6728, Promedio=0.6642, Diversidad=0.0093
-2025-07-23 08:50:32,691 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6746, Promedio=0.6639, Diversidad=0.0090
-2025-07-23 08:50:34,599 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6746, Promedio=0.6653, Diversidad=0.0113
-2025-07-23 08:50:36,416 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6746, Promedio=0.6600, Diversidad=0.0120
-2025-07-23 08:50:38,257 - INFO - genetic_algorithm_v2 - Generación 225: Mejor fitness=0.6746, Promedio=0.6668, Diversidad=0.0097
-2025-07-23 08:50:40,190 - INFO - genetic_algorithm_v2 - Evolución completada. Mejor fitness: 0.6746
-2025-07-23 08:50:40,191 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 4
-2025-07-23 08:50:40,191 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
-2025-07-23 08:50:40,200 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
-2025-07-23 08:50:40,349 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4488, Promedio=0.4094, Diversidad=0.0127
-2025-07-23 08:50:42,444 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.6746, Promedio=0.6047, Diversidad=0.0127
-2025-07-23 08:50:44,177 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.6746, Promedio=0.6629, Diversidad=0.0117
-2025-07-23 08:50:45,526 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6746, Promedio=0.6669, Diversidad=0.0107
-2025-07-23 08:50:47,070 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6746, Promedio=0.6644, Diversidad=0.0107
-2025-07-23 08:50:48,409 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6746, Promedio=0.6613, Diversidad=0.0110
-2025-07-23 08:50:49,776 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6746, Promedio=0.6676, Diversidad=0.0107
-2025-07-23 08:50:51,125 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6746, Promedio=0.6699, Diversidad=0.0097
-2025-07-23 08:50:52,467 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6746, Promedio=0.6645, Diversidad=0.0100
-2025-07-23 08:50:53,810 - INFO - genetic_algorithm_v2 - Generación 225: Mejor fitness=0.6746, Promedio=0.6659, Diversidad=0.0100
-2025-07-23 08:50:55,152 - INFO - genetic_algorithm_v2 - Evolución completada. Mejor fitness: 0.6746
-2025-07-23 08:50:55,152 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 5
-2025-07-23 08:50:55,152 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
-2025-07-23 08:50:55,162 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
-2025-07-23 08:50:55,206 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4435, Promedio=0.4095, Diversidad=0.0127
-2025-07-23 08:50:56,607 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.6683, Promedio=0.6318, Diversidad=0.0127
-2025-07-23 08:50:57,961 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.6683, Promedio=0.6619, Diversidad=0.0093
-2025-07-23 08:50:59,309 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6683, Promedio=0.6595, Diversidad=0.0110
-2025-07-23 08:51:00,666 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6683, Promedio=0.6657, Diversidad=0.0087
-2025-07-23 08:51:02,050 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6683, Promedio=0.6585, Diversidad=0.0103
-2025-07-23 08:51:03,430 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6683, Promedio=0.6568, Diversidad=0.0113
-2025-07-23 08:51:04,785 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6683, Promedio=0.6554, Diversidad=0.0113
-2025-07-23 08:51:06,126 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6683, Promedio=0.6530, Diversidad=0.0107
-2025-07-23 08:51:07,489 - INFO - genetic_algorithm_v2 - Generación 225: Mejor fitness=0.6683, Promedio=0.6641, Diversidad=0.0093
-2025-07-23 08:51:08,783 - INFO - genetic_algorithm_v2 - Evolución completada. Mejor fitness: 0.6683
-2025-07-23 08:51:08,783 - INFO - genetic_algorithm_v2 - Solución única 2 encontrada con fitness: 0.6683
-2025-07-23 08:51:08,783 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 6
-2025-07-23 08:51:08,783 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
-2025-07-23 08:51:08,790 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
-2025-07-23 08:51:08,838 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4468, Promedio=0.4083, Diversidad=0.0127
-2025-07-23 08:51:10,264 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.6660, Promedio=0.5149, Diversidad=0.0127
-2025-07-23 08:51:11,628 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.6728, Promedio=0.6650, Diversidad=0.0103
-2025-07-23 08:51:12,978 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6746, Promedio=0.6696, Diversidad=0.0080
-2025-07-23 08:51:14,301 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6746, Promedio=0.6701, Diversidad=0.0100
-2025-07-23 08:51:15,648 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6746, Promedio=0.6622, Diversidad=0.0107
-2025-07-23 08:51:16,997 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6746, Promedio=0.6672, Diversidad=0.0107
-2025-07-23 08:51:18,346 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6746, Promedio=0.6701, Diversidad=0.0087
-2025-07-23 08:51:19,689 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6746, Promedio=0.6637, Diversidad=0.0113
-2025-07-23 08:51:21,027 - INFO - genetic_algorithm_v2 - Generación 225: Mejor fitness=0.6746, Promedio=0.6671, Diversidad=0.0100
-2025-07-23 08:51:22,311 - INFO - genetic_algorithm_v2 - Evolución completada. Mejor fitness: 0.6746
-2025-07-23 08:51:22,316 - INFO - genetic_algorithm_v2 - Generadas 2 soluciones únicas
-2025-07-23 08:51:24,156 - INFO - main_window - Status: Optimización completada - 2 soluciones encontradas
-2025-07-23 08:53:16,634 - INFO - main - Cerrando aplicación...
-2025-07-23 08:53:20,919 - INFO - main - Aplicación interrumpida por usuario
-2025-07-23 08:53:20,919 - INFO - main - === FINALIZANDO MENUOPTIMIZER ===
+2025-07-23 10:05:48,044 - INFO - main - === INICIANDO MENUOPTIMIZER v10.0 ===
+2025-07-23 10:05:49,006 - INFO - database_manager - Intentando conectar a la base de datos 'menu_optimizer_db' en host 'localhost'...
+2025-07-23 10:05:49,063 - INFO - main - Conexión a base de datos exitosa. 130 platos disponibles.
+2025-07-23 10:05:49,063 - INFO - main - Cargando catálogo de platos y técnicas culinarias...
+2025-07-23 10:05:49,064 - INFO - database_manager - Intentando conectar a la base de datos 'menu_optimizer_db' en host 'localhost'...
+2025-07-23 10:05:49,072 - INFO - database_manager - Conexión a la base de datos exitosa.
+2025-07-23 10:05:49,183 - INFO - database_manager - Carga completa. Se cargaron 300 ingredientes y 130 platos.
+2025-07-23 10:05:49,183 - INFO - main - Base de conocimiento cargada: 130 platos, 43 técnicas
+2025-07-23 10:05:49,542 - INFO - main_window - Ventana principal inicializada correctamente
+2025-07-23 10:05:49,542 - INFO - main - Aplicación iniciada exitosamente
+2025-07-23 10:06:29,839 - INFO - main_window - Status: Iniciando optimización...
+2025-07-23 10:06:29,840 - INFO - main_window - === INICIANDO FILTRADO DE CATÁLOGO ===
+2025-07-23 10:06:29,841 - INFO - main_window - Catálogo inicial: 130 platos
+2025-07-23 10:06:29,841 - INFO - main_window - === RESUMEN DE FILTRADO ===
+2025-07-23 10:06:29,841 - INFO - main_window - Platos aceptados: 38
+2025-07-23 10:06:29,841 - INFO - main_window - Platos rechazados: 92
+2025-07-23 10:06:29,843 - INFO - main_window -   - tecnicas_faltantes: 53 platos
+2025-07-23 10:06:29,843 - INFO - main_window -   - estaciones_faltantes: 31 platos
+2025-07-23 10:06:29,843 - INFO - main_window -   - costo_excesivo: 8 platos
+2025-07-23 10:06:29,918 - INFO - main_window - Status: Ejecutando algoritmo genético...
+2025-07-23 10:06:29,918 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 1
+2025-07-23 10:06:29,918 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
+2025-07-23 10:06:29,927 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
+2025-07-23 10:06:29,971 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4484, Promedio=0.4094, Diversidad=0.0127
+2025-07-23 10:06:31,106 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.6595, Promedio=0.6387, Diversidad=0.0110
+2025-07-23 10:06:32,037 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.6728, Promedio=0.6585, Diversidad=0.0100
+2025-07-23 10:06:32,949 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6746, Promedio=0.6613, Diversidad=0.0103
+2025-07-23 10:06:33,881 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6746, Promedio=0.6641, Diversidad=0.0103
+2025-07-23 10:06:34,913 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6746, Promedio=0.6658, Diversidad=0.0107
+2025-07-23 10:06:35,864 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6746, Promedio=0.6677, Diversidad=0.0090
+2025-07-23 10:06:36,774 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6746, Promedio=0.6709, Diversidad=0.0090
+2025-07-23 10:06:37,660 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6746, Promedio=0.6612, Diversidad=0.0110
+2025-07-23 10:06:38,602 - INFO - genetic_algorithm_v2 - Generación 225: Mejor fitness=0.6746, Promedio=0.6630, Diversidad=0.0117
+2025-07-23 10:06:39,438 - INFO - genetic_algorithm_v2 - Evolución completada. Mejor fitness: 0.6746
+2025-07-23 10:06:39,438 - INFO - genetic_algorithm_v2 - Solución única 1 encontrada con fitness: 0.6746
+2025-07-23 10:06:39,438 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 2
+2025-07-23 10:06:39,438 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
+2025-07-23 10:06:39,446 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
+2025-07-23 10:06:39,490 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4408, Promedio=0.4080, Diversidad=0.0127
+2025-07-23 10:06:40,844 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.4752, Promedio=0.4716, Diversidad=0.0110
+2025-07-23 10:06:42,150 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.4753, Promedio=0.4732, Diversidad=0.0103
+2025-07-23 10:06:43,508 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6725, Promedio=0.6570, Diversidad=0.0120
+2025-07-23 10:06:44,842 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6725, Promedio=0.6632, Diversidad=0.0097
+2025-07-23 10:06:46,184 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6746, Promedio=0.6583, Diversidad=0.0100
+2025-07-23 10:06:47,519 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6746, Promedio=0.6592, Diversidad=0.0120
+2025-07-23 10:06:48,847 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6746, Promedio=0.6671, Diversidad=0.0100
+2025-07-23 10:06:50,169 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6746, Promedio=0.6517, Diversidad=0.0113
+2025-07-23 10:06:51,483 - INFO - genetic_algorithm_v2 - Generación 225: Mejor fitness=0.6746, Promedio=0.6587, Diversidad=0.0110
+2025-07-23 10:06:52,754 - INFO - genetic_algorithm_v2 - Evolución completada. Mejor fitness: 0.6746
+2025-07-23 10:06:52,755 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 3
+2025-07-23 10:06:52,755 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
+2025-07-23 10:06:52,760 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
+2025-07-23 10:06:52,812 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4411, Promedio=0.4085, Diversidad=0.0127
+2025-07-23 10:06:54,151 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.6412, Promedio=0.5415, Diversidad=0.0127
+2025-07-23 10:06:55,479 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.6746, Promedio=0.6629, Diversidad=0.0113
+2025-07-23 10:06:56,818 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6746, Promedio=0.6676, Diversidad=0.0097
+2025-07-23 10:06:58,130 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6746, Promedio=0.6555, Diversidad=0.0120
+2025-07-23 10:06:59,462 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6746, Promedio=0.6700, Diversidad=0.0093
+2025-07-23 10:07:00,806 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6746, Promedio=0.6671, Diversidad=0.0103
+2025-07-23 10:07:02,130 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6746, Promedio=0.6574, Diversidad=0.0120
+2025-07-23 10:07:03,464 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6746, Promedio=0.6612, Diversidad=0.0107
+2025-07-23 10:07:04,797 - INFO - genetic_algorithm_v2 - Generación 225: Mejor fitness=0.6746, Promedio=0.6639, Diversidad=0.0100
+2025-07-23 10:07:06,062 - INFO - genetic_algorithm_v2 - Evolución completada. Mejor fitness: 0.6746
+2025-07-23 10:07:06,062 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 4
+2025-07-23 10:07:06,066 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
+2025-07-23 10:07:06,068 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
+2025-07-23 10:07:06,117 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4449, Promedio=0.4087, Diversidad=0.0127
+2025-07-23 10:07:07,490 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.6683, Promedio=0.6571, Diversidad=0.0117
+2025-07-23 10:07:08,810 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.6746, Promedio=0.6647, Diversidad=0.0103
+2025-07-23 10:07:10,116 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6746, Promedio=0.6671, Diversidad=0.0103
+2025-07-23 10:07:11,458 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6746, Promedio=0.6665, Diversidad=0.0103
+2025-07-23 10:07:12,771 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6746, Promedio=0.6642, Diversidad=0.0097
+2025-07-23 10:07:14,108 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6746, Promedio=0.6649, Diversidad=0.0103
+2025-07-23 10:07:15,490 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6746, Promedio=0.6651, Diversidad=0.0107
+2025-07-23 10:07:16,800 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6746, Promedio=0.6642, Diversidad=0.0100
+2025-07-23 10:07:18,121 - INFO - genetic_algorithm_v2 - Generación 225: Mejor fitness=0.6746, Promedio=0.6630, Diversidad=0.0103
+2025-07-23 10:07:19,388 - INFO - genetic_algorithm_v2 - Evolución completada. Mejor fitness: 0.6746
+2025-07-23 10:07:19,388 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 5
+2025-07-23 10:07:19,388 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
+2025-07-23 10:07:19,396 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
+2025-07-23 10:07:19,445 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4445, Promedio=0.4079, Diversidad=0.0127
+2025-07-23 10:07:20,827 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.6591, Promedio=0.5421, Diversidad=0.0127
+2025-07-23 10:07:22,183 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.6725, Promedio=0.6625, Diversidad=0.0090
+2025-07-23 10:07:23,501 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6725, Promedio=0.6648, Diversidad=0.0103
+2025-07-23 10:07:24,863 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6725, Promedio=0.6603, Diversidad=0.0103
+2025-07-23 10:07:26,202 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6725, Promedio=0.6656, Diversidad=0.0100
+2025-07-23 10:07:27,531 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6725, Promedio=0.6607, Diversidad=0.0103
+2025-07-23 10:07:28,851 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6725, Promedio=0.6554, Diversidad=0.0110
+2025-07-23 10:07:30,153 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6725, Promedio=0.6647, Diversidad=0.0103
+2025-07-23 10:07:31,466 - INFO - genetic_algorithm_v2 - Generación 225: Mejor fitness=0.6725, Promedio=0.6611, Diversidad=0.0110
+2025-07-23 10:07:32,753 - INFO - genetic_algorithm_v2 - Evolución completada. Mejor fitness: 0.6725
+2025-07-23 10:07:32,754 - INFO - genetic_algorithm_v2 - Solución única 2 encontrada con fitness: 0.6725
+2025-07-23 10:07:32,754 - INFO - genetic_algorithm_v2 - Ejecutando búsqueda de solución 6
+2025-07-23 10:07:32,754 - INFO - genetic_algorithm_v2 - Iniciando evolución del algoritmo genético
+2025-07-23 10:07:32,760 - INFO - genetic_algorithm_v2 - Población inicial creada: 150 individuos
+2025-07-23 10:07:32,809 - INFO - genetic_algorithm_v2 - Generación 0: Mejor fitness=0.4451, Promedio=0.4088, Diversidad=0.0127
+2025-07-23 10:07:34,175 - INFO - genetic_algorithm_v2 - Generación 25: Mejor fitness=0.5692, Promedio=0.4521, Diversidad=0.0127
+2025-07-23 10:07:35,515 - INFO - genetic_algorithm_v2 - Generación 50: Mejor fitness=0.6594, Promedio=0.6393, Diversidad=0.0123
+2025-07-23 10:07:36,823 - INFO - genetic_algorithm_v2 - Generación 75: Mejor fitness=0.6716, Promedio=0.6615, Diversidad=0.0103
+2025-07-23 10:07:38,185 - INFO - genetic_algorithm_v2 - Generación 100: Mejor fitness=0.6716, Promedio=0.6559, Diversidad=0.0113
+2025-07-23 10:07:39,513 - INFO - genetic_algorithm_v2 - Generación 125: Mejor fitness=0.6728, Promedio=0.6629, Diversidad=0.0097
+2025-07-23 10:07:40,834 - INFO - genetic_algorithm_v2 - Generación 150: Mejor fitness=0.6728, Promedio=0.6585, Diversidad=0.0113
+2025-07-23 10:07:42,172 - INFO - genetic_algorithm_v2 - Generación 175: Mejor fitness=0.6728, Promedio=0.6570, Diversidad=0.0117
+2025-07-23 10:07:43,495 - INFO - genetic_algorithm_v2 - Generación 200: Mejor fitness=0.6728, Promedio=0.6598, Diversidad=0.0103
+2025-07-23 10:07:44,842 - INFO - genetic_algorithm_v2 - Generación 225: Mejor fitness=0.6728, Promedio=0.6614, Diversidad=0.0107
+2025-07-23 10:07:46,134 - INFO - genetic_algorithm_v2 - Evolución completada. Mejor fitness: 0.6728
+2025-07-23 10:07:46,134 - INFO - genetic_algorithm_v2 - Solución única 3 encontrada con fitness: 0.6728
+2025-07-23 10:07:46,134 - INFO - genetic_algorithm_v2 - Generadas 3 soluciones únicas
+2025-07-23 10:07:46,136 - INFO - main_window - Status: Generando estructura cúbica de flujo de trabajo...
+2025-07-23 10:07:46,136 - INFO - cubic_integration - Creadas 8 personas con especialidades distribuidas
+2025-07-23 10:07:46,136 - INFO - cubic_integration - Creadas 9 posiciones de estaciones disponibles
+2025-07-23 10:07:46,136 - INFO - cubic_data_structure - Estructura cúbica inicializada: 8x9x90
+2025-07-23 10:07:46,136 - INFO - cubic_data_structure - Persona agregada: Chef_1 (ID: 0)
+2025-07-23 10:07:46,136 - INFO - cubic_data_structure - Persona agregada: Chef_2 (ID: 1)
+2025-07-23 10:07:46,136 - INFO - cubic_data_structure - Persona agregada: Chef_3 (ID: 2)
+2025-07-23 10:07:46,136 - INFO - cubic_data_structure - Persona agregada: Chef_4 (ID: 3)
+2025-07-23 10:07:46,136 - INFO - cubic_data_structure - Persona agregada: Chef_5 (ID: 4)
+2025-07-23 10:07:46,136 - INFO - cubic_data_structure - Persona agregada: Chef_6 (ID: 5)
+2025-07-23 10:07:46,136 - INFO - cubic_data_structure - Persona agregada: Chef_7 (ID: 6)
+2025-07-23 10:07:46,136 - INFO - cubic_data_structure - Persona agregada: Chef_8 (ID: 7)
+2025-07-23 10:07:46,136 - INFO - cubic_data_structure - Posición agregada: Ahumador (ID: 0)
+2025-07-23 10:07:46,142 - INFO - cubic_data_structure - Posición agregada: Bar de Jugos y Smoothies (ID: 1)
+2025-07-23 10:07:46,142 - INFO - cubic_data_structure - Posición agregada: Bebidas y Cócteles (ID: 2)
+2025-07-23 10:07:46,142 - INFO - cubic_data_structure - Posición agregada: Ensaladas y Fríos (ID: 3)
+2025-07-23 10:07:46,142 - INFO - cubic_data_structure - Posición agregada: Ensamblaje y Emplatado (ID: 4)
+2025-07-23 10:07:46,143 - INFO - cubic_data_structure - Posición agregada: Estación de Sushis (ID: 5)
+2025-07-23 10:07:46,143 - INFO - cubic_data_structure - Posición agregada: Estofados y Salsas (ID: 6)
+2025-07-23 10:07:46,143 - INFO - cubic_data_structure - Posición agregada: Fritura (ID: 7)
+2025-07-23 10:07:46,143 - INFO - cubic_data_structure - Posición agregada: Horno y Rostizado (ID: 8)
+2025-07-23 10:07:46,143 - INFO - cubic_data_structure - Etapa agregada: Torta Ahogada Tapatía: Rellenar bolillo con carnitas (ID: 0)
+2025-07-23 10:07:46,144 - INFO - cubic_data_structure - Etapa agregada: Torta Ahogada Tapatía: Preparar salsa de tomate picante (ID: 1)
+2025-07-23 10:07:46,144 - INFO - cubic_data_structure - Etapa agregada: Torta Ahogada Tapatía: Bañar torta con salsa (ID: 2)
+2025-07-23 10:07:46,144 - INFO - cubic_data_structure - Etapa agregada: Torta Ahogada Tapatía: Servir con frijoles refritos (ID: 3)
+2025-07-23 10:07:46,145 - INFO - cubic_data_structure - Etapa agregada: Cocktail de Sal de Gusano: Moler gusanos de maguey secos (ID: 4)
+2025-07-23 10:07:46,145 - INFO - cubic_data_structure - Etapa agregada: Cocktail de Sal de Gusano: Mezclar con sal de mar (ID: 5)
+2025-07-23 10:07:46,145 - INFO - cubic_data_structure - Etapa agregada: Cocktail de Sal de Gusano: Preparar rim de sal especiada (ID: 6)
+2025-07-23 10:07:46,146 - INFO - cubic_data_structure - Etapa agregada: Cocktail de Sal de Gusano: Mezclar jugo de limón y tuna (ID: 7)
+2025-07-23 10:07:46,146 - INFO - cubic_data_structure - Etapa agregada: Cocktail de Sal de Gusano: Servir en vaso con rim (ID: 8)
+2025-07-23 10:07:46,146 - INFO - cubic_data_structure - Etapa agregada: Chilaquiles Verdes con Pollo: Freír totopos hasta crujientes (ID: 9)
+2025-07-23 10:07:46,146 - INFO - cubic_data_structure - Etapa agregada: Chilaquiles Verdes con Pollo: Preparar salsa verde (ID: 10)
+2025-07-23 10:07:46,146 - INFO - cubic_data_structure - Etapa agregada: Chilaquiles Verdes con Pollo: Cocinar pollo deshebrado (ID: 11)
+2025-07-23 10:07:46,146 - INFO - cubic_data_structure - Etapa agregada: Chilaquiles Verdes con Pollo: Mezclar totopos con salsa (ID: 12)
+2025-07-23 10:07:46,147 - INFO - cubic_data_structure - Etapa agregada: Chilaquiles Verdes con Pollo: Servir con crema y queso (ID: 13)
+2025-07-23 10:07:46,148 - INFO - cubic_data_structure - Etapa agregada: Molletes Gratinados: Cortar bolillos por la mitad (ID: 14)
+2025-07-23 10:07:46,148 - INFO - cubic_data_structure - Etapa agregada: Molletes Gratinados: Untar frijoles refritos (ID: 15)
+2025-07-23 10:07:46,149 - INFO - cubic_data_structure - Etapa agregada: Molletes Gratinados: Cubrir con queso oaxaca (ID: 16)
+2025-07-23 10:07:46,149 - INFO - cubic_data_structure - Etapa agregada: Molletes Gratinados: Gratinar en horno (ID: 17)
+2025-07-23 10:07:46,149 - INFO - cubic_data_structure - Etapa agregada: Molletes Gratinados: Servir con pico de gallo (ID: 18)
+2025-07-23 10:07:46,149 - INFO - cubic_data_structure - Etapa agregada: Lassi de Mango y Cardamomo: Pelar y cortar mango maduro (ID: 19)
+2025-07-23 10:07:46,150 - INFO - cubic_data_structure - Etapa agregada: Lassi de Mango y Cardamomo: Licuar mango con yogurt griego (ID: 20)
+2025-07-23 10:07:46,150 - INFO - cubic_data_structure - Etapa agregada: Lassi de Mango y Cardamomo: Agregar cardamomo y miel (ID: 21)
+2025-07-23 10:07:46,151 - INFO - cubic_data_structure - Etapa agregada: Lassi de Mango y Cardamomo: Decorar con semillas de chía (ID: 22)
+2025-07-23 10:07:46,151 - INFO - cubic_data_structure - Etapa agregada: Lassi de Mango y Cardamomo: Servir bien frío (ID: 23)
+2025-07-23 10:07:46,151 - INFO - cubic_data_structure - Etapa agregada: Crema de Champiñones: Limpiar y laminar champiñones finamente (ID: 24)
+2025-07-23 10:07:46,152 - INFO - cubic_data_structure - Etapa agregada: Crema de Champiñones: Sofreír cebolla hasta transparentar (ID: 25)
+2025-07-23 10:07:46,152 - INFO - cubic_data_structure - Etapa agregada: Crema de Champiñones: Agregar champiñones y cocinar hasta reducir agua (ID: 26)
+2025-07-23 10:07:46,152 - INFO - cubic_data_structure - Etapa agregada: Crema de Champiñones: Licuar con caldo y crema hasta suave (ID: 27)
+2025-07-23 10:07:46,152 - INFO - cubic_data_structure - Etapa agregada: Crema de Champiñones: Colar, sazonar y servir con perejil (ID: 28)
+2025-07-23 10:07:46,152 - INFO - cubic_data_structure - Etapa agregada: Queso Fundido con Chorizo: Freír chorizo hasta dorar (ID: 29)
+2025-07-23 10:07:46,152 - INFO - cubic_data_structure - Etapa agregada: Queso Fundido con Chorizo: Agregar cebolla picada (ID: 30)
+2025-07-23 10:07:46,153 - INFO - cubic_data_structure - Etapa agregada: Queso Fundido con Chorizo: Añadir queso oaxaca desmenuzado (ID: 31)
+2025-07-23 10:07:46,153 - INFO - cubic_data_structure - Etapa agregada: Queso Fundido con Chorizo: Derretir hasta cremoso (ID: 32)
+2025-07-23 10:07:46,153 - INFO - cubic_data_structure - Etapa agregada: Queso Fundido con Chorizo: Servir en molcajete con tortillas (ID: 33)
+2025-07-23 10:07:46,153 - INFO - cubic_data_structure - Etapa agregada: Esquites Callejeros: Hervir granos de elote (ID: 34)
+2025-07-23 10:07:46,153 - INFO - cubic_data_structure - Etapa agregada: Esquites Callejeros: Servir en vaso con crema (ID: 35)
+2025-07-23 10:07:46,155 - INFO - cubic_data_structure - Etapa agregada: Esquites Callejeros: Espolvorear queso y chile (ID: 36)
+2025-07-23 10:07:46,155 - INFO - cubic_data_structure - Etapa agregada: Esquites Callejeros: Agregar limón al gusto (ID: 37)
+2025-07-23 10:07:46,155 - INFO - cubic_data_structure - Etapa agregada: Papas a la Francesa Artesanales: Cortar papas en bastones uniformes (ID: 38)
+2025-07-23 10:07:46,155 - INFO - cubic_data_structure - Etapa agregada: Papas a la Francesa Artesanales: Freír en aceite caliente hasta dorar (ID: 39)
+2025-07-23 10:07:46,155 - INFO - cubic_data_structure - Etapa agregada: Papas a la Francesa Artesanales: Escurrir y sazonar con sal (ID: 40)
+2025-07-23 10:07:46,155 - INFO - cubic_data_structure - Etapa agregada: Tostadas de Frijoles: Freír las tortillas en aceite caliente hasta que estén crujientes y planas (ID: 41)
+2025-07-23 10:07:46,156 - INFO - cubic_data_structure - Etapa agregada: Tostadas de Frijoles: Escurrir el exceso de aceite y reservar las tostadas (ID: 42)
+2025-07-23 10:07:46,156 - INFO - cubic_data_structure - Etapa agregada: Tostadas de Frijoles: Untar una capa uniforme de frijoles sobre cada tostada (ID: 43)
+2025-07-23 10:07:46,156 - INFO - cubic_data_structure - Etapa agregada: Tostadas de Frijoles: Agregar lechuga picada, crema y queso desmoronado al gusto (ID: 44)
+2025-07-23 10:07:46,156 - INFO - cubic_data_structure - Etapa agregada: Sopa de Tortilla Tradicional: Cortar tortillas en tiras y freír hasta crujientes (ID: 45)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Sopa de Tortilla Tradicional: Asar tomates, cebolla y ajo (ID: 46)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Sopa de Tortilla Tradicional: Licuar verduras asadas para hacer caldo (ID: 47)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Sopa de Tortilla Tradicional: Colar y guisar el caldo con especias (ID: 48)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Sopa de Tortilla Tradicional: Servir con totopos, queso, aguacate y crema (ID: 49)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Margarita de Mango Chamoy: Escarchar el borde de una copa con limón, sal y chile en polvo (ID: 50)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Margarita de Mango Chamoy: Licuar el mango con jugo de limón, miel y tequila (ID: 51)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Margarita de Mango Chamoy: Agregar hielo y licuar de nuevo hasta punto frappé (ID: 52)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Margarita de Mango Chamoy: Servir en la copa escarchada y decorar con chamoy (ID: 53)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Ensalada Mixta de Temporada: Lavar y desinfectar todas las verduras (ID: 54)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Ensalada Mixta de Temporada: Cortar en trozos atractivos (ID: 55)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Ensalada Mixta de Temporada: Aderezar con aceite de oliva y limón (ID: 56)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Curry Rojo de Vegetales: Cortar todas las verduras en trozos medianos (ID: 57)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Curry Rojo de Vegetales: Sofreír jengibre y cúrcuma para base aromática (ID: 58)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Curry Rojo de Vegetales: Agregar verduras más duras primero (zanahoria, brócoli) (ID: 59)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Curry Rojo de Vegetales: Incorporar verduras tiernas y guisar en leche de coco (ID: 60)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Curry Rojo de Vegetales: Ajustar sazón y servir con arroz (ID: 61)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Bruschetta de Tomate y Albahaca: Cortar baguette en rebanadas gruesas (ID: 62)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Bruschetta de Tomate y Albahaca: Tostar pan hasta dorar ligeramente (ID: 63)
+2025-07-23 10:07:46,157 - INFO - cubic_data_structure - Etapa agregada: Bruschetta de Tomate y Albahaca: Cortar tomate en cubos pequeños (ID: 64)
+2025-07-23 10:07:46,161 - INFO - cubic_data_structure - Etapa agregada: Bruschetta de Tomate y Albahaca: Mezclar tomate con albahaca, ajo y aceite (ID: 65)
+2025-07-23 10:07:46,161 - INFO - cubic_data_structure - Etapa agregada: Bruschetta de Tomate y Albahaca: Servir mezcla sobre pan tostado (ID: 66)
+2025-07-23 10:07:46,162 - INFO - cubic_data_structure - Etapa agregada: Arroz Pilaf con Almendras: Tostar almendras hasta dorar (ID: 67)
+2025-07-23 10:07:46,162 - INFO - cubic_data_structure - Etapa agregada: Arroz Pilaf con Almendras: Sofreír cebolla y arroz hasta transparentar (ID: 68)
+2025-07-23 10:07:46,162 - INFO - cubic_data_structure - Etapa agregada: Arroz Pilaf con Almendras: Agregar caldo caliente y cocinar (ID: 69)
+2025-07-23 10:07:46,162 - INFO - cubic_data_structure - Etapa agregada: Arroz Pilaf con Almendras: Incorporar almendras al final (ID: 70)
+2025-07-23 10:07:46,162 - INFO - cubic_data_structure - Etapa agregada: Verduras Salteadas al Wok: Cortar verduras en trozos uniformes (ID: 71)
+2025-07-23 10:07:46,162 - INFO - cubic_data_structure - Etapa agregada: Verduras Salteadas al Wok: Saltear en wok a fuego alto con salsa de soya (ID: 72)
+2025-07-23 10:07:46,162 - INFO - cubic_data_structure - Etapa agregada: Puré de Papa con Mantequilla: Hervir papas peladas hasta tiernas (ID: 73)
+2025-07-23 10:07:46,162 - INFO - cubic_data_structure - Etapa agregada: Puré de Papa con Mantequilla: Escurrir y hacer puré con mantequilla y crema (ID: 74)
+2025-07-23 10:07:46,164 - INFO - cubic_data_structure - Etapa agregada: Puré de Papa con Mantequilla: Sazonar con sal y servir caliente (ID: 75)
+2025-07-23 10:07:46,164 - INFO - cubic_data_structure - Etapa agregada: Michelada Preparada: Preparar rim de sal y chile (ID: 76)
+2025-07-23 10:07:46,164 - INFO - cubic_data_structure - Etapa agregada: Michelada Preparada: Mezclar jugo de limón con especias (ID: 77)
+2025-07-23 10:07:46,164 - INFO - cubic_data_structure - Etapa agregada: Michelada Preparada: Agregar hielo y cerveza (ID: 78)
+2025-07-23 10:07:46,165 - INFO - cubic_data_structure - Etapa agregada: Michelada Preparada: Servir en vaso preparado (ID: 79)
+2025-07-23 10:07:46,165 - INFO - cubic_data_structure - Estructura cúbica creada: 80 etapas de 20 platos
+2025-07-23 10:07:46,165 - WARNING - cubic_data_structure - Persona Chef_1 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,165 - WARNING - cubic_data_structure - Persona Chef_2 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,165 - WARNING - cubic_data_structure - Persona Chef_2 no domina técnica Guisar
+2025-07-23 10:07:46,166 - WARNING - cubic_data_structure - Persona Chef_3 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,166 - WARNING - cubic_data_structure - Persona Chef_4 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,166 - WARNING - cubic_data_structure - Persona Chef_5 no tiene habilidades requeridas para Bebidas y Cócteles
+2025-07-23 10:07:46,166 - WARNING - cubic_data_structure - Persona Chef_6 no tiene habilidades requeridas para Bebidas y Cócteles
+2025-07-23 10:07:46,166 - WARNING - cubic_data_structure - Persona Chef_7 no tiene habilidades requeridas para Bebidas y Cócteles
+2025-07-23 10:07:46,166 - WARNING - cubic_data_structure - Persona Chef_8 no tiene habilidades requeridas para Bebidas y Cócteles
+2025-07-23 10:07:46,166 - WARNING - cubic_data_structure - Persona Chef_1 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,167 - WARNING - cubic_data_structure - Persona Chef_3 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,167 - WARNING - cubic_data_structure - Persona Chef_3 no domina técnica Guisar
+2025-07-23 10:07:46,167 - WARNING - cubic_data_structure - Persona Chef_4 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,167 - WARNING - cubic_data_structure - Persona Chef_5 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,167 - WARNING - cubic_data_structure - Persona Chef_5 no domina técnica Salteado
+2025-07-23 10:07:46,167 - WARNING - cubic_data_structure - Persona Chef_6 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,167 - WARNING - cubic_data_structure - Persona Chef_7 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,167 - WARNING - cubic_data_structure - Persona Chef_8 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,168 - WARNING - cubic_data_structure - Persona Chef_1 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,168 - WARNING - cubic_data_structure - Persona Chef_2 no tiene habilidades requeridas para Horno y Rostizado
+2025-07-23 10:07:46,168 - WARNING - cubic_data_structure - Persona Chef_2 no domina técnica Horneado
+2025-07-23 10:07:46,168 - WARNING - cubic_data_structure - Persona Chef_3 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,169 - WARNING - cubic_data_structure - Persona Chef_4 no tiene habilidades requeridas para Bar de Jugos y Smoothies
+2025-07-23 10:07:46,169 - WARNING - cubic_data_structure - Persona Chef_5 no tiene habilidades requeridas para Bar de Jugos y Smoothies
+2025-07-23 10:07:46,169 - WARNING - cubic_data_structure - Persona Chef_6 no tiene habilidades requeridas para Bar de Jugos y Smoothies
+2025-07-23 10:07:46,169 - WARNING - cubic_data_structure - Persona Chef_7 no tiene habilidades requeridas para Bar de Jugos y Smoothies
+2025-07-23 10:07:46,169 - WARNING - cubic_data_structure - Persona Chef_8 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,169 - WARNING - cubic_data_structure - Persona Chef_1 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,170 - WARNING - cubic_data_structure - Persona Chef_2 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,170 - WARNING - cubic_data_structure - Persona Chef_2 no domina técnica Salteado
+2025-07-23 10:07:46,170 - WARNING - cubic_data_structure - Persona Chef_3 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,170 - WARNING - cubic_data_structure - Persona Chef_3 no domina técnica Salteado
+2025-07-23 10:07:46,170 - WARNING - cubic_data_structure - Persona Chef_4 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,171 - WARNING - cubic_data_structure - Persona Chef_5 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,171 - WARNING - cubic_data_structure - Persona Chef_6 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,171 - WARNING - cubic_data_structure - Persona Chef_6 no domina técnica Freír
+2025-07-23 10:07:46,171 - WARNING - cubic_data_structure - Persona Chef_1 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,173 - WARNING - cubic_data_structure - Persona Chef_2 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,173 - WARNING - cubic_data_structure - Persona Chef_3 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,173 - WARNING - cubic_data_structure - Persona Chef_4 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,173 - WARNING - cubic_data_structure - Persona Chef_5 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,173 - WARNING - cubic_data_structure - Persona Chef_6 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,173 - WARNING - cubic_data_structure - Persona Chef_7 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,173 - WARNING - cubic_data_structure - Persona Chef_8 no tiene habilidades requeridas para Fritura
+2025-07-23 10:07:46,173 - WARNING - cubic_data_structure - Persona Chef_8 no domina técnica Freír
+2025-07-23 10:07:46,174 - WARNING - cubic_data_structure - Persona Chef_3 no tiene habilidades requeridas para Fritura
+2025-07-23 10:07:46,174 - WARNING - cubic_data_structure - Persona Chef_4 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,174 - WARNING - cubic_data_structure - Persona Chef_5 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,175 - WARNING - cubic_data_structure - Persona Chef_6 no tiene habilidades requeridas para Fritura
+2025-07-23 10:07:46,175 - WARNING - cubic_data_structure - Persona Chef_6 no domina técnica Freír
+2025-07-23 10:07:46,175 - WARNING - cubic_data_structure - Persona Chef_7 no tiene habilidades requeridas para Horno y Rostizado
+2025-07-23 10:07:46,175 - WARNING - cubic_data_structure - Persona Chef_7 no domina técnica Horneado
+2025-07-23 10:07:46,175 - WARNING - cubic_data_structure - Persona Chef_1 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,175 - WARNING - cubic_data_structure - Persona Chef_1 no domina técnica Guisar
+2025-07-23 10:07:46,175 - WARNING - cubic_data_structure - Persona Chef_2 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,176 - WARNING - cubic_data_structure - Persona Chef_3 no tiene habilidades requeridas para Bebidas y Cócteles
+2025-07-23 10:07:46,176 - WARNING - cubic_data_structure - Persona Chef_4 no tiene habilidades requeridas para Bar de Jugos y Smoothies
+2025-07-23 10:07:46,176 - WARNING - cubic_data_structure - Persona Chef_5 no tiene habilidades requeridas para Bar de Jugos y Smoothies
+2025-07-23 10:07:46,176 - WARNING - cubic_data_structure - Persona Chef_6 no tiene habilidades requeridas para Bebidas y Cócteles
+2025-07-23 10:07:46,176 - WARNING - cubic_data_structure - Persona Chef_7 no tiene habilidades requeridas para Ensaladas y Fríos
+2025-07-23 10:07:46,177 - WARNING - cubic_data_structure - Persona Chef_8 no tiene habilidades requeridas para Ensaladas y Fríos
+2025-07-23 10:07:46,177 - WARNING - cubic_data_structure - Persona Chef_1 no tiene habilidades requeridas para Ensaladas y Fríos
+2025-07-23 10:07:46,177 - WARNING - cubic_data_structure - Persona Chef_2 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,177 - WARNING - cubic_data_structure - Persona Chef_3 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,178 - WARNING - cubic_data_structure - Persona Chef_3 no domina técnica Salteado
+2025-07-23 10:07:46,178 - WARNING - cubic_data_structure - Persona Chef_4 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,178 - WARNING - cubic_data_structure - Persona Chef_4 no domina técnica Salteado
+2025-07-23 10:07:46,178 - WARNING - cubic_data_structure - Persona Chef_5 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,178 - WARNING - cubic_data_structure - Persona Chef_5 no domina técnica Guisar
+2025-07-23 10:07:46,178 - WARNING - cubic_data_structure - Persona Chef_6 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,178 - WARNING - cubic_data_structure - Persona Chef_7 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,178 - WARNING - cubic_data_structure - Persona Chef_8 no tiene habilidades requeridas para Horno y Rostizado
+2025-07-23 10:07:46,180 - WARNING - cubic_data_structure - Persona Chef_8 no domina técnica Horneado
+2025-07-23 10:07:46,180 - WARNING - cubic_data_structure - Persona Chef_1 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,180 - WARNING - cubic_data_structure - Persona Chef_2 no tiene habilidades requeridas para Ensaladas y Fríos
+2025-07-23 10:07:46,180 - WARNING - cubic_data_structure - Persona Chef_3 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,180 - WARNING - cubic_data_structure - Persona Chef_4 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,180 - WARNING - cubic_data_structure - Persona Chef_4 no domina técnica Salteado
+2025-07-23 10:07:46,181 - WARNING - cubic_data_structure - Persona Chef_5 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,181 - WARNING - cubic_data_structure - Persona Chef_5 no domina técnica Salteado
+2025-07-23 10:07:46,181 - WARNING - cubic_data_structure - Persona Chef_6 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,181 - WARNING - cubic_data_structure - Persona Chef_6 no domina técnica Guisar
+2025-07-23 10:07:46,181 - WARNING - cubic_data_structure - Persona Chef_8 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,181 - WARNING - cubic_data_structure - Persona Chef_1 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,181 - WARNING - cubic_data_structure - Persona Chef_1 no domina técnica Salteado
+2025-07-23 10:07:46,181 - WARNING - cubic_data_structure - Persona Chef_2 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,181 - WARNING - cubic_data_structure - Persona Chef_3 no tiene habilidades requeridas para Estofados y Salsas
+2025-07-23 10:07:46,181 - WARNING - cubic_data_structure - Persona Chef_4 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,182 - WARNING - cubic_data_structure - Persona Chef_5 no tiene habilidades requeridas para Bebidas y Cócteles
+2025-07-23 10:07:46,182 - WARNING - cubic_data_structure - Persona Chef_6 no tiene habilidades requeridas para Bebidas y Cócteles
+2025-07-23 10:07:46,182 - WARNING - cubic_data_structure - Persona Chef_7 no tiene habilidades requeridas para Bebidas y Cócteles
+2025-07-23 10:07:46,182 - WARNING - cubic_data_structure - Persona Chef_8 no tiene habilidades requeridas para Ensamblaje y Emplatado
+2025-07-23 10:07:46,187 - WARNING - cubic_data_structure - Se encontraron 15 inconsistencias:
+2025-07-23 10:07:46,187 - WARNING - cubic_data_structure -   - Posición Bar de Jugos y Smoothies excede capacidad: 4 > 1
+2025-07-23 10:07:46,187 - WARNING - cubic_data_structure -   - Posición Bebidas y Cócteles excede capacidad: 5 > 1
+2025-07-23 10:07:46,187 - WARNING - cubic_data_structure -   - Posición Ensaladas y Fríos excede capacidad: 4 > 2
+2025-07-23 10:07:46,187 - WARNING - cubic_data_structure -   - Posición Ensamblaje y Emplatado excede capacidad: 8 > 3
+2025-07-23 10:07:46,187 - WARNING - cubic_data_structure -   - Posición Estofados y Salsas excede capacidad: 8 > 2
+2025-07-23 10:07:46,187 - WARNING - cubic_data_structure -   - Posición Fritura excede capacidad: 5 > 1
+2025-07-23 10:07:46,189 - WARNING - cubic_data_structure -   - Posición Horno y Rostizado excede capacidad: 3 > 2
+2025-07-23 10:07:46,189 - WARNING - cubic_data_structure -   - Persona Chef_1 excede capacidad: 4 > 2
+2025-07-23 10:07:46,189 - WARNING - cubic_data_structure -   - Persona Chef_2 excede capacidad: 5 > 2
+2025-07-23 10:07:46,189 - WARNING - cubic_data_structure -   - Persona Chef_3 excede capacidad: 4 > 2
+2025-07-23 10:07:46,189 - WARNING - cubic_data_structure -   - Persona Chef_4 excede capacidad: 3 > 2
+2025-07-23 10:07:46,189 - WARNING - cubic_data_structure -   - Persona Chef_5 excede capacidad: 4 > 2
+2025-07-23 10:07:46,189 - WARNING - cubic_data_structure -   - Persona Chef_6 excede capacidad: 5 > 2
+2025-07-23 10:07:46,189 - WARNING - cubic_data_structure -   - Persona Chef_7 excede capacidad: 6 > 2
+2025-07-23 10:07:46,189 - WARNING - cubic_data_structure -   - Persona Chef_8 excede capacidad: 6 > 2
+2025-07-23 10:07:46,190 - WARNING - cubic_integration - Estructura inicial no es consistente, aplicando optimización...
+2025-07-23 10:07:46,190 - INFO - cubic_integration - Iniciando optimización de flujo de trabajo...
+2025-07-23 10:07:46,190 - INFO - cubic_data_structure - Iniciando optimización de asignaciones...
+2025-07-23 10:07:46,197 - WARNING - cubic_data_structure - Se encontraron 15 inconsistencias:
+2025-07-23 10:07:46,197 - WARNING - cubic_data_structure -   - Posición Bar de Jugos y Smoothies excede capacidad: 4 > 1
+2025-07-23 10:07:46,197 - WARNING - cubic_data_structure -   - Posición Bebidas y Cócteles excede capacidad: 5 > 1
+2025-07-23 10:07:46,198 - WARNING - cubic_data_structure -   - Posición Ensaladas y Fríos excede capacidad: 4 > 2
+2025-07-23 10:07:46,198 - WARNING - cubic_data_structure -   - Posición Ensamblaje y Emplatado excede capacidad: 8 > 3
+2025-07-23 10:07:46,198 - WARNING - cubic_data_structure -   - Posición Estofados y Salsas excede capacidad: 8 > 2
+2025-07-23 10:07:46,200 - WARNING - cubic_data_structure -   - Posición Fritura excede capacidad: 5 > 1
+2025-07-23 10:07:46,200 - WARNING - cubic_data_structure -   - Posición Horno y Rostizado excede capacidad: 3 > 2
+2025-07-23 10:07:46,200 - WARNING - cubic_data_structure -   - Persona Chef_1 excede capacidad: 4 > 2
+2025-07-23 10:07:46,200 - WARNING - cubic_data_structure -   - Persona Chef_2 excede capacidad: 5 > 2
+2025-07-23 10:07:46,200 - WARNING - cubic_data_structure -   - Persona Chef_3 excede capacidad: 4 > 2
+2025-07-23 10:07:46,200 - WARNING - cubic_data_structure -   - Persona Chef_4 excede capacidad: 3 > 2
+2025-07-23 10:07:46,201 - WARNING - cubic_data_structure -   - Persona Chef_5 excede capacidad: 4 > 2
+2025-07-23 10:07:46,201 - WARNING - cubic_data_structure -   - Persona Chef_6 excede capacidad: 5 > 2
+2025-07-23 10:07:46,201 - WARNING - cubic_data_structure -   - Persona Chef_7 excede capacidad: 6 > 2
+2025-07-23 10:07:46,201 - WARNING - cubic_data_structure -   - Persona Chef_8 excede capacidad: 6 > 2
+2025-07-23 10:07:46,201 - INFO - cubic_data_structure - Optimización completada. Inconsistencias: 15 -> 15
+2025-07-23 10:07:46,201 - INFO - cubic_integration - Estructura cúbica inicializada exitosamente
+2025-07-23 10:07:46,201 - INFO - cubic_integration - Integración de estructura cúbica completada exitosamente
+2025-07-23 10:07:46,208 - INFO - cubic_integration - Reporte de flujo: 80 asignaciones, 15 inconsistencias
+2025-07-23 10:07:46,208 - INFO - main_window - Estructura cúbica generada exitosamente
+2025-07-23 10:07:46,213 - WARNING - cubic_data_structure - Se encontraron 15 inconsistencias:
+2025-07-23 10:07:46,213 - WARNING - cubic_data_structure -   - Posición Bar de Jugos y Smoothies excede capacidad: 4 > 1
+2025-07-23 10:07:46,213 - WARNING - cubic_data_structure -   - Posición Bebidas y Cócteles excede capacidad: 5 > 1
+2025-07-23 10:07:46,213 - WARNING - cubic_data_structure -   - Posición Ensaladas y Fríos excede capacidad: 4 > 2
+2025-07-23 10:07:46,213 - WARNING - cubic_data_structure -   - Posición Ensamblaje y Emplatado excede capacidad: 8 > 3
+2025-07-23 10:07:46,216 - WARNING - cubic_data_structure -   - Posición Estofados y Salsas excede capacidad: 8 > 2
+2025-07-23 10:07:46,216 - WARNING - cubic_data_structure -   - Posición Fritura excede capacidad: 5 > 1
+2025-07-23 10:07:46,216 - WARNING - cubic_data_structure -   - Posición Horno y Rostizado excede capacidad: 3 > 2
+2025-07-23 10:07:46,216 - WARNING - cubic_data_structure -   - Persona Chef_1 excede capacidad: 4 > 2
+2025-07-23 10:07:46,216 - WARNING - cubic_data_structure -   - Persona Chef_2 excede capacidad: 5 > 2
+2025-07-23 10:07:46,216 - WARNING - cubic_data_structure -   - Persona Chef_3 excede capacidad: 4 > 2
+2025-07-23 10:07:46,217 - WARNING - cubic_data_structure -   - Persona Chef_4 excede capacidad: 3 > 2
+2025-07-23 10:07:46,217 - WARNING - cubic_data_structure -   - Persona Chef_5 excede capacidad: 4 > 2
+2025-07-23 10:07:46,217 - WARNING - cubic_data_structure -   - Persona Chef_6 excede capacidad: 5 > 2
+2025-07-23 10:07:46,217 - WARNING - cubic_data_structure -   - Persona Chef_7 excede capacidad: 6 > 2
+2025-07-23 10:07:46,217 - WARNING - cubic_data_structure -   - Persona Chef_8 excede capacidad: 6 > 2
+2025-07-23 10:07:46,219 - WARNING - main_window - Estructura cúbica inicial tiene inconsistencias. Optimizando...
+2025-07-23 10:07:46,221 - INFO - cubic_integration - Iniciando optimización de flujo de trabajo...
+2025-07-23 10:07:46,221 - INFO - cubic_data_structure - Iniciando optimización de asignaciones...
+2025-07-23 10:07:46,228 - WARNING - cubic_data_structure - Se encontraron 15 inconsistencias:
+2025-07-23 10:07:46,228 - WARNING - cubic_data_structure -   - Posición Bar de Jugos y Smoothies excede capacidad: 4 > 1
+2025-07-23 10:07:46,228 - WARNING - cubic_data_structure -   - Posición Bebidas y Cócteles excede capacidad: 5 > 1
+2025-07-23 10:07:46,229 - WARNING - cubic_data_structure -   - Posición Ensaladas y Fríos excede capacidad: 4 > 2
+2025-07-23 10:07:46,229 - WARNING - cubic_data_structure -   - Posición Ensamblaje y Emplatado excede capacidad: 8 > 3
+2025-07-23 10:07:46,229 - WARNING - cubic_data_structure -   - Posición Estofados y Salsas excede capacidad: 8 > 2
+2025-07-23 10:07:46,229 - WARNING - cubic_data_structure -   - Posición Fritura excede capacidad: 5 > 1
+2025-07-23 10:07:46,229 - WARNING - cubic_data_structure -   - Posición Horno y Rostizado excede capacidad: 3 > 2
+2025-07-23 10:07:46,229 - WARNING - cubic_data_structure -   - Persona Chef_1 excede capacidad: 4 > 2
+2025-07-23 10:07:46,229 - WARNING - cubic_data_structure -   - Persona Chef_2 excede capacidad: 5 > 2
+2025-07-23 10:07:46,229 - WARNING - cubic_data_structure -   - Persona Chef_3 excede capacidad: 4 > 2
+2025-07-23 10:07:46,230 - WARNING - cubic_data_structure -   - Persona Chef_4 excede capacidad: 3 > 2
+2025-07-23 10:07:46,230 - WARNING - cubic_data_structure -   - Persona Chef_5 excede capacidad: 4 > 2
+2025-07-23 10:07:46,230 - WARNING - cubic_data_structure -   - Persona Chef_6 excede capacidad: 5 > 2
+2025-07-23 10:07:46,230 - WARNING - cubic_data_structure -   - Persona Chef_7 excede capacidad: 6 > 2
+2025-07-23 10:07:46,230 - WARNING - cubic_data_structure -   - Persona Chef_8 excede capacidad: 6 > 2
+2025-07-23 10:07:46,230 - INFO - cubic_data_structure - Optimización completada. Inconsistencias: 15 -> 15
+2025-07-23 10:07:46,494 - WARNING - cubic_data_structure - Se encontraron 15 inconsistencias:
+2025-07-23 10:07:46,494 - WARNING - cubic_data_structure -   - Posición Bar de Jugos y Smoothies excede capacidad: 4 > 1
+2025-07-23 10:07:46,495 - WARNING - cubic_data_structure -   - Posición Bebidas y Cócteles excede capacidad: 5 > 1
+2025-07-23 10:07:46,496 - WARNING - cubic_data_structure -   - Posición Ensaladas y Fríos excede capacidad: 4 > 2
+2025-07-23 10:07:46,496 - WARNING - cubic_data_structure -   - Posición Ensamblaje y Emplatado excede capacidad: 8 > 3
+2025-07-23 10:07:46,496 - WARNING - cubic_data_structure -   - Posición Estofados y Salsas excede capacidad: 8 > 2
+2025-07-23 10:07:46,496 - WARNING - cubic_data_structure -   - Posición Fritura excede capacidad: 5 > 1
+2025-07-23 10:07:46,496 - WARNING - cubic_data_structure -   - Posición Horno y Rostizado excede capacidad: 3 > 2
+2025-07-23 10:07:46,496 - WARNING - cubic_data_structure -   - Persona Chef_1 excede capacidad: 4 > 2
+2025-07-23 10:07:46,496 - WARNING - cubic_data_structure -   - Persona Chef_2 excede capacidad: 5 > 2
+2025-07-23 10:07:46,496 - WARNING - cubic_data_structure -   - Persona Chef_3 excede capacidad: 4 > 2
+2025-07-23 10:07:46,496 - WARNING - cubic_data_structure -   - Persona Chef_4 excede capacidad: 3 > 2
+2025-07-23 10:07:46,496 - WARNING - cubic_data_structure -   - Persona Chef_5 excede capacidad: 4 > 2
+2025-07-23 10:07:46,496 - WARNING - cubic_data_structure -   - Persona Chef_6 excede capacidad: 5 > 2
+2025-07-23 10:07:46,496 - WARNING - cubic_data_structure -   - Persona Chef_7 excede capacidad: 6 > 2
+2025-07-23 10:07:46,496 - WARNING - cubic_data_structure -   - Persona Chef_8 excede capacidad: 6 > 2
+2025-07-23 10:07:47,627 - INFO - main_window - Status: Optimización completada - 3 soluciones encontradas
+2025-07-23 10:08:03,189 - INFO - main_window - Status: Listo
+2025-07-23 10:08:22,079 - INFO - main - Cerrando aplicación...
