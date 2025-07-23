@@ -28,11 +28,11 @@ class MenuOptimizerApp(tk.Tk):
         self.notebook = ttk.Notebook(self)
         self.notebook.pack(pady=10, padx=10, fill="both", expand=True)
         
-        # Presets de objetivos por tipo de establecimiento
+        # Presets de objetivos por tipo de establecimiento (CORREGIDOS)
         self.establishment_presets = {
-            'casual': {'ganancia': 0.6, 'tiempo': 0.8, 'popularidad': 0.9, 'desperdicio': 0.5},
-            'elegante': {'ganancia': 0.8, 'tiempo': 0.4, 'popularidad': 0.7, 'desperdicio': 0.6},
-            'comida_rapida': {'ganancia': 0.7, 'tiempo': 1.0, 'popularidad': 0.8, 'desperdicio': 0.7}
+            'casual': {'ganancia': 0.5, 'tiempo': 0.9, 'popularidad': 1.0, 'desperdicio': 0.4},
+            'elegante': {'ganancia': 1.0, 'tiempo': 0.3, 'popularidad': 0.7, 'desperdicio': 0.8},
+            'comida_rapida': {'ganancia': 0.6, 'tiempo': 1.0, 'popularidad': 0.9, 'desperdicio': 0.8}
         }
         
         self.create_parameters_tab()
@@ -312,6 +312,26 @@ Estos presets han sido calibrados para obtener los mejores resultados según el 
             real_prep_time = self.calculate_dish_prep_time(dish)
             dish._calculated_prep_time = real_prep_time  # Guardar tiempo calculado
             
+            # NUEVO: Filtro por tipo de establecimiento
+            if tipo_establecimiento == 'casual':
+                # Para casual: rechazar platos moleculares o muy complejos
+                if (hasattr(dish, 'tags') and dish.tags and 
+                    ('molecular' in dish.tags or 'vanguardista' in dish.tags)) or \
+                   (hasattr(dish, 'complexity') and dish.complexity > 6):
+                    logging.warning(f"RECHAZADO '{dish.name}': Demasiado complejo para restaurante casual.")
+                    continue
+                    
+                # Para casual: priorizar platos populares y simples
+                if hasattr(dish, 'popularity') and dish.popularity < 6:
+                    logging.warning(f"RECHAZADO '{dish.name}': Popularidad muy baja para restaurante casual.")
+                    continue
+                    
+            elif tipo_establecimiento == 'comida_rapida':
+                # Para comida rápida: solo platos muy rápidos
+                if real_prep_time > 30:
+                    logging.warning(f"RECHAZADO '{dish.name}': Tiempo de preparación muy largo para comida rápida.")
+                    continue
+            
             # Chequeo de costo
             if real_cost > costo_max:
                 logging.warning(f"RECHAZADO '{dish.name}': Costo ({real_cost:.2f}) > Máximo ({costo_max}).")
@@ -319,22 +339,29 @@ Estos presets han sido calibrados para obtener los mejores resultados según el 
             
             # Chequeo de temporada
             if temporada != 'Todo el año':
-                is_in_season = all(ing.season in ('Todo el año', temporada) for ing in dish.recipe.keys())
-                if not is_in_season:
-                    logging.warning(f"RECHAZADO '{dish.name}': Fuera de temporada ('{temporada}').")
-                    continue
+                # Verificar si el plato tiene receta e ingredientes
+                if hasattr(dish, 'recipe') and dish.recipe:
+                    is_in_season = all(ing.season in ('Todo el año', temporada) for ing in dish.recipe.keys())
+                    if not is_in_season:
+                        logging.warning(f"RECHAZADO '{dish.name}': Fuera de temporada ('{temporada}').")
+                        continue
+                else:
+                    # Si no tiene receta, asumir que está disponible todo el año
+                    logging.warning(f"'{dish.name}': Sin receta definida, asumiendo disponibilidad todo el año.")
             
             # Chequeo de técnicas
-            required_techs = {step.technique for step in dish.steps if step.technique}
-            if not required_techs.issubset(tecnicas_disponibles):
-                logging.warning(f"RECHAZADO '{dish.name}': Requiere técnicas no disponibles {required_techs - tecnicas_disponibles}.")
-                continue
+            if hasattr(dish, 'steps') and dish.steps:
+                required_techs = {step.technique for step in dish.steps if step.technique}
+                if required_techs and not required_techs.issubset(tecnicas_disponibles):
+                    logging.warning(f"RECHAZADO '{dish.name}': Requiere técnicas no disponibles {required_techs - tecnicas_disponibles}.")
+                    continue
             
             # Chequeo de estaciones
-            required_stations = {step.station for step in dish.steps if step.station}
-            if not required_stations.issubset(estaciones_disponibles):
-                logging.warning(f"RECHAZADO '{dish.name}': Requiere estaciones no disponibles {required_stations - estaciones_disponibles}.")
-                continue
+            if hasattr(dish, 'steps') and dish.steps:
+                required_stations = {step.station for step in dish.steps if step.station}
+                if required_stations and not required_stations.issubset(estaciones_disponibles):
+                    logging.warning(f"RECHAZADO '{dish.name}': Requiere estaciones no disponibles {required_stations - estaciones_disponibles}.")
+                    continue
             
             logging.info(f"ACEPTADO '{dish.name}': Costo real=${real_cost:.2f}, Tiempo={real_prep_time}min")
             filtered_catalog.append(dish)
@@ -488,7 +515,7 @@ Estos presets han sido calibrados para obtener los mejores resultados según el 
                     logging.error(f"Error procesando ingredientes de {dish.name}: {e}")
                     main_ingredients = ["Error al procesar"]
             else:
-                main_ingredients = ["Sin receta"]
+                main_ingredients = ["Sin receta definida"]
             
             ingredients_text = ", ".join(main_ingredients) if main_ingredients else "N/A"
             
@@ -516,4 +543,265 @@ Estos presets han sido calibrados para obtener los mejores resultados según el 
         # Configurar estilo para totales
         tree.tag_configure("total", background="#E3F2FD", font=("Segoe UI", 9, "bold"))
         
-        #
+        # Agregar scrollbars
+        v_scrollbar = ttk.Scrollbar(table_frame, orient="vertical", command=tree.yview)
+        h_scrollbar = ttk.Scrollbar(table_frame, orient="horizontal", command=tree.xview)
+        tree.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
+        
+        # Empacar elementos
+        tree.pack(side="left", fill="both", expand=True)
+        v_scrollbar.pack(side="right", fill="y")
+        h_scrollbar.pack(side="bottom", fill="x")
+
+    def create_operational_efficiency_report(self, parent, menu, num_cocineros):
+        """SALIDA 2: Reporte de eficiencia operativa"""
+        
+        ttk.Label(parent, text="⚡ REPORTE DE EFICIENCIA OPERATIVA", font=("Segoe UI", 16, "bold")).pack(pady=(0, 15))
+        
+        # Crear frame principal con scroll
+        main_frame = ttk.Frame(parent)
+        main_frame.pack(fill="both", expand=True)
+        
+        # === SECCIÓN 1: TIEMPOS DE PREPARACIÓN ===
+        prep_frame = ttk.LabelFrame(main_frame, text="🕒 Tiempos de Preparación Estimados", padding=10)
+        prep_frame.pack(fill="x", pady=(0, 10))
+        
+        # Tabla de tiempos
+        prep_columns = ("Plato", "Tiempo Prep. (min)", "Complejidad", "Clasificación")
+        prep_tree = ttk.Treeview(prep_frame, columns=prep_columns, show="headings", height=6)
+        
+        for col in prep_columns:
+            prep_tree.heading(col, text=col)
+            prep_tree.column(col, width=150, anchor="center")
+        
+        total_time = 0
+        for dish in menu:
+            prep_time = getattr(dish, '_calculated_prep_time', self.calculate_dish_prep_time(dish))
+            complexity = getattr(dish, 'complexity', 3)
+            
+            # Clasificar velocidad
+            if prep_time <= 15:
+                classification = "⚡ Rápido"
+            elif prep_time <= 30:
+                classification = "🟡 Medio"
+            else:
+                classification = "🔴 Lento"
+            
+            prep_tree.insert("", "end", values=(
+                dish.name[:20] + "..." if len(dish.name) > 20 else dish.name,
+                prep_time,
+                f"{complexity}/6",
+                classification
+            ))
+            total_time += prep_time
+        
+        prep_tree.pack(fill="x")
+        
+        # Resumen de tiempos
+        avg_time = total_time / len(menu) if menu else 0
+        ttk.Label(prep_frame, text=f"Tiempo total estimado: {total_time} min | Promedio por plato: {avg_time:.1f} min", 
+                 font=("Segoe UI", 10, "bold")).pack(pady=(10, 0))
+        
+        # === SECCIÓN 2: DISTRIBUCIÓN POR ESTACIÓN ===
+        station_frame = ttk.LabelFrame(main_frame, text="🏭 Distribución de Carga por Estación", padding=10)
+        station_frame.pack(fill="x", pady=(0, 10))
+        
+        # Calcular uso por estación
+        station_usage = defaultdict(int)
+        station_time = defaultdict(int)
+        
+        for dish in menu:
+            if hasattr(dish, 'steps') and dish.steps:
+                for step in dish.steps:
+                    if hasattr(step, 'station') and step.station:
+                        station_usage[step.station] += 1
+                        if hasattr(step, 'time'):
+                            station_time[step.station] += self.safe_float_conversion(step.time, 0)
+        
+        # Tabla de estaciones
+        station_columns = ("Estación", "Tiempo Total (min)", "% Carga", "Estado")
+        station_tree = ttk.Treeview(station_frame, columns=station_columns, show="headings", height=6)
+        
+        for col in station_columns:
+            station_tree.heading(col, text=col)
+            station_tree.column(col, width=150, anchor="center")
+        
+        max_time = max(station_time.values()) if station_time else 1
+        
+        for station, time_used in sorted(station_time.items(), key=lambda x: x[1], reverse=True):
+            percentage = (time_used / max_time) * 100
+            
+            if percentage > 80:
+                status = "🔴 Sobrecargada"
+            elif percentage > 60:
+                status = "🟡 Ocupada"
+            else:
+                status = "🟢 Normal"
+            
+            station_tree.insert("", "end", values=(
+                station[:25] + "..." if len(station) > 25 else station,
+                time_used,
+                f"{percentage:.1f}%",
+                status
+            ))
+        
+        station_tree.pack(fill="x")
+        
+        # === SECCIÓN 3: PROYECCIÓN DE CAPACIDAD ===
+        capacity_frame = ttk.LabelFrame(main_frame, text="📊 Proyección de Capacidad de Atención por Hora", padding=10)
+        capacity_frame.pack(fill="x", pady=(0, 10))
+        
+        # Calcular capacidades
+        theoretical_capacity = (60 / avg_time) * num_cocineros if avg_time > 0 else 0
+        practical_capacity = theoretical_capacity * 0.75  # 75% de eficiencia
+        peak_capacity = theoretical_capacity * 0.60  # 60% en hora pico
+        daily_capacity = practical_capacity * 8  # 8 horas de servicio
+        
+        capacity_data = [
+            ("Cocineros disponibles", num_cocineros, "Personal asignado en cocina"),
+            ("Tiempo promedio prep.", f"{avg_time:.1f} min", "Tiempo medio por plato"),
+            ("Capacidad teórica", f"{theoretical_capacity:.0f} platos/h", "Máximo teórico sin interrupciones"),
+            ("Capacidad práctica", f"{practical_capacity:.0f} platos/h", "Considerando eficiencia del 75%"),
+            ("Capacidad en hora pico", f"{peak_capacity:.0f} platos/h", "Durante períodos de alta demanda"),
+            ("Capacidad diaria (8h)", f"{daily_capacity:.0f} platos", "Proyección para jornada completa")
+        ]
+        
+        # Tabla de capacidades
+        capacity_columns = ("Métrica", "Valor", "Descripción")
+        capacity_tree = ttk.Treeview(capacity_frame, columns=capacity_columns, show="headings", height=6)
+        
+        capacity_tree.heading("Métrica", text="Métrica")
+        capacity_tree.heading("Valor", text="Valor")
+        capacity_tree.heading("Descripción", text="Descripción")
+        
+        capacity_tree.column("Métrica", width=150, anchor="w")
+        capacity_tree.column("Valor", width=120, anchor="center")
+        capacity_tree.column("Descripción", width=300, anchor="w")
+        
+        for metric, value, description in capacity_data:
+            capacity_tree.insert("", "end", values=(metric, value, description))
+        
+        capacity_tree.pack(fill="x")
+
+    def create_inventory_analysis_report(self, parent, menu):
+        """SALIDA 3: Análisis de inventario"""
+        
+        ttk.Label(parent, text="📦 ANÁLISIS DE INVENTARIO", font=("Segoe UI", 16, "bold")).pack(pady=(0, 15))
+        
+        # === SECCIÓN 1: LISTA DE INGREDIENTES ===
+        ingredients_frame = ttk.LabelFrame(parent, text="📋 Lista de Ingredientes Necesarios", padding=10)
+        ingredients_frame.pack(fill="both", expand=True, pady=(0, 10))
+        
+        # Consolidar ingredientes
+        ingredient_totals = defaultdict(float)
+        ingredient_info = {}
+        
+        for dish in menu:
+            if hasattr(dish, 'recipe') and dish.recipe:
+                for ingredient, quantity in dish.recipe.items():
+                    if hasattr(ingredient, 'name'):
+                        qty = self.safe_float_conversion(quantity, 0)
+                        ingredient_totals[ingredient.name] += qty
+                        
+                        if ingredient.name not in ingredient_info:
+                            supplier_name = "N/A"
+                            cost_per_kg = 0
+                            shelf_life = "N/A"
+                            
+                            if hasattr(ingredient, 'supplier') and ingredient.supplier:
+                                supplier_name = getattr(ingredient.supplier, 'name', 'N/A')
+                            
+                            if hasattr(ingredient, 'cost_per_kg'):
+                                cost_per_kg = self.safe_float_conversion(ingredient.cost_per_kg, 0)
+                            
+                            if hasattr(ingredient, 'shelf_life_days'):
+                                shelf_life = f"{ingredient.shelf_life_days}d"
+                            
+                            ingredient_info[ingredient.name] = {
+                                'supplier': supplier_name,
+                                'cost_per_kg': cost_per_kg,
+                                'shelf_life': shelf_life
+                            }
+        
+        # Tabla de ingredientes
+        ing_columns = ("Ingrediente", "Cantidad Total", "Proveedor", "Costo Total", "Vida Útil")
+        ing_tree = ttk.Treeview(ingredients_frame, columns=ing_columns, show="headings", height=8)
+        
+        for col in ing_columns:
+            ing_tree.heading(col, text=col)
+        
+        ing_tree.column("Ingrediente", width=180, anchor="w")
+        ing_tree.column("Cantidad Total", width=120, anchor="center")
+        ing_tree.column("Proveedor", width=150, anchor="w")
+        ing_tree.column("Costo Total", width=120, anchor="center")
+        ing_tree.column("Vida Útil", width=80, anchor="center")
+        
+        total_inventory_cost = 0
+        
+        for ingredient_name, total_qty in sorted(ingredient_totals.items()):
+            info = ingredient_info.get(ingredient_name, {})
+            cost_per_kg = info.get('cost_per_kg', 0)
+            total_cost = (total_qty / 1000) * cost_per_kg
+            total_inventory_cost += total_cost
+            
+            ing_tree.insert("", "end", values=(
+                ingredient_name[:25] + "..." if len(ingredient_name) > 25 else ingredient_name,
+                f"{total_qty:.0f}g",
+                info.get('supplier', 'N/A')[:20] + "..." if len(info.get('supplier', 'N/A')) > 20 else info.get('supplier', 'N/A'),
+                f"MXN${total_cost:.2f}",
+                info.get('shelf_life', 'N/A')
+            ))
+        
+        # Agregar scrollbar
+        ing_scrollbar = ttk.Scrollbar(ingredients_frame, orient="vertical", command=ing_tree.yview)
+        ing_tree.configure(yscrollcommand=ing_scrollbar.set)
+        ing_tree.pack(side="left", fill="both", expand=True)
+        ing_scrollbar.pack(side="right", fill="y")
+        
+        # === SECCIÓN 2: COSTOS TOTALES ===
+        costs_frame = ttk.LabelFrame(parent, text="💰 Costos Totales", padding=10)
+        costs_frame.pack(fill="x", pady=(10, 10))
+        
+        # Cálculos de costos
+        unique_ingredients = len(ingredient_totals)
+        avg_cost_per_ingredient = total_inventory_cost / unique_ingredients if unique_ingredients > 0 else 0
+        cost_per_portion = total_inventory_cost / len(menu) if menu else 0
+        
+        cost_text = f"""📊 RESUMEN DE COSTOS:
+• Costo total del inventario: MXN${total_inventory_cost:.2f}
+• Número de ingredientes únicos: {unique_ingredients}
+• Costo promedio por ingrediente: MXN${avg_cost_per_ingredient:.2f}
+• Costo por porción del menú: MXN${cost_per_portion:.2f}"""
+        
+        ttk.Label(costs_frame, text=cost_text, font=("Segoe UI", 10), justify="left").pack(anchor="w")
+        
+        # Top 5 ingredientes más costosos
+        top_ingredients = sorted(
+            [(name, (qty/1000) * ingredient_info.get(name, {}).get('cost_per_kg', 0)) 
+             for name, qty in ingredient_totals.items()],
+            key=lambda x: x[1], reverse=True
+        )[:5]
+        
+        if top_ingredients:
+            top_text = "\n🔝 TOP 5 INGREDIENTES MÁS COSTOSOS:\n"
+            for i, (name, cost) in enumerate(top_ingredients, 1):
+                top_text += f"{i}. {name}: MXN${cost:.2f}\n"
+            
+            ttk.Label(costs_frame, text=top_text, font=("Segoe UI", 9), justify="left").pack(anchor="w", pady=(10, 0))
+        
+        # === SECCIÓN 3: RECOMENDACIONES ===
+        recommendations_frame = ttk.LabelFrame(parent, text="💡 Recomendaciones para Minimizar Desperdicio", padding=10)
+        recommendations_frame.pack(fill="x", pady=(10, 0))
+        
+        recommendations_text = """🔄 ESTRATEGIAS DE ROTACIÓN:
+• Método FIFO (First In, First Out) para todos los ingredientes perecederos
+• Etiquetado con fechas de recepción y vencimiento
+• Revisión diaria del inventario y programación de menús según proximidad de vencimiento
+
+📋 RECOMENDACIONES ESPECÍFICAS:
+• Optimizar pedidos basados en vida útil y rotación
+• Implementar sistema de alertas para ingredientes próximos a vencer
+• Considerar preparaciones que utilicen múltiples ingredientes del menú
+• Establecer políticas de descuento para platos con ingredientes próximos a vencer"""
+        
+        ttk.Label(recommendations_frame, text=recommendations_text, font=("Segoe UI", 9), justify="left", wraplength=700).pack(anchor="w")
