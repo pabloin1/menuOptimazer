@@ -79,9 +79,6 @@ class GeneticOperators:
         
         Args:
             parent1, parent2: Menús padres
-            
-        Returns:
-            Tupla con dos menús hijos
         """
         if not parent1 or not parent2:
             return parent1[:], parent2[:]

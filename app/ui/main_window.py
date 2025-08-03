@@ -37,7 +37,7 @@ class MenuOptimizerMainWindow(tk.Tk):
         # Variables de estado
         self.current_results = None
         self.optimization_running = False
-        self.cubic_workflow_manager = None  # NUEVA VARIABLE PARA ESTRUCTURA CÚBICA
+        self.cubic_workflow_manager = None  
         
         # Inicializar interfaz
         self._setup_ui()
@@ -127,10 +127,6 @@ class MenuOptimizerMainWindow(tk.Tk):
     def _run_optimization(self, config: Dict):
         """
         Ejecuta el algoritmo de optimización con la configuración proporcionada.
-        VERSIÓN MODIFICADA que incluye generación de estructura cúbica.
-        
-        Args:
-            config: Diccionario con toda la configuración del usuario
         """
         if self.optimization_running:
             messagebox.showwarning("Optimización en Curso", 
@@ -345,12 +341,37 @@ class MenuOptimizerMainWindow(tk.Tk):
         min_margin = config['min_profit_margin']
         price_factor = 1 / (1 - min_margin / 100) if min_margin < 100 else 2.0
 
+
+
+
+
+
+
+
+
+
+        # Asignar pesos a las características de los restaurante según su tipo
         establishment_weights = {
             'casual': {'ganancia': 0.20, 'tiempo': 0.25, 'nutricion': 0.10, 'variedad': 0.15, 'desperdicio': 0.10, 'distribucion_carga': 0.10, 'popularidad': 0.10},
             'elegante': {'ganancia': 0.30, 'tiempo': 0.10, 'nutricion': 0.15, 'variedad': 0.20, 'desperdicio': 0.15, 'distribucion_carga': 0.05, 'popularidad': 0.05},
             'comida_rapida': {'ganancia': 0.25, 'tiempo': 0.35, 'nutricion': 0.05, 'variedad': 0.10, 'desperdicio': 0.15, 'distribucion_carga': 0.10, 'popularidad': 0.00}
         }
         weights = establishment_weights.get(config['establishment_type'], establishment_weights['casual'])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         return {
             'population_size': 150, 'generations': 250, 'mutation_rate': 0.12,

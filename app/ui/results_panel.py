@@ -45,7 +45,6 @@ class ResultsPanel(ttk.Frame):
         Muestra los resultados de la optimización incluyendo análisis cúbico.
         
         Args:
-            results: Diccionario con resultados de optimización
             cubic_manager: Gestor de flujo de trabajo cúbico (opcional)
         """
         self.current_results = results

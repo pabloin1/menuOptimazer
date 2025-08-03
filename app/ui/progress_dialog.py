@@ -8,7 +8,6 @@ import time
 class ProgressDialog:
     """
     Diálogo de progreso para mostrar el avance de la optimización.
-    VERSIÓN CORREGIDA - Evita reaperturas automáticas
     """
     
     def __init__(self, parent, title: str = "Procesando..."):

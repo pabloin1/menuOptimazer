@@ -57,9 +57,6 @@ class MenuGeneticAlgorithm:
     def create_initial_population(self) -> List[List[Dish]]:
         """
         Crea la población inicial de menús usando diferentes estrategias.
-        
-        Returns:
-            Lista de individuos (menús) para la población inicial
         """
         population = []
         
@@ -145,14 +142,11 @@ class MenuGeneticAlgorithm:
                     qty_kg = float(quantity) / 1000.0
                     total_cost += cost_per_kg * qty_kg
             return total_cost
-        return 10.0  # Costo por defecto
+        return 10.0  
     
     def evolve(self) -> Tuple[List[Dish], float, Dict]:
         """
         Ejecuta el algoritmo genético completo.
-        
-        Returns:
-            Tupla con (mejor_menu, mejor_fitness, estadisticas)
         """
         logging.info("Iniciando evolución del algoritmo genético")
         
@@ -265,9 +259,6 @@ class MenuGeneticAlgorithm:
         
         Args:
             num_solutions: Número de soluciones diferentes a generar
-            
-        Returns:
-            Lista de tuplas (menu, fitness) con las mejores soluciones únicas
         """
         solutions = []
         seen_menus = set()
