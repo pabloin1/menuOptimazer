@@ -1,4 +1,4 @@
-# DIAGNÓSTICO Y CORRECCIÓN DEFINITIVA - configuration_panel.py
+# app/ui/configuration_panel.py - VERSIÓN CORREGIDA PARA WINDOWS
 
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -7,7 +7,7 @@ import logging
 
 
 class ConfigurationPanel(ttk.Frame):
-    """Panel de configuración CORREGIDO para capturar valores correctamente."""
+    """Panel de configuración CORREGIDO para Windows y captura de valores."""
     
     def __init__(self, parent, catalog: List, all_techniques: List[str], 
                  on_optimize_callback: Callable):
@@ -18,7 +18,7 @@ class ConfigurationPanel(ttk.Frame):
         self.on_optimize_callback = on_optimize_callback
         self.all_stations = []
         
-        # Variables de configuración - CAMBIO CRÍTICO: usar StringVar correctamente
+        # Variables de configuración
         self.vars = {}
         self.config_vars = {}
         self.technique_vars = {}
@@ -26,13 +26,13 @@ class ConfigurationPanel(ttk.Frame):
         
         # Presets por tipo de establecimiento
         self.establishment_presets = {
-            'casual': {'description': 'Restaurante Casual - Enfoque en rapidez y precios', 'target_margin': 30, 'max_cost': 200},
-            'elegante': {'description': 'Restaurante Elegante - Enfoque en calidad', 'target_margin': 50, 'max_cost': 350},
-            'comida_rapida': {'description': 'Comida Rápida - Máxima eficiencia', 'target_margin': 40, 'max_cost': 150}
+            'casual': {'description': 'Restaurante Casual - Enfoque en rapidez y precios'},
+            'elegante': {'description': 'Restaurante Elegante - Enfoque en calidad'},
+            'comida_rapida': {'description': 'Comida Rápida - Máxima eficiencia'}
         }
         
         self._create_interface()
-        self._set_default_values()
+        self._initialize_with_defaults()  # CAMBIO: Método específico para defaults
     
     def _create_interface(self):
         """Crea la interfaz del panel de configuración."""
@@ -53,36 +53,32 @@ class ConfigurationPanel(ttk.Frame):
         frame = ttk.LabelFrame(parent, text="Restricciones del Restaurante", padding=15)
         frame.pack(fill="x", pady=(0, 10))
         
-        # NÚMERO DE PLATOS - CORRECCIÓN CRÍTICA
+        # NÚMERO DE PLATOS
         ttk.Label(frame, text="Número deseado de opciones en el menú:", 
                  font=("Segoe UI", 9, "bold")).grid(row=0, column=0, sticky="w", pady=8)
         
-        # IMPORTANTE: Inicializar con valor por defecto explícito
         self.vars["num_dishes"] = tk.StringVar()
-        self.vars["num_dishes"].set("20")  # Valor por defecto
         
-        entry_dishes = ttk.Entry(frame, textvariable=self.vars["num_dishes"], width=15)
-        entry_dishes.grid(row=0, column=1, sticky="w")
+        self.entry_dishes = ttk.Entry(frame, textvariable=self.vars["num_dishes"], width=15)
+        self.entry_dishes.grid(row=0, column=1, sticky="w")
         
-        # PRESUPUESTO MÁXIMO - CORRECCIÓN CRÍTICA
+        # PRESUPUESTO MÁXIMO
         ttk.Label(frame, text="Presupuesto máximo de costo por plato (MXN):", 
                  font=("Segoe UI", 9, "bold")).grid(row=1, column=0, sticky="w", pady=8)
         
         self.vars["max_cost_per_dish"] = tk.StringVar()
-        self.vars["max_cost_per_dish"].set("200")  # Valor por defecto
         
-        entry_cost = ttk.Entry(frame, textvariable=self.vars["max_cost_per_dish"], width=15)
-        entry_cost.grid(row=1, column=1, sticky="w")
+        self.entry_cost = ttk.Entry(frame, textvariable=self.vars["max_cost_per_dish"], width=15)
+        self.entry_cost.grid(row=1, column=1, sticky="w")
         
-        # PERSONAL DISPONIBLE - CORRECCIÓN CRÍTICA  
+        # PERSONAL DISPONIBLE
         ttk.Label(frame, text="Personal disponible (cocineros):", 
                  font=("Segoe UI", 9, "bold")).grid(row=2, column=0, sticky="w", pady=8)
         
         self.vars["num_chefs"] = tk.StringVar()
-        self.vars["num_chefs"].set("8")  # Valor por defecto
         
-        entry_chefs = ttk.Entry(frame, textvariable=self.vars["num_chefs"], width=15)
-        entry_chefs.grid(row=2, column=1, sticky="w")
+        self.entry_chefs = ttk.Entry(frame, textvariable=self.vars["num_chefs"], width=15)
+        self.entry_chefs.grid(row=2, column=1, sticky="w")
     
     def _create_stations_section(self, parent):
         """Crea la sección de estaciones de trabajo."""
@@ -118,10 +114,9 @@ class ConfigurationPanel(ttk.Frame):
                  font=("Segoe UI", 9, "bold")).grid(row=0, column=0, sticky="w", pady=8)
         
         self.config_vars["min_profit_margin"] = tk.StringVar()
-        self.config_vars["min_profit_margin"].set("30")  # Valor por defecto
         
-        entry_margin = ttk.Entry(frame, textvariable=self.config_vars["min_profit_margin"], width=15)
-        entry_margin.grid(row=0, column=1, sticky="w")
+        self.entry_margin = ttk.Entry(frame, textvariable=self.config_vars["min_profit_margin"], width=15)
+        self.entry_margin.grid(row=0, column=1, sticky="w")
         
         # TEMPORADA
         ttk.Label(frame, text="Temporada del año:", font=("Segoe UI", 9, "bold")).grid(row=1, column=0, sticky="w", pady=8)
@@ -219,10 +214,16 @@ Configuración del Algoritmo:
         ttk.Label(button_frame, text="La optimización puede tomar 1-2 minutos",
                  font=("Segoe UI", 8, "italic"), foreground="#666666").pack()
     
-    def _set_default_values(self):
-        """Establece valores por defecto."""
+    def _initialize_with_defaults(self):
+        """Inicializa con valores por defecto SOLO para conveniencia del usuario."""
+        # ESTABLECER VALORES POR DEFECTO EN LOS WIDGETS DIRECTAMENTE
+        self.entry_dishes.insert(0, "12")
+        self.entry_cost.insert(0, "200")
+        self.entry_chefs.insert(0, "8")
+        self.entry_margin.insert(0, "30")
+        
+        # Actualizar descripción
         self._on_establishment_change()
-        self._select_basic_techniques()
     
     def set_available_stations(self, stations: List[str]):
         """Establece las estaciones disponibles y crea los checkboxes."""
@@ -246,7 +247,10 @@ Configuración del Algoritmo:
                 row=row, column=col, sticky="w", padx=15, pady=2)
             row += 1
         
+        # Seleccionar estaciones básicas al inicio
         self._select_basic_stations()
+        # Seleccionar técnicas básicas al inicio
+        self._select_basic_techniques()
     
     def _on_establishment_change(self, event=None):
         """Maneja el cambio de tipo de establecimiento."""
@@ -256,10 +260,7 @@ Configuración del Algoritmo:
         description = preset.get('description', '')
         self.establishment_description.config(text=description)
         
-        if 'target_margin' in preset:
-            self.config_vars["min_profit_margin"].set(str(preset['target_margin']))
-        if 'max_cost' in preset:
-            self.vars["max_cost_per_dish"].set(str(preset['max_cost']))
+        logging.info(f"Tipo de establecimiento cambiado a: {establishment_type}")
     
     def _select_all_techniques(self):
         for var in self.technique_vars.values():
@@ -270,7 +271,7 @@ Configuración del Algoritmo:
             var.set(False)
     
     def _select_basic_techniques(self):
-        basic_techniques = {'Plancha', 'Hervido', 'Salteado', 'Horneado', 'Freír', 'Guisar', 'Amasar', 'Brasear', 'Caramelizado', 'Fermentado'}
+        basic_techniques = {'Plancha', 'Hervido', 'Salteado', 'Horneado', 'Freír', 'Guisar', 'Brasear', 'Caramelizado'}
         for technique, var in self.technique_vars.items():
             var.set(technique in basic_techniques)
     
@@ -283,97 +284,101 @@ Configuración del Algoritmo:
             var.set(False)
     
     def _select_basic_stations(self):
-        basic_stations = {'Ahumador', 'Bar de Jugos y Smoothies', 'Bebidas y Cócteles',
-                         'Ensaladas y Fríos', 'Ensamblaje y Emplatado', 'Estación de Sushis',
-                         'Estación de Wok y Cocina Asiática', 'Estofados y Salsas',
-                         'Fritura', 'Horno y Rostizado'}
+        basic_stations = {'Ensaladas y Fríos', 'Ensamblaje y Emplatado', 'Estofados y Salsas',
+                         'Fritura', 'Horno y Rostizado', 'Bebidas y Cócteles'}
         
         for station, var in self.station_vars.items():
             var.set(station in basic_stations)
     
     def _run_optimization(self):
-        """MÉTODO CRÍTICO: Recopila la configuración y ejecuta la optimización."""
+        """Recopila la configuración y ejecuta la optimización."""
         try:
             config = self._gather_configuration()
-            # SIN EMOJIS para evitar errores Unicode en Windows
-            logging.info("DEBUG - Configuración recopilada: {}".format(config))
+            logging.info("CONFIGURACION CAPTURADA PARA OPTIMIZACION:")
+            logging.info(f"  - Numero de platos: {config['num_dishes']}")
+            logging.info(f"  - Costo maximo: ${config['max_cost_per_dish']}")
+            logging.info(f"  - Cocineros: {config['num_chefs']}")
+            logging.info(f"  - Margen minimo: {config['min_profit_margin']}%")
+            logging.info(f"  - Tecnicas: {len(config['available_techniques'])}")
+            logging.info(f"  - Estaciones: {len(config['available_stations'])}")
+            
             self.on_optimize_callback(config)
         except Exception as e:
-            logging.error("Error al recopilar configuración: {}".format(str(e)))
+            logging.error(f"Error al recopilar configuracion: {e}")
             messagebox.showerror("Error de Configuración", 
-                               "Error al recopilar configuración:\n{}".format(str(e)))
+                               f"Error al recopilar configuración:\n{str(e)}")
     
     def _gather_configuration(self) -> Dict:
         """
-        MÉTODO CORREGIDO CRÍTICO: Recopila toda la configuración del panel.
+        MÉTODO COMPLETAMENTE CORREGIDO: Captura valores directamente de los widgets.
         """
-        logging.info("DEBUG - Iniciando recopilación de configuración...")
+        logging.info("RECOPILANDO CONFIGURACION DE LA INTERFAZ...")
         
-        # CONVERSIÓN SEGURA CON DEBUGGING DETALLADO
+        # CAPTURA DIRECTA DE LOS ENTRY WIDGETS - MÁS CONFIABLE
+        num_dishes_raw = self.entry_dishes.get().strip()
+        cost_raw = self.entry_cost.get().strip()
+        chefs_raw = self.entry_chefs.get().strip()
+        margin_raw = self.entry_margin.get().strip()
         
-        # NÚMERO DE PLATOS
+        # DEBUG: Mostrar valores capturados
+        logging.info(f"VALORES CAPTURADOS DE LA INTERFAZ:")
+        logging.info(f"  num_dishes_raw: '{num_dishes_raw}'")
+        logging.info(f"  cost_raw: '{cost_raw}'")
+        logging.info(f"  chefs_raw: '{chefs_raw}'")
+        logging.info(f"  margin_raw: '{margin_raw}'")
+        
+        # VALIDACIONES CRÍTICAS
+        if not num_dishes_raw:
+            raise ValueError("Debe ingresar el número de opciones en el menú")
+        if not cost_raw:
+            raise ValueError("Debe ingresar el presupuesto máximo por plato")  
+        if not chefs_raw:
+            raise ValueError("Debe ingresar el número de cocineros disponibles")
+        if not margin_raw:
+            raise ValueError("Debe ingresar el margen mínimo de ganancia")
+        
+        # CONVERSIONES SEGURAS
         try:
-            num_dishes_raw = self.vars["num_dishes"].get()
-            logging.info("DEBUG - Valor raw num_dishes: '{}'".format(repr(num_dishes_raw)))
-            num_dishes_str = str(num_dishes_raw).strip()
-            num_dishes = int(num_dishes_str) if num_dishes_str and num_dishes_str.isdigit() else 20
-            logging.info("DEBUG - Número de platos convertido: {} -> {}".format(num_dishes_str, num_dishes))
-        except Exception as e:
-            logging.error("Error convirtiendo num_dishes: {}".format(e))
-            num_dishes = 20
+            num_dishes = int(num_dishes_raw)
+            if num_dishes <= 0:
+                raise ValueError("El número de platos debe ser mayor a 0")
+        except ValueError:
+            raise ValueError(f"Número de platos inválido: '{num_dishes_raw}'. Debe ser un número entero.")
         
-        # COSTO MÁXIMO
         try:
-            cost_raw = self.vars["max_cost_per_dish"].get()
-            logging.info("DEBUG - Valor raw max_cost: '{}'".format(repr(cost_raw)))
-            cost_str = str(cost_raw).strip()
-            max_cost_per_dish = float(cost_str) if cost_str else 200.0
-            logging.info("DEBUG - Costo máximo convertido: {} -> {}".format(cost_str, max_cost_per_dish))
-        except Exception as e:
-            logging.error("Error convirtiendo max_cost_per_dish: {}".format(e))
-            max_cost_per_dish = 200.0
+            max_cost_per_dish = float(cost_raw)
+            if max_cost_per_dish <= 0:
+                raise ValueError("El costo máximo debe ser mayor a 0")
+        except ValueError:
+            raise ValueError(f"Costo máximo inválido: '{cost_raw}'. Debe ser un número.")
         
-        # NÚMERO DE COCINEROS  
         try:
-            chefs_raw = self.vars["num_chefs"].get()
-            logging.info("DEBUG - Valor raw num_chefs: '{}'".format(repr(chefs_raw)))
-            chefs_str = str(chefs_raw).strip()
-            num_chefs = int(chefs_str) if chefs_str and chefs_str.isdigit() else 8
-            logging.info("DEBUG - Número de cocineros convertido: {} -> {}".format(chefs_str, num_chefs))
-        except Exception as e:
-            logging.error("Error convirtiendo num_chefs: {}".format(e))
-            num_chefs = 8
+            num_chefs = int(chefs_raw)
+            if num_chefs <= 0:
+                raise ValueError("El número de cocineros debe ser mayor a 0")
+        except ValueError:
+            raise ValueError(f"Número de cocineros inválido: '{chefs_raw}'. Debe ser un número entero.")
         
-        # MARGEN DE GANANCIA
         try:
-            margin_raw = self.config_vars["min_profit_margin"].get()
-            logging.info("DEBUG - Valor raw margin: '{}'".format(repr(margin_raw)))
-            margin_str = str(margin_raw).strip()
-            min_profit_margin = float(margin_str) if margin_str else 30.0
-            logging.info("DEBUG - Margen convertido: {} -> {}".format(margin_str, min_profit_margin))
-        except Exception as e:
-            logging.error("Error convirtiendo min_profit_margin: {}".format(e))
-            min_profit_margin = 30.0
+            min_profit_margin = float(margin_raw)
+            if not (0 <= min_profit_margin <= 100):
+                raise ValueError("El margen de ganancia debe estar entre 0% y 100%")
+        except ValueError:
+            raise ValueError(f"Margen de ganancia inválido: '{margin_raw}'. Debe ser un número entre 0 y 100.")
         
-        # OTROS VALORES
+        # OBTENER OTROS VALORES
         season = self.config_vars["season"].get() or "Todo el año"
         establishment_type = self.config_vars["establishment_type"].get() or "casual"
         
-        logging.info("DEBUG - Temporada: {}".format(season))
-        logging.info("DEBUG - Tipo establecimiento: {}".format(establishment_type))
-        
-        # TÉCNICAS Y ESTACIONES
+        # OBTENER TÉCNICAS Y ESTACIONES SELECCIONADAS
         selected_techniques = {tech for tech, var in self.technique_vars.items() if var.get()}
         selected_stations = {station for station, var in self.station_vars.items() if var.get()}
         
-        logging.info("DEBUG - Técnicas seleccionadas: {} técnicas".format(len(selected_techniques)))
-        logging.info("DEBUG - Estaciones seleccionadas: {} estaciones".format(len(selected_stations)))
-        
-        # VALIDACIÓN
-        if not selected_stations:
-            raise ValueError("Debe seleccionar al menos una estación de trabajo disponible")
+        # VALIDACIONES FINALES
         if not selected_techniques:
             raise ValueError("Debe seleccionar al menos una técnica culinaria")
+        if not selected_stations:
+            raise ValueError("Debe seleccionar al menos una estación de trabajo")
         
         # CONFIGURACIÓN FINAL
         config = {
@@ -387,28 +392,14 @@ Configuración del Algoritmo:
             'available_stations': selected_stations
         }
         
-        logging.info("DEBUG - Configuración final exitosa")
-        logging.info("DEBUG - RESUMEN FINAL: {} platos, {} cocineros, {} MXN max, {}% margen".format(
-            num_dishes, num_chefs, max_cost_per_dish, min_profit_margin))
+        logging.info("CONFIGURACION FINAL VALIDADA:")
+        logging.info(f"   Platos: {num_dishes}")
+        logging.info(f"   Costo maximo: ${max_cost_per_dish}")
+        logging.info(f"   Cocineros: {num_chefs}")
+        logging.info(f"   Margen: {min_profit_margin}%")
+        logging.info(f"   Temporada: {season}")
+        logging.info(f"   Tipo: {establishment_type}")
+        logging.info(f"   Tecnicas: {len(selected_techniques)}")
+        logging.info(f"   Estaciones: {len(selected_stations)}")
         
         return config
-    
-    def _create_tooltip(self, widget, text):
-        """Crea un tooltip simple."""
-        def on_enter(event):
-            tooltip = tk.Toplevel()
-            tooltip.wm_overrideredirect(True)
-            tooltip.geometry("+{}+{}".format(event.x_root+10, event.y_root+10))
-            
-            label = tk.Label(tooltip, text=text, background="lightyellow",
-                           relief="solid", borderwidth=1, font=("Segoe UI", 8))
-            label.pack()
-            widget.tooltip = tooltip
-        
-        def on_leave(event):
-            if hasattr(widget, 'tooltip'):
-                widget.tooltip.destroy()
-                delattr(widget, 'tooltip')
-        
-        widget.bind("<Enter>", on_enter)
-        widget.bind("<Leave>", on_leave)

@@ -138,6 +138,17 @@ class MenuOptimizerMainWindow(tk.Tk):
             self._update_status("Iniciando optimización...")
             self.progress_bar.start(10)
             
+            # ===== LOG CRÍTICO: VERIFICAR QUE LLEGA LA CONFIGURACIÓN CORRECTA =====
+            logging.info("🚀 INICIANDO OPTIMIZACIÓN CON CONFIGURACIÓN DEL USUARIO:")
+            logging.info(f"   📊 Número de platos solicitados: {config['num_dishes']}")
+            logging.info(f"   💰 Presupuesto máximo por plato: ${config['max_cost_per_dish']}")
+            logging.info(f"   👥 Personal disponible: {config['num_chefs']} cocineros")
+            logging.info(f"   📈 Margen mínimo requerido: {config['min_profit_margin']}%")
+            logging.info(f"   🌍 Temporada seleccionada: {config['season']}")
+            logging.info(f"   🏪 Tipo de establecimiento: {config['establishment_type']}")
+            logging.info(f"   🔧 Técnicas disponibles: {len(config['available_techniques'])} técnicas")
+            logging.info(f"   🏭 Estaciones disponibles: {len(config['available_stations'])} estaciones")
+            
             # Validar configuración
             validation_result = self._validate_configuration(config)
             if not validation_result['valid']:
@@ -243,19 +254,34 @@ class MenuOptimizerMainWindow(tk.Tk):
     def _validate_configuration(self, config: Dict) -> Dict:
         """Valida la configuración del usuario."""
         try:
-            if config['num_dishes'] <= 0:
-                return {'valid': False, 'message': 'El número de platos debe ser mayor a 0'}
-            if config['max_cost_per_dish'] <= 0:
-                return {'valid': False, 'message': 'El costo máximo por plato debe ser mayor a 0'}
-            if not (0 <= config['min_profit_margin'] <= 100):
-                return {'valid': False, 'message': 'El margen de ganancia debe estar entre 0% y 100%'}
-            if config['num_chefs'] <= 0:
-                return {'valid': False, 'message': 'El número de cocineros debe ser mayor a 0'}
-            if not config['available_techniques']:
+            # ===== VALIDACIÓN USANDO EXACTAMENTE LOS VALORES DEL USUARIO =====
+            logging.info("🔍 VALIDANDO CONFIGURACIÓN DEL USUARIO...")
+            
+            user_num_dishes = config['num_dishes']
+            user_max_cost = config['max_cost_per_dish']
+            user_margin = config['min_profit_margin']
+            user_chefs = config['num_chefs']
+            user_techniques = config['available_techniques']
+            user_stations = config['available_stations']
+            
+            logging.info(f"   Validando {user_num_dishes} platos con presupuesto ${user_max_cost}")
+            logging.info(f"   Validando margen {user_margin}% con {user_chefs} cocineros")
+            logging.info(f"   Validando {len(user_techniques)} técnicas y {len(user_stations)} estaciones")
+            
+            if user_num_dishes <= 0:
+                return {'valid': False, 'message': f'El número de platos ({user_num_dishes}) debe ser mayor a 0'}
+            if user_max_cost <= 0:
+                return {'valid': False, 'message': f'El costo máximo (${user_max_cost}) debe ser mayor a 0'}
+            if not (0 <= user_margin <= 100):
+                return {'valid': False, 'message': f'El margen de ganancia ({user_margin}%) debe estar entre 0% y 100%'}
+            if user_chefs <= 0:
+                return {'valid': False, 'message': f'El número de cocineros ({user_chefs}) debe ser mayor a 0'}
+            if not user_techniques:
                 return {'valid': False, 'message': 'Debe seleccionar al menos una técnica culinaria'}
-            if not config['available_stations']:
+            if not user_stations:
                 return {'valid': False, 'message': 'Debe seleccionar al menos una estación de trabajo'}
             
+            logging.info("✅ CONFIGURACIÓN VALIDADA CORRECTAMENTE")
             return {'valid': True, 'message': 'Configuración válida'}
             
         except KeyError as e:
@@ -265,43 +291,58 @@ class MenuOptimizerMainWindow(tk.Tk):
 
     def _filter_catalog(self, config: Dict) -> List[Dish]:
         """Filtra el catálogo según las restricciones configuradas con logging detallado."""
-        logging.info("=== INICIANDO FILTRADO DE CATÁLOGO ===")
+        logging.info("=== INICIANDO FILTRADO DE CATÁLOGO CON CONFIGURACIÓN DEL USUARIO ===")
         logging.info(f"Catálogo inicial: {len(self.catalog)} platos")
+        logging.info(f"Filtros a aplicar:")
+        logging.info(f"  - Costo máximo: ${config['max_cost_per_dish']}")
+        logging.info(f"  - Temporada: {config['season']}")
+        logging.info(f"  - Técnicas disponibles: {len(config['available_techniques'])} técnicas")
+        logging.info(f"  - Estaciones disponibles: {len(config['available_stations'])} estaciones")
         
         filtered = []
         rejection_reasons = defaultdict(int)
         
         for dish in self.catalog:
-            # Filtrar por costo
+            # Filtrar por costo usando el valor exacto del usuario
             dish_cost = self._calculate_dish_cost(dish)
             if dish_cost > config['max_cost_per_dish']:
                 rejection_reasons['costo_excesivo'] += 1
+                logging.debug(f"Rechazado {dish.name}: costo ${dish_cost:.2f} > ${config['max_cost_per_dish']}")
                 continue
 
-            # Filtrar por temporada
+            # Filtrar por temporada usando el valor exacto del usuario
             if config['season'] != 'Todo el año' and not self._dish_available_in_season(dish, config['season']):
                 rejection_reasons['fuera_temporada'] += 1
+                logging.debug(f"Rechazado {dish.name}: no disponible en {config['season']}")
                 continue
 
-            # Filtrar por técnicas disponibles
+            # Filtrar por técnicas disponibles usando la selección exacta del usuario  
             required_techniques = {step.technique for step in dish.steps if hasattr(step, 'technique') and step.technique}
             if required_techniques and not required_techniques.issubset(config['available_techniques']):
                 rejection_reasons['tecnicas_faltantes'] += 1
+                missing_techniques = required_techniques - config['available_techniques']
+                logging.debug(f"Rechazado {dish.name}: técnicas faltantes {missing_techniques}")
                 continue
 
-            # Filtrar por estaciones disponibles
+            # Filtrar por estaciones disponibles usando la selección exacta del usuario
             required_stations = {step.station for step in dish.steps if hasattr(step, 'station') and step.station}
             if required_stations and not required_stations.issubset(config['available_stations']):
                 rejection_reasons['estaciones_faltantes'] += 1
+                missing_stations = required_stations - config['available_stations']
+                logging.debug(f"Rechazado {dish.name}: estaciones faltantes {missing_stations}")
                 continue
             
             filtered.append(dish)
+            logging.debug(f"Aceptado {dish.name}: costo ${dish_cost:.2f}")
 
-        logging.info("=== RESUMEN DE FILTRADO ===")
+        logging.info("=== RESUMEN DE FILTRADO CON CONFIGURACIÓN DEL USUARIO ===")
         logging.info(f"Platos aceptados: {len(filtered)}")
         logging.info(f"Platos rechazados: {sum(rejection_reasons.values())}")
         for reason, count in rejection_reasons.items():
             logging.info(f"  - {reason}: {count} platos")
+        
+        if len(filtered) < config['num_dishes']:
+            logging.warning(f"⚠️ INSUFICIENTES PLATOS: Se encontraron {len(filtered)} pero se necesitan {config['num_dishes']}")
         
         return filtered
 
@@ -337,55 +378,67 @@ class MenuOptimizerMainWindow(tk.Tk):
         return float(getattr(dish, 'complexity', 3)) * 8
 
     def _build_genetic_config(self, config: Dict, filtered_catalog: List[Dish]) -> Dict:
-        """Construye la configuración para el algoritmo genético."""
-        min_margin = config['min_profit_margin']
-        price_factor = 1 / (1 - min_margin / 100) if min_margin < 100 else 2.0
-
-
-
-
-
-
-
-
-
-
-        # Asignar pesos a las características de los restaurante según su tipo
+        """Construye la configuración para el algoritmo genético usando EXACTAMENTE los valores del usuario."""
+        
+        # ===== USAR DIRECTAMENTE LOS VALORES DEL USUARIO - SIN SOBRESCRIBIR =====
+        user_margin = config['min_profit_margin']  # Ya validado en configuration_panel
+        user_price_factor = 1 / (1 - user_margin / 100) if user_margin < 100 else 2.0
+        
+        logging.info("🔧 CONSTRUYENDO CONFIGURACIÓN DEL ALGORITMO GENÉTICO:")
+        logging.info(f"   Margen del usuario: {user_margin}%")
+        logging.info(f"   Factor de precio calculado: {user_price_factor:.3f}")
+        logging.info(f"   Platos solicitados: {config['num_dishes']}")
+        logging.info(f"   Cocineros disponibles: {config['num_chefs']}")
+        logging.info(f"   Costo máximo: ${config['max_cost_per_dish']}")
+        logging.info(f"   Temporada: {config['season']}")
+        logging.info(f"   Tipo establecimiento: {config['establishment_type']}")
+        
+        # PESOS DINÁMICOS BASADOS EN EL TIPO DE ESTABLECIMIENTO DEL USUARIO
         establishment_weights = {
-            'casual': {'ganancia': 0.20, 'tiempo': 0.25, 'nutricion': 0.10, 'variedad': 0.15, 'desperdicio': 0.10, 'distribucion_carga': 0.10, 'popularidad': 0.10},
-            'elegante': {'ganancia': 0.30, 'tiempo': 0.10, 'nutricion': 0.15, 'variedad': 0.20, 'desperdicio': 0.15, 'distribucion_carga': 0.05, 'popularidad': 0.05},
-            'comida_rapida': {'ganancia': 0.25, 'tiempo': 0.35, 'nutricion': 0.05, 'variedad': 0.10, 'desperdicio': 0.15, 'distribucion_carga': 0.10, 'popularidad': 0.00}
+            'casual': {
+                'ganancia': 0.20, 'tiempo': 0.25, 'nutricion': 0.10, 
+                'variedad': 0.15, 'desperdicio': 0.10, 'distribucion_carga': 0.10, 'popularidad': 0.10
+            },
+            'elegante': {
+                'ganancia': 0.30, 'tiempo': 0.10, 'nutricion': 0.15, 
+                'variedad': 0.20, 'desperdicio': 0.15, 'distribucion_carga': 0.05, 'popularidad': 0.05
+            },
+            'comida_rapida': {
+                'ganancia': 0.25, 'tiempo': 0.35, 'nutricion': 0.05, 
+                'variedad': 0.10, 'desperdicio': 0.15, 'distribucion_carga': 0.10, 'popularidad': 0.00
+            }
         }
-        weights = establishment_weights.get(config['establishment_type'], establishment_weights['casual'])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        return {
-            'population_size': 150, 'generations': 250, 'mutation_rate': 0.12,
-            'elite_size': 15, 'tournament_size': 5, 'num_dishes': config['num_dishes'],
+        
+        user_establishment = config['establishment_type']
+        weights = establishment_weights.get(user_establishment, establishment_weights['casual'])
+        
+        logging.info(f"   Pesos para {user_establishment}: {weights}")
+        
+        # ===== CONFIGURACIÓN FINAL - USA EXCLUSIVAMENTE VALORES DEL USUARIO =====
+        genetic_config = {
+            'population_size': 150,
+            'generations': 250,
+            'mutation_rate': 0.12,
+            'elite_size': 15,
+            'tournament_size': 5,
+            'num_dishes': config['num_dishes'],  # DIRECTO DEL USUARIO
             'catalog': filtered_catalog,
             'constraints': {
-                'max_cost_per_dish': config['max_cost_per_dish'],
-                'min_profit_margin': config['min_profit_margin'],
-                'price_factor': price_factor,
-                'num_chefs': config['num_chefs'],
-                'season': config['season']
+                'max_cost_per_dish': config['max_cost_per_dish'],  # DIRECTO DEL USUARIO
+                'min_profit_margin': config['min_profit_margin'],  # DIRECTO DEL USUARIO
+                'price_factor': user_price_factor,  # CALCULADO CON EL MARGEN DEL USUARIO
+                'num_chefs': config['num_chefs'],  # DIRECTO DEL USUARIO
+                'season': config['season'],  # DIRECTO DEL USUARIO
+                'available_techniques': config['available_techniques'],  # DIRECTO DEL USUARIO
+                'available_stations': config['available_stations']  # DIRECTO DEL USUARIO
             },
             'optimization_weights': weights
         }
+        
+        logging.info("✅ CONFIGURACIÓN GENÉTICA CONSTRUIDA CON VALORES DEL USUARIO")
+        logging.info(f"   Restricciones finales: costo≤${genetic_config['constraints']['max_cost_per_dish']}, margen≥{genetic_config['constraints']['min_profit_margin']}%")
+        
+        return genetic_config
 
     def _show_insufficient_dishes_dialog(self, available: int, needed: int):
         """Muestra diálogo cuando no hay suficientes platos."""
