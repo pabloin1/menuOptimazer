@@ -1,507 +1,284 @@
+# app/main.py - VERSIÓN CORREGIDA PARA WINDOWS
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import messagebox, ttk
 import logging
-from typing import List, Dict
-from collections import defaultdict
+import sys
+import os
 
-from app.core.models import Dish
-from app.core.genetic_algorithm_v2 import MenuGeneticAlgorithm
-from app.ui.configuration_panel import ConfigurationPanel
-from app.ui.results_panel import ResultsPanel
-from app.ui.progress_dialog import ProgressDialog
-# Imports adicionales para estructura cúbica
-from app.core.cubic_integration import CubicWorkflowManager, integrate_cubic_workflow_with_menu_optimization
+# Agregar el directorio raíz al path para imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from app.data.database_manager import load_knowledge_base
+from app.ui.main_window import MenuOptimizerMainWindow
 
 
-class MenuOptimizerMainWindow(tk.Tk):
-    """
-    Ventana principal del sistema MenuOptimizer.
-    Coordina los paneles de configuración y resultados.
-    """
+def setup_logging():
+    """Configura el sistema de logging CON SOPORTE COMPLETO PARA UNICODE."""
+    # CONFIGURACIÓN CORREGIDA PARA WINDOWS - Soporte completo UTF-8
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(module)s - %(message)s',
+        handlers=[
+            # ✅ CORRECCIÓN CRÍTICA: Agregar encoding='utf-8' para soporte de emojis
+            logging.FileHandler("app.log", mode='w', encoding='utf-8'),
+            
+            # ✅ CORRECCIÓN CRÍTICA: Configurar StreamHandler para Windows
+            logging.StreamHandler(sys.stdout)
+        ]
+    )
     
-    def __init__(self, catalog: List[Dish], all_techniques: List[str]):
-        super().__init__()
-        
-        if not catalog:
-            self.destroy()
-            return
-        
-        self.catalog = catalog
-        self.all_techniques = all_techniques
-        
-        # Configurar ventana principal
-        self.title("MENUOPTIMIZER v10.0 - Sistema Inteligente de Optimización")
-        self.geometry("1400x900")
-        self.configure(bg='#f0f0f0')
-        
-        # Variables de estado
-        self.current_results = None
-        self.optimization_running = False
-        self.cubic_workflow_manager = None  
-        
-        # Inicializar interfaz
-        self._setup_ui()
-        self._setup_menu_bar()
-        
-        # Obtener estaciones únicas de la base de datos
-        self._extract_stations_from_catalog()
-        
-        logging.info("Ventana principal inicializada correctamente")
+    # Configurar nivel específico para librerías verbose
+    logging.getLogger('matplotlib').setLevel(logging.WARNING)
+    logging.getLogger('PIL').setLevel(logging.WARNING)
     
-    def _setup_ui(self):
-        """Configura la interfaz de usuario principal."""
-        # Crear notebook principal
-        self.main_notebook = ttk.Notebook(self)
-        self.main_notebook.pack(pady=10, padx=10, fill="both", expand=True)
-        
-        # Panel de configuración
-        self.config_panel = ConfigurationPanel(
-            self.main_notebook, 
-            catalog=self.catalog,
-            all_techniques=self.all_techniques,
-            on_optimize_callback=self._run_optimization
-        )
-        self.main_notebook.add(self.config_panel, text='⚙️ Configuración del Restaurante')
-        
-        # Panel de resultados
-        self.results_panel = ResultsPanel(self.main_notebook)
-        self.main_notebook.add(self.results_panel, text='🏆 Resultados de Optimización')
-        
-        # Statusbar
-        self.status_frame = ttk.Frame(self)
-        self.status_frame.pack(side="bottom", fill="x", padx=5, pady=2)
-        
-        self.status_label = ttk.Label(
-            self.status_frame, 
-            text="Listo - Configure los parámetros y ejecute la optimización",
-            font=("Segoe UI", 9)
-        )
-        self.status_label.pack(side="left")
-        
-        self.progress_bar = ttk.Progressbar(
-            self.status_frame, 
-            mode='indeterminate',
-            length=200
-        )
-        self.progress_bar.pack(side="right", padx=(10, 0))
-    
-    def _setup_menu_bar(self):
-        """Configura la barra de menú."""
-        menubar = tk.Menu(self)
-        self.config(menu=menubar)
-        
-        # Menú Archivo
-        file_menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="Archivo", menu=file_menu)
-        file_menu.add_command(label="Exportar Resultados...", command=self._export_results)
-        file_menu.add_separator()
-        file_menu.add_command(label="Salir", command=self.quit)
-        
-        # Menú Herramientas
-        tools_menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="Herramientas", menu=tools_menu)
-        tools_menu.add_command(label="Configuración Avanzada...", command=self._show_advanced_config)
-        tools_menu.add_command(label="Estadísticas del Catálogo", command=self._show_catalog_stats)
-        
-        # Menú Ayuda
-        help_menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="Ayuda", menu=help_menu)
-        help_menu.add_command(label="Manual de Usuario", command=self._show_help)
-        help_menu.add_command(label="Acerca de...", command=self._show_about)
-    
-    def _extract_stations_from_catalog(self):
-        """Extrae todas las estaciones únicas del catálogo."""
-        all_stations = set()
-        for dish in self.catalog:
-            if hasattr(dish, 'steps') and dish.steps:
-                for step in dish.steps:
-                    if hasattr(step, 'station') and step.station:
-                        all_stations.add(step.station)
-        
-        self.all_stations = sorted(list(all_stations))
-        
-        # Pasarlas al panel de configuración
-        if hasattr(self.config_panel, 'set_available_stations'):
-            self.config_panel.set_available_stations(self.all_stations)
-    
-    def _run_optimization(self, config: Dict):
-        """
-        Ejecuta el algoritmo de optimización con la configuración proporcionada.
-        """
-        if self.optimization_running:
-            messagebox.showwarning("Optimización en Curso", 
-                                 "Ya hay una optimización ejecutándose. Por favor espere.")
-            return
-        
+    # ✅ NUEVO: Configurar encoding para stdout en Windows
+    if sys.platform.startswith('win'):
         try:
-            self.optimization_running = True
-            self._update_status("Iniciando optimización...")
-            self.progress_bar.start(10)
-            
-            # ===== LOG CRÍTICO: VERIFICAR QUE LLEGA LA CONFIGURACIÓN CORRECTA =====
-            logging.info("🚀 INICIANDO OPTIMIZACIÓN CON CONFIGURACIÓN DEL USUARIO:")
-            logging.info(f"   📊 Número de platos solicitados: {config['num_dishes']}")
-            logging.info(f"   💰 Presupuesto máximo por plato: ${config['max_cost_per_dish']}")
-            logging.info(f"   👥 Personal disponible: {config['num_chefs']} cocineros")
-            logging.info(f"   📈 Margen mínimo requerido: {config['min_profit_margin']}%")
-            logging.info(f"   🌍 Temporada seleccionada: {config['season']}")
-            logging.info(f"   🏪 Tipo de establecimiento: {config['establishment_type']}")
-            logging.info(f"   🔧 Técnicas disponibles: {len(config['available_techniques'])} técnicas")
-            logging.info(f"   🏭 Estaciones disponibles: {len(config['available_stations'])} estaciones")
-            
-            # Validar configuración
-            validation_result = self._validate_configuration(config)
-            if not validation_result['valid']:
-                messagebox.showerror("Configuración Inválida", validation_result['message'])
-                self._cleanup_optimization()
-                return
-            
-            # Filtrar catálogo según restricciones
-            filtered_catalog = self._filter_catalog(config)
-            
-            if len(filtered_catalog) < config['num_dishes']:
-                self._show_insufficient_dishes_dialog(len(filtered_catalog), config['num_dishes'])
-                self._cleanup_optimization()
-                return
-            
-            # Mostrar diálogo de progreso
-            progress_dialog = ProgressDialog(self, "Optimizando Menú...")
-            progress_dialog.show()
-            
-            # Configurar algoritmo genético
-            genetic_config = self._build_genetic_config(config, filtered_catalog)
-            genetic_algorithm = MenuGeneticAlgorithm(genetic_config)
-            
-            self._update_status("Ejecutando algoritmo genético...")
-            
-            # Ejecutar optimización (obtener múltiples soluciones)
-            try:
-                solutions = genetic_algorithm.get_multiple_solutions(num_solutions=3)
-                
-                if solutions:
-                    # ===== NUEVA INTEGRACIÓN DE ESTRUCTURA CÚBICA =====
-                    self._update_status("Generando estructura cúbica de flujo de trabajo...")
-                    
-                    # Actualizar mensaje del diálogo de progreso
-                    if hasattr(progress_dialog, 'update_status'):
-                        progress_dialog.update_status("Analizando flujo de trabajo en cocina...")
-                    
-                    # Tomar el mejor menú para generar la estructura cúbica
-                    best_menu = solutions[0][0]  # Primer elemento es el menú, segundo es fitness
-                    
-                    # Crear estructura cúbica
-                    self.cubic_workflow_manager = integrate_cubic_workflow_with_menu_optimization(
-                        best_menu, config
-                    )
-                    
-                    if self.cubic_workflow_manager:
-                        logging.info("Estructura cúbica generada exitosamente")
-                        
-                        if hasattr(progress_dialog, 'update_status'):
-                            progress_dialog.update_status("Verificando consistencia de precedencias...")
-                        
-                        validation_result = self.cubic_workflow_manager.validate_workflow_integrity()
-                        if not validation_result['valid']:
-                            logging.warning("Estructura cúbica inicial tiene inconsistencias. Optimizando...")
-                            self.cubic_workflow_manager.optimize_workflow()
-                    else:
-                        logging.warning("No se pudo generar la estructura cúbica")
-                    # ===== FIN DE INTEGRACIÓN CÚBICA =====
-                    
-                    self.current_results = {
-                        'solutions': solutions,
-                        'config': config,
-                        'algorithm_stats': genetic_algorithm.evolution_stats,
-                        'cubic_workflow_manager': self.cubic_workflow_manager
-                    }
-                    
-                    # Mostrar resultados usando el método modificado
-                    self.results_panel.display_results_with_cubic(self.current_results, self.cubic_workflow_manager)
-                    self.main_notebook.select(1)
-                    
-                    self._update_status(f"Optimización completada - {len(solutions)} soluciones encontradas")
-                    
-                    cubic_status = "con análisis de flujo de trabajo" if self.cubic_workflow_manager else "sin análisis de flujo"
-                    messagebox.showinfo("Optimización Completada", 
-                                      f"Se encontraron {len(solutions)} configuraciones óptimas de menú {cubic_status}.")
-                else:
-                    messagebox.showwarning("Sin Resultados", 
-                                         "No se pudieron generar menús óptimos con las restricciones actuales.")
-                    self._update_status("Optimización completada sin resultados")
-                    
-            except Exception as e:
-                logging.error(f"Error durante optimización: {e}", exc_info=True)
-                messagebox.showerror("Error de Optimización", f"Error durante la optimización:\n{str(e)}")
-                self._update_status("Error en optimización")
-            
-            finally:
-                progress_dialog.close()
+            # Intentar configurar la consola de Windows para UTF-8
+            import codecs
+            sys.stdout = codecs.getwriter('utf-8')(sys.stdout.detach())
+            sys.stderr = codecs.getwriter('utf-8')(sys.stderr.detach())
+        except Exception:
+            # Si falla, usar logging sin emojis para evitar crashes
+            logging.info("Configurando logging sin emojis para compatibilidad con Windows")
+
+
+def setup_tkinter_styles():
+    """Configura estilos personalizados para la aplicación."""
+    root = tk.Tk()
+    root.withdraw()  # Ocultar ventana temporal
+    
+    # Configurar tema y estilos
+    style = ttk.Style()
+    
+    # Usar tema moderno si está disponible
+    available_themes = style.theme_names()
+    if 'clam' in available_themes:
+        style.theme_use('clam')
+    elif 'alt' in available_themes:
+        style.theme_use('alt')
+    
+    # Configurar colores personalizados
+    style.configure('Accent.TButton', 
+                   font=('Segoe UI', 10, 'bold'),
+                   foreground='white',
+                   background='#0078d4')
+    
+    style.map('Accent.TButton',
+              background=[('active', '#106ebe'),
+                         ('pressed', '#005a9e')])
+    
+    # Configurar estilo de notebook
+    style.configure('TNotebook.Tab', 
+                   font=('Segoe UI', 9))
+    
+    # Configurar labelframes
+    style.configure('TLabelframe.Label', 
+                   font=('Segoe UI', 9, 'bold'))
+    
+    root.destroy()
+
+
+def check_dependencies():
+    """Verifica que todas las dependencias estén disponibles."""
+    missing_deps = []
+    
+    try:
+        import mysql.connector
+    except ImportError:
+        missing_deps.append("mysql-connector-python")
+    
+    try:
+        import numpy
+    except ImportError:
+        missing_deps.append("numpy")
+    
+    try:
+        import matplotlib
+    except ImportError:
+        missing_deps.append("matplotlib")
+    
+    if missing_deps:
+        deps_str = ", ".join(missing_deps)
+        error_message = (f"Faltan dependencias requeridas: {deps_str}\n\n"
+                        f"Por favor instálelas usando:\n"
+                        f"pip install {' '.join(missing_deps)}")
+        messagebox.showerror("Dependencias Faltantes", error_message)
+        return False
+    
+    return True
+
+
+def check_database_connection():
+    """Verifica la conexión a la base de datos."""
+    try:
+        # Intentar cargar una pequeña muestra de datos
+        from app.data.database_manager import get_db_connection
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM dishes LIMIT 1")
+        count = cursor.fetchone()[0]
+        cursor.close()
+        conn.close()
         
-        except Exception as e:
-            logging.error(f"Error en configuración de optimización: {e}", exc_info=True)
-            messagebox.showerror("Error de Configuración", f"Error al configurar la optimización:\n{str(e)}")
-            self._update_status("Error en configuración")
-        
-        finally:
-            self._cleanup_optimization()
-
-    def _cleanup_optimization(self):
-        """Limpia el estado de la optimización."""
-        self.optimization_running = False
-        self.progress_bar.stop()
-        self._update_status("Listo")
-
-    def _validate_configuration(self, config: Dict) -> Dict:
-        """Valida la configuración del usuario."""
-        try:
-            # ===== VALIDACIÓN USANDO EXACTAMENTE LOS VALORES DEL USUARIO =====
-            logging.info("🔍 VALIDANDO CONFIGURACIÓN DEL USUARIO...")
-            
-            user_num_dishes = config['num_dishes']
-            user_max_cost = config['max_cost_per_dish']
-            user_margin = config['min_profit_margin']
-            user_chefs = config['num_chefs']
-            user_techniques = config['available_techniques']
-            user_stations = config['available_stations']
-            
-            logging.info(f"   Validando {user_num_dishes} platos con presupuesto ${user_max_cost}")
-            logging.info(f"   Validando margen {user_margin}% con {user_chefs} cocineros")
-            logging.info(f"   Validando {len(user_techniques)} técnicas y {len(user_stations)} estaciones")
-            
-            if user_num_dishes <= 0:
-                return {'valid': False, 'message': f'El número de platos ({user_num_dishes}) debe ser mayor a 0'}
-            if user_max_cost <= 0:
-                return {'valid': False, 'message': f'El costo máximo (${user_max_cost}) debe ser mayor a 0'}
-            if not (0 <= user_margin <= 100):
-                return {'valid': False, 'message': f'El margen de ganancia ({user_margin}%) debe estar entre 0% y 100%'}
-            if user_chefs <= 0:
-                return {'valid': False, 'message': f'El número de cocineros ({user_chefs}) debe ser mayor a 0'}
-            if not user_techniques:
-                return {'valid': False, 'message': 'Debe seleccionar al menos una técnica culinaria'}
-            if not user_stations:
-                return {'valid': False, 'message': 'Debe seleccionar al menos una estación de trabajo'}
-            
-            logging.info("✅ CONFIGURACIÓN VALIDADA CORRECTAMENTE")
-            return {'valid': True, 'message': 'Configuración válida'}
-            
-        except KeyError as e:
-            return {'valid': False, 'message': f'Falta parámetro de configuración: {e}'}
-        except Exception as e:
-            return {'valid': False, 'message': f'Error de validación: {e}'}
-
-    def _filter_catalog(self, config: Dict) -> List[Dish]:
-        """Filtra el catálogo según las restricciones configuradas con logging detallado."""
-        logging.info("=== INICIANDO FILTRADO DE CATÁLOGO CON CONFIGURACIÓN DEL USUARIO ===")
-        logging.info(f"Catálogo inicial: {len(self.catalog)} platos")
-        logging.info(f"Filtros a aplicar:")
-        logging.info(f"  - Costo máximo: ${config['max_cost_per_dish']}")
-        logging.info(f"  - Temporada: {config['season']}")
-        logging.info(f"  - Técnicas disponibles: {len(config['available_techniques'])} técnicas")
-        logging.info(f"  - Estaciones disponibles: {len(config['available_stations'])} estaciones")
-        
-        filtered = []
-        rejection_reasons = defaultdict(int)
-        
-        for dish in self.catalog:
-            # Filtrar por costo usando el valor exacto del usuario
-            dish_cost = self._calculate_dish_cost(dish)
-            if dish_cost > config['max_cost_per_dish']:
-                rejection_reasons['costo_excesivo'] += 1
-                logging.debug(f"Rechazado {dish.name}: costo ${dish_cost:.2f} > ${config['max_cost_per_dish']}")
-                continue
-
-            # Filtrar por temporada usando el valor exacto del usuario
-            if config['season'] != 'Todo el año' and not self._dish_available_in_season(dish, config['season']):
-                rejection_reasons['fuera_temporada'] += 1
-                logging.debug(f"Rechazado {dish.name}: no disponible en {config['season']}")
-                continue
-
-            # Filtrar por técnicas disponibles usando la selección exacta del usuario  
-            required_techniques = {step.technique for step in dish.steps if hasattr(step, 'technique') and step.technique}
-            if required_techniques and not required_techniques.issubset(config['available_techniques']):
-                rejection_reasons['tecnicas_faltantes'] += 1
-                missing_techniques = required_techniques - config['available_techniques']
-                logging.debug(f"Rechazado {dish.name}: técnicas faltantes {missing_techniques}")
-                continue
-
-            # Filtrar por estaciones disponibles usando la selección exacta del usuario
-            required_stations = {step.station for step in dish.steps if hasattr(step, 'station') and step.station}
-            if required_stations and not required_stations.issubset(config['available_stations']):
-                rejection_reasons['estaciones_faltantes'] += 1
-                missing_stations = required_stations - config['available_stations']
-                logging.debug(f"Rechazado {dish.name}: estaciones faltantes {missing_stations}")
-                continue
-            
-            filtered.append(dish)
-            logging.debug(f"Aceptado {dish.name}: costo ${dish_cost:.2f}")
-
-        logging.info("=== RESUMEN DE FILTRADO CON CONFIGURACIÓN DEL USUARIO ===")
-        logging.info(f"Platos aceptados: {len(filtered)}")
-        logging.info(f"Platos rechazados: {sum(rejection_reasons.values())}")
-        for reason, count in rejection_reasons.items():
-            logging.info(f"  - {reason}: {count} platos")
-        
-        if len(filtered) < config['num_dishes']:
-            logging.warning(f"⚠️ INSUFICIENTES PLATOS: Se encontraron {len(filtered)} pero se necesitan {config['num_dishes']}")
-        
-        return filtered
-
-    def _calculate_dish_cost(self, dish: Dish) -> float:
-        """Calcula el costo de un plato."""
-        if hasattr(dish, '_calculated_cost'):
-            return float(dish._calculated_cost)
-        if hasattr(dish, 'recipe') and dish.recipe:
-            total_cost = 0.0
-            for ingredient, quantity in dish.recipe.items():
-                if hasattr(ingredient, 'cost_per_kg'):
-                    cost_per_kg = float(getattr(ingredient, 'cost_per_kg', 0))
-                    qty_kg = float(getattr(quantity, 'value', quantity)) / 1000.0
-                    total_cost += cost_per_kg * qty_kg
-            return total_cost
-        return 10.0
-
-    def _dish_available_in_season(self, dish: Dish, season: str) -> bool:
-        """Verifica si un plato está disponible en la temporada especificada."""
-        if not hasattr(dish, 'recipe') or not dish.recipe:
-            return True
-        for ingredient in dish.recipe.keys():
-            if hasattr(ingredient, 'season') and ingredient.season not in ('Todo el año', season):
-                return False
+        logging.info(f"Conexión a base de datos exitosa. {count} platos disponibles.")
         return True
+        
+    except Exception as e:
+        logging.error(f"Error de conexión a base de datos: {e}")
+        error_message = (f"No se pudo conectar a la base de datos MySQL.\n\n"
+                        f"Verifique que:\n"
+                        f"• El servidor MySQL esté ejecutándose\n"
+                        f"• Las credenciales en 'config/db_config.ini' sean correctas\n"
+                        f"• La base de datos 'menu_optimizer_db' exista\n\n"
+                        f"Error específico: {str(e)}")
+        messagebox.showerror("Error de Base de Datos", error_message)
+        return False
 
-    def _calculate_dish_prep_time(self, dish: Dish) -> float:
-        """Calcula el tiempo de preparación de un plato."""
-        if hasattr(dish, '_calculated_prep_time'):
-            return float(dish._calculated_prep_time)
-        if hasattr(dish, 'steps') and dish.steps:
-            return sum(float(getattr(step, 'time', 0)) for step in dish.steps)
-        return float(getattr(dish, 'complexity', 3)) * 8
 
-    def _build_genetic_config(self, config: Dict, filtered_catalog: List[Dish]) -> Dict:
-        """Construye la configuración para el algoritmo genético usando EXACTAMENTE los valores del usuario."""
-        
-        # ===== USAR DIRECTAMENTE LOS VALORES DEL USUARIO - SIN SOBRESCRIBIR =====
-        user_margin = config['min_profit_margin']  # Ya validado en configuration_panel
-        user_price_factor = 1 / (1 - user_margin / 100) if user_margin < 100 else 2.0
-        
-        logging.info("🔧 CONSTRUYENDO CONFIGURACIÓN DEL ALGORITMO GENÉTICO:")
-        logging.info(f"   Margen del usuario: {user_margin}%")
-        logging.info(f"   Factor de precio calculado: {user_price_factor:.3f}")
-        logging.info(f"   Platos solicitados: {config['num_dishes']}")
-        logging.info(f"   Cocineros disponibles: {config['num_chefs']}")
-        logging.info(f"   Costo máximo: ${config['max_cost_per_dish']}")
-        logging.info(f"   Temporada: {config['season']}")
-        logging.info(f"   Tipo establecimiento: {config['establishment_type']}")
-        
-        # PESOS DINÁMICOS BASADOS EN EL TIPO DE ESTABLECIMIENTO DEL USUARIO
-        establishment_weights = {
-            'casual': {
-                'ganancia': 0.20, 'tiempo': 0.25, 'nutricion': 0.10, 
-                'variedad': 0.15, 'desperdicio': 0.10, 'distribucion_carga': 0.10, 'popularidad': 0.10
-            },
-            'elegante': {
-                'ganancia': 0.30, 'tiempo': 0.10, 'nutricion': 0.15, 
-                'variedad': 0.20, 'desperdicio': 0.15, 'distribucion_carga': 0.05, 'popularidad': 0.05
-            },
-            'comida_rapida': {
-                'ganancia': 0.25, 'tiempo': 0.35, 'nutricion': 0.05, 
-                'variedad': 0.10, 'desperdicio': 0.15, 'distribucion_carga': 0.10, 'popularidad': 0.00
-            }
-        }
-        
-        user_establishment = config['establishment_type']
-        weights = establishment_weights.get(user_establishment, establishment_weights['casual'])
-        
-        logging.info(f"   Pesos para {user_establishment}: {weights}")
-        
-        # ===== CONFIGURACIÓN FINAL - USA EXCLUSIVAMENTE VALORES DEL USUARIO =====
-        genetic_config = {
-            'population_size': 150,
-            'generations': 250,
-            'mutation_rate': 0.12,
-            'elite_size': 15,
-            'tournament_size': 5,
-            'num_dishes': config['num_dishes'],  # DIRECTO DEL USUARIO
-            'catalog': filtered_catalog,
-            'constraints': {
-                'max_cost_per_dish': config['max_cost_per_dish'],  # DIRECTO DEL USUARIO
-                'min_profit_margin': config['min_profit_margin'],  # DIRECTO DEL USUARIO
-                'price_factor': user_price_factor,  # CALCULADO CON EL MARGEN DEL USUARIO
-                'num_chefs': config['num_chefs'],  # DIRECTO DEL USUARIO
-                'season': config['season'],  # DIRECTO DEL USUARIO
-                'available_techniques': config['available_techniques'],  # DIRECTO DEL USUARIO
-                'available_stations': config['available_stations']  # DIRECTO DEL USUARIO
-            },
-            'optimization_weights': weights
-        }
-        
-        logging.info("✅ CONFIGURACIÓN GENÉTICA CONSTRUIDA CON VALORES DEL USUARIO")
-        logging.info(f"   Restricciones finales: costo≤${genetic_config['constraints']['max_cost_per_dish']}, margen≥{genetic_config['constraints']['min_profit_margin']}%")
-        
-        return genetic_config
-
-    def _show_insufficient_dishes_dialog(self, available: int, needed: int):
-        """Muestra diálogo cuando no hay suficientes platos."""
-        message = (f"No se encontraron suficientes platos ({available}) para generar "
-                   f"un menú de {needed} opciones.\n\nSugerencias:\n"
-                   "• Reduzca el 'Número de opciones en el menú'\n"
-                   "• Aumente el 'Presupuesto máximo por plato'\n"
-                   "• Seleccione más 'Técnicas' y 'Estaciones'\n"
-                   "• Cambie la 'Temporada' a 'Todo el año'")
-        messagebox.showwarning("Restricciones Demasiado Estrictas", message)
+def show_startup_splash():
+    """Muestra pantalla de inicio con información del sistema."""
+    splash = tk.Toplevel()
+    splash.title("MenuOptimizer v10.0")
+    splash.geometry("500x300")
+    splash.resizable(False, False)
     
-    def _update_status(self, message: str):
-        """Actualiza el mensaje de estado."""
-        self.status_label.config(text=message)
-        self.update_idletasks()
-        logging.info(f"Status: {message}")
+    # Centrar splash
+    splash.update_idletasks()
+    x = (splash.winfo_screenwidth() // 2) - (500 // 2)
+    y = (splash.winfo_screenheight() // 2) - (300 // 2)
+    splash.geometry(f"500x300+{x}+{y}")
     
-    def _export_results(self):
-        """Exporta los resultados actuales."""
-        if not self.current_results:
-            messagebox.showinfo("Sin Resultados", "No hay resultados para exportar.")
+    # Contenido del splash
+    main_frame = tk.Frame(splash, bg='#f0f8ff')
+    main_frame.pack(fill='both', expand=True)
+    
+    # Logo y título - SIN EMOJIS para evitar problemas de encoding
+    tk.Label(main_frame, text="MENU", font=("Arial", 48), bg='#f0f8ff').pack(pady=(30, 10))
+    tk.Label(main_frame, text="MENUOPTIMIZER v10.0", 
+             font=("Segoe UI", 20, "bold"), bg='#f0f8ff', fg='#2c3e50').pack()
+    tk.Label(main_frame, text="Sistema Inteligente de Optimización de Menús", 
+             font=("Segoe UI", 11), bg='#f0f8ff', fg='#7f8c8d').pack(pady=(5, 20))
+    
+    # Información del sistema
+    info_text = """Algoritmos Genéticos Avanzados
+Optimización Multi-objetivo (7 variables)
+Análisis Operativo Integral
+Interfaz Intuitiva y Moderna
+Estructura Cúbica de Flujo de Trabajo
+
+Desarrollado por: Pablo César Altuzar Grajales
+Matrícula: 223267 - Grupo: 8B"""
+    
+    tk.Label(main_frame, text=info_text, 
+             font=("Segoe UI", 9), bg='#f0f8ff', fg='#34495e', 
+             justify='center').pack(pady=(0, 20))
+    
+    # Barra de progreso
+    progress = ttk.Progressbar(main_frame, mode='indeterminate', length=300)
+    progress.pack(pady=(0, 10))
+    progress.start(10)
+    
+    status_label = tk.Label(main_frame, text="Inicializando sistema...", 
+                           font=("Segoe UI", 9), bg='#f0f8ff', fg='#7f8c8d')
+    status_label.pack()
+    
+    splash.update()
+    return splash, progress, status_label
+
+
+def main():
+    """Función principal de la aplicación."""
+    try:
+        # 1. Configurar logging CON SOPORTE UNICODE
+        setup_logging()
+        logging.info("=== INICIANDO MENUOPTIMIZER v10.0 ===")
+        
+        # 2. Verificar dependencias
+        if not check_dependencies():
             return
-        messagebox.showinfo("Función no Implementada", "La exportación de resultados estará disponible en una futura versión.")
-    
-    def _show_advanced_config(self):
-        """Muestra diálogo de configuración avanzada."""
-        messagebox.showinfo("Función no Implementada", "La configuración avanzada estará disponible en una futura versión.")
-    
-    def _show_catalog_stats(self):
-        """Muestra estadísticas del catálogo de platos."""
-        total_dishes = len(self.catalog)
-        avg_cost = sum(self._calculate_dish_cost(dish) for dish in self.catalog) / total_dishes
-        avg_complexity = sum(getattr(dish, 'complexity', 0) for dish in self.catalog) / total_dishes
-        diet_types = defaultdict(int)
-        for dish in self.catalog:
-            diet_types[getattr(dish, 'diet_type', 'N/D')] += 1
         
-        diet_summary = '\n'.join([f"  • {diet}: {count}" for diet, count in diet_types.items()])
-
-        workflow_info = ""
-        if hasattr(self, 'cubic_workflow_manager') and self.cubic_workflow_manager and self.cubic_workflow_manager.cubic_structure:
-            workflow_data = self.cubic_workflow_manager.get_workflow_report()
-            stats = workflow_data['general_stats']
-            workflow_info = f"""
-🧊 FLUJO DE TRABAJO CÚBICO ACTUAL:
-• Dimensiones: {stats['active_persons']}p × {stats['active_positions']}e × {stats['max_precedence_used']}pr
-• Utilización: {stats['utilization_rate']:.1%}
-• Estado: {'✅ Consistente' if stats['inconsistencies_count'] == 0 else f'⚠️ {stats["inconsistencies_count"]} problemas'}"""
-
-        stats_message = (f"Estadísticas del Catálogo:\n\n"
-                        f"Total de platos: {total_dishes}\n"
-                        f"Costo promedio: ${avg_cost:.2f} MXN\n"
-                        f"Complejidad promedio: {avg_complexity:.1f}/10\n\n"
-                        f"Distribución por tipo de dieta:\n{diet_summary}"
-                        f"{workflow_info}")
+        # 3. Configurar estilos de tkinter
+        setup_tkinter_styles()
         
-        messagebox.showinfo("Estadísticas del Catálogo", stats_message)
+        # 4. Mostrar splash screen
+        splash, progress, status_label = show_startup_splash()
+        
+        # 5. Verificar conexión a base de datos
+        status_label.config(text="Verificando conexión a base de datos...")
+        splash.update()
+        
+        if not check_database_connection():
+            splash.destroy()
+            return
+        
+        # 6. Cargar base de conocimiento
+        status_label.config(text="Cargando base de conocimiento...")
+        splash.update()
+        
+        logging.info("Cargando catálogo de platos y técnicas culinarias...")
+        dish_catalog, all_techniques = load_knowledge_base()
+        
+        if not dish_catalog:
+            progress.stop()
+            splash.destroy()
+            messagebox.showerror("Error Crítico", 
+                               "La base de conocimiento de platos está vacía. "
+                               "Verifique que la base de datos contenga datos de muestra.")
+            logging.critical("Base de conocimiento vacía")
+            return
+        
+        logging.info(f"Base de conocimiento cargada: {len(dish_catalog)} platos, {len(all_techniques)} técnicas")
+        
+        # 7. Inicializar aplicación principal
+        status_label.config(text="Iniciando interfaz principal...")
+        splash.update()
+        
+        # Cerrar splash
+        progress.stop()
+        splash.destroy()
+        
+        # 8. Crear y mostrar ventana principal
+        try:
+            app = MenuOptimizerMainWindow(dish_catalog, all_techniques)
+            
+            # Configurar comportamiento de cierre
+            def on_closing():
+                logging.info("Cerrando aplicación...")
+                app.destroy()
+            
+            app.protocol("WM_DELETE_WINDOW", on_closing)
+            
+            # Mostrar ventana maximizada pero redimensionable
+            try:
+                app.state('zoomed')  # Windows
+            except tk.TclError:
+                app.attributes('-zoomed', True)  # Linux
+            except:
+                app.geometry("1400x900")  # Fallback
+            
+            logging.info("Aplicación iniciada exitosamente")
+            
+            # Ejecutar loop principal
+            app.mainloop()
+            
+        except Exception as e:
+            logging.error(f"Error al crear ventana principal: {e}", exc_info=True)
+            messagebox.showerror("Error de Interfaz", 
+                               f"No se pudo inicializar la interfaz gráfica:\n{str(e)}")
     
-    def _show_help(self):
-        """Muestra ayuda del usuario."""
-        messagebox.showinfo("Ayuda", "Consulte la documentación para obtener instrucciones detalladas.")
+    except KeyboardInterrupt:
+        logging.info("Aplicación interrumpida por usuario")
     
-    def _show_about(self):
-        """Muestra información sobre la aplicación."""
-        about_text = "MENUOPTIMIZER v10.0\nSistema Inteligente de Optimización\n\nDesarrollado por: Pablo César Altuzar Grajales"
-        messagebox.showinfo("Acerca de MenuOptimizer", about_text)
+    except Exception as e:
+        logging.critical(f"Error crítico en aplicación: {e}", exc_info=True)
+        messagebox.showerror("Error Crítico", 
+                           f"Error inesperado en la aplicación:\n{str(e)}\n\n"
+                           f"Consulte 'app.log' para más detalles.")
+    
+    finally:
+        logging.info("=== FINALIZANDO MENUOPTIMIZER ===")
+
+
+if __name__ == "__main__":
+    main()
